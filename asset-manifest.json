@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/dm-toolbook/static/css/main.ddb4aedc.css",
+    "main.js": "/dm-toolbook/static/js/main.6778c35a.js",
+    "static/media/background_texture.png": "/dm-toolbook/static/media/background_texture.9efbaca70f36e40effd0.png",
+    "static/media/kobold.png": "/dm-toolbook/static/media/kobold.4b7abaa0b79af259a38a.png",
+    "static/media/human.png": "/dm-toolbook/static/media/human.62afb403d889684b1163.png",
+    "index.html": "/dm-toolbook/index.html",
+    "main.ddb4aedc.css.map": "/dm-toolbook/static/css/main.ddb4aedc.css.map",
+    "main.6778c35a.js.map": "/dm-toolbook/static/js/main.6778c35a.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ddb4aedc.css",
+    "static/js/main.6778c35a.js"
+  ]
+}
