@@ -1,0 +1,8 @@
+.results-gallery {
+  padding: 30px 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 320px));
+  grid-gap: 10px;
+  justify-content: space-evenly;
+
+}
