@@ -73,28 +73,3 @@ div.card .card-tools button:last-child {
   border-right: none;
   border-bottom-right-radius: 4px;
 }
-
-/* NPC CARD *****************************************************************/
-div.card .card-header.human {
-  background: rgb(36, 60, 125);
-  background: linear-gradient(150deg, rgb(36, 60, 125) 0%, rgba(0, 0, 0, 1) 100%);
-}
-
-div.card p.alignment {
-  display: inline-block;
-}
-
-div.card p.relationship {
-  display: inline-block;
-  margin-left: 5px;
-}
-
-div.card p.relationship.Friendly {
-  color: rgb(23, 221, 50);
-}
-div.card p.relationship.Hostile {
-  color: red;
-}
-div.card p.relationship.Neutral {
-  color: rgb(218, 178, 2);
-}

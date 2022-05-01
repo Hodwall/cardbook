@@ -3,7 +3,7 @@ import { npc } from '../features/npcsSlice.model';
 
 const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
 const aligntment = ['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'];
-const relationship = ['Friendly', 'Neutral', 'Hostile'];
+const relationship = ['friendly', 'indifferent', 'hostile'];
 
 const createNpc = (ancestry: string): npc => {
   const doRoll = (max: number) => { return Math.floor((Math.random() * max)); }
