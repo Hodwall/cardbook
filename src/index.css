@@ -8,7 +8,22 @@ input::-webkit-inner-spin-button {
 }
 
 body {
-    margin: 0px;
-    width:100%;
-    background: #f9f9f9 url(./img/background_texture.png) repeat;
+  margin: 0px;
+  width: 100%;
+  background: #f9f9f9 url(./img/background_texture.png) repeat;
+}
+
+span.credit {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  font-family: 'IM Fell DW Pica';
+  color: #6c6a6a;
+  font-size: 14px;
+}
+
+span.credit .nickname {
+  color: #00d0ff;
+  margin-right: 5px;
 }

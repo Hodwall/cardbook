@@ -3,5 +3,5 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 230px));
   grid-gap: 12px;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }

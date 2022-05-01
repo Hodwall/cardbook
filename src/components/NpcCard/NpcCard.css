@@ -8,6 +8,7 @@ div.card.npc-card .card-header {
 
 div.card.npc-card .card-header .label {
   z-index: 5;
+  text-transform: capitalize;
 }
 
 div.card.npc-card.human .card-header {
@@ -25,22 +26,24 @@ div.card.npc-card p {
 
 div.card.npc-card p.alignment {
   display: inline-block;
+  text-transform: capitalize;
 }
 
 div.card.npc-card p.relationship {
   display: inline-block;
   margin-left: 5px;
+  text-transform: capitalize;
 }
 
-div.card.npc-card p.relationship.Friendly {
+div.card.npc-card p.relationship.friendly {
   color: rgb(23, 221, 50);
 }
 
-div.card.npc-card p.relationship.Hostile {
+div.card.npc-card p.relationship.hostile {
   color: red;
 }
 
-div.card.npc-card p.relationship.Indifferent {
+div.card.npc-card p.relationship.indifferent {
   color: rgb(218, 178, 2);
 }
 

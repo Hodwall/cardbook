@@ -24,6 +24,7 @@ ReactDOM.render(
           <Route path="/npcs" element={<Npcs />} />
           <Route path="/locations" element={<Locations />} />
         </Routes>
+        <span className="credit"></span>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

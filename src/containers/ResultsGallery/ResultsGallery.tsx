@@ -1,15 +1,11 @@
 import './ResultsGallery.css';
+import { ReactChild } from 'react';
 
-import { useAppSelector } from '../../app/hooks';
-import { selectGeneratedNpcs } from '../../features/npcsSlice';
 
-import NpcCard from "../../components/NpcCard";
-
-const ResultsGallery = () => {
-  const npcs = useAppSelector(selectGeneratedNpcs);
+const ResultsGallery = (props: { children?: ReactChild | ReactChild[] }) => {
   return (
     <div className="results-gallery">
-      {npcs.map((npc) => <NpcCard data={npc} />)}
+      {props.children}
     </div>
   )
 }

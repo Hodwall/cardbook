@@ -1,9 +1,9 @@
 div.card {
   width: 320px;
   background: white;
-  border: 1px solid #c1c1c1;
   border-radius: 4px;
   box-shadow: #00000030 2px 2px 5px;
+  position: relative;
 }
 
 div.card .card-header {
@@ -72,4 +72,17 @@ div.card .card-tools button:first-child {
 div.card .card-tools button:last-child {
   border-right: none;
   border-bottom-right-radius: 4px;
+}
+
+div.card div.stored {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border-radius: 50px;
+  right: 0;
+  top: 0;
+  margin-right: 5px;
+  margin-top: 5px;
+  background: #5bdb64;
+  box-shadow: rgb(23 221 50 / 61%) 1px 1px 16px 4px;
 }

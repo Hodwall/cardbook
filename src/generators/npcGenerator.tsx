@@ -1,20 +1,26 @@
 import npcData from './npcs-data.json';
 import { npc } from '../features/npcsSlice.model';
 
-const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-const aligntment = ['Lawful Good', 'Neutral Good', 'Chaotic Good', 'Lawful Neutral', 'Neutral', 'Chaotic Neutral', 'Lawful Evil', 'Neutral Evil', 'Chaotic Evil'];
-const relationship = ['friendly', 'indifferent', 'hostile'];
+interface npcnames {
+  [key: string]: string[]
+}
+
+const npcNames: npcnames = npcData.names;
+ 
 
 const createNpc = (ancestry: string): npc => {
-  const doRoll = (max: number) => { return Math.floor((Math.random() * max)); }
+  const doRoll = (arr: string[]) => { return arr[Math.floor((Math.random() * arr.length))] }
   return {
-    name: npcData.names[doRoll(npcData.names.length)],
-    ancestry: ancestry,
-    high_ability: abilities[doRoll(6)],
-    low_ability: abilities[doRoll(6)],
-    alignment: aligntment[doRoll(9)],
-    occupation: 'Fisherman',
-    relationship: relationship[doRoll(3)]
+      id: Date.now(),
+      isStored: false,
+      name: doRoll(npcNames[ancestry]),
+      ancestry: ancestry,
+      high_ability: doRoll(npcData.abilities),
+      low_ability: doRoll(npcData.abilities),
+      alignment: doRoll(npcData.alignments),
+      occupation: doRoll(npcData.occupations),
+      interaction: doRoll(npcData.interactions),
+      relationship: doRoll(npcData.relationships)
   };
 }
 

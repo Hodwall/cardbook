@@ -11,15 +11,18 @@ div.options-bar {
 div.options-bar button {
     height: 54px;
     width: 94px;
-    
-    box-shadow: #00000040 1px 1px 4px 1px;
-    background-color: rgba(255, 255, 255, 0.137);
+    box-shadow: #00000024 1px 1px 11px 5px;
+    background-color: rgb(255 112 112 / 8%);
     border-radius: 4px;
-    border-style: none;
-  
-    color: rgb(209, 197, 197);
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    color: rgb(185 174 174);
     text-align: center;
     text-decoration: none;
     font-family: 'IM Fell DW Pica', serif;
     font-size: 18px;
+}
+
+div.options-bar button.active {
+    background-color: tomato;
 }

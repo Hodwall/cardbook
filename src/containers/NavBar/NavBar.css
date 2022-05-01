@@ -4,8 +4,24 @@
     background: linear-gradient(180deg, rgba(125,36,36,1) 0%, rgba(64,26,26,1) 100%);
 
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
 
     color: white;
+}
+
+div.logo {
+    color: #ffa48f;
+    font-family: 'IM Fell DW Pica';
+    font-size: 32px;
+    font-weight: bold;
+    padding-bottom: -50px;
+    vertical-align: middle;
+    text-decoration: overline;
+    padding-top: 5px;
+    margin-bottom: -4px;
+}
+
+div.logo span {
+    color: #c34d38;
 }

@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OptionsBar from '../containers/OptionsBar';
 import ResultsGallery from '../containers/ResultsGallery';
 
-import { useAppDispatch } from '../app/hooks';
-import { addNpc, deleteAllNpcs } from '../features/npcsSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { addNpc, deleteAllNpcs, selectGeneratedNpcs, selectStoredNpcs, deleteNotStoredNpcs } from '../features/npcsSlice';
 import createNpc from '../generators/npcGenerator';
 
+import NpcCard from "../components/NpcCard";
 
- const Npcs = () => {
+
+const Npcs = () => {
+    const [showStored, setShowStored] = useState(false);
     const dispatch = useAppDispatch();
+    const generatedNpcs = useAppSelector(selectGeneratedNpcs);
+    const storedNpcs = useAppSelector(selectStoredNpcs);
 
     return (
         <React.Fragment>
@@ -20,10 +25,16 @@ import createNpc from '../generators/npcGenerator';
                 ]}
                 tools={[
                     // <button onClick={() => dispatch(deleteAllNpcs())}>Male</button>,
+                    <button onClick={() => dispatch(deleteAllNpcs())}>Male</button>,
+                    <button onClick={() => setShowStored(!showStored)} className={`${showStored && 'active'}`}>Stored</button>,
+                    <button onClick={() => dispatch(deleteNotStoredNpcs())}>Delete not stored</button>,
                     <button onClick={() => dispatch(deleteAllNpcs())}>Delete All</button>
                 ]}
             />
-            <ResultsGallery />
+            <ResultsGallery>
+                {/* {showStored ? generatedNpcs.map((npc) => <NpcCard data={npc} />) : storedNpcs.map((npc) => <NpcCard data={npc} />)} */}
+                {showStored ? storedNpcs.map((npc) => <NpcCard data={npc} />) : generatedNpcs.map((npc) => <NpcCard data={npc} />)}
+            </ResultsGallery>
         </React.Fragment>
     )
 }
