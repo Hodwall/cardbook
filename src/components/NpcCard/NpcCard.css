@@ -1,7 +1,7 @@
 div.card.npc-card,
 div.card.npc-card .card-side {
   width: 250px;
-  height: 290px;
+  height: 320px;
 }
 
 div.card.npc-card .card-header {
@@ -43,8 +43,8 @@ div.card.npc-card p.relationship.indifferent {
 div.card.npc-card p.voice {
   color: rgb(20, 206, 219);
   font-style: italic;
-  line-height: 8px;
   margin-bottom: 8px;
+  margin-top: -2px;
 }
 
 div.card.npc-card p.occupation {
@@ -56,6 +56,7 @@ div.card.npc-card p.abilities {
   margin-top: 10px;
   font-size: 22px;
   background-color: #efefef;
+  text-transform: uppercase;
 }
 
 div.card.npc-card p.abilities span {
@@ -72,7 +73,7 @@ div.card.npc-card .card-side.back .card-body {
   margin: 10px;
   background-color: white;
   border-radius: 4px;
-  height: 260px;
+  height: 280px;
 }
 
 div.card.npc-card.human .card-header {

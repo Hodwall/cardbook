@@ -2,6 +2,7 @@ export interface npc {
   id: number,
   name: string,
   ancestry: string,
+  age: string,
   high_ability: string,
   low_ability: string,
   alignment: string,
@@ -9,6 +10,8 @@ export interface npc {
   interaction: string,
   relationship: string,
   isStored: boolean,
+  voice: string,
+  description: string
 }
 
 export interface npcsSliceState {

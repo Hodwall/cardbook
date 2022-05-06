@@ -4,7 +4,7 @@ import ResultsGallery from '../containers/ResultsGallery';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { addNpc, deleteAllNpcs, selectGeneratedNpcs, selectStoredNpcs, deleteNotStoredNpcs } from '../features/npcsSlice';
-import createNpc from '../generators/npcGenerator';
+import createNpc from '../builders/npcBuilder';
 
 import NpcCard from "../components/NpcCard";
 
