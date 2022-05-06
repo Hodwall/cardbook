@@ -1,7 +1,7 @@
 .navigation-bar {
     padding: 10px;
-    background: rgb(125,36,36);
-    background: linear-gradient(180deg, rgba(125,36,36,1) 0%, rgba(64,26,26,1) 100%);
+    background: rgb(159 58 58);
+    background: linear-gradient(180deg, rgba(159 58 58) 0%, rgba(64,26,26,1) 100%);
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -11,7 +11,7 @@
 }
 
 div.logo {
-    color: #ffa48f;
+    color: #ffebe6;
     font-family: 'IM Fell DW Pica';
     font-size: 32px;
     font-weight: bold;

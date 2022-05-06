@@ -15,9 +15,10 @@ const NpcCard = (props: { data: npc }) => {
 
   return (
     <Card
-      class={`npc-card $a{props.data.ancestry}`}
+      class={`npc-card ${props.data.ancestry}`}
       label={props.data.name}
       art={props.data.ancestry === 'human' ? human : dwarfMale}
+      stored={props.data.isStored}
       tools={
         <React.Fragment>
           {props.data.isStored
@@ -27,18 +28,21 @@ const NpcCard = (props: { data: npc }) => {
           <button onClick={() => dispatch(deleteNpc(props.data.id))}>DELETE</button>
         </React.Fragment>
       }
-      stored={props.data.isStored}
-    >
-      <p className="alignment">{props.data.alignment}</p>
-      <p className={`relationship ${props.data.relationship}`}>{props.data.relationship}</p>
-      <p className='voice'>Has a gravel voice</p>
-      <p className='occupation'>{`${occupation_pre} ${props.data.interaction} ${props.data.occupation}, who believes in Respect`}</p>
-      <p className='abilities'><span className="high-ability">▲ DEX</span><span className="low-ability">▼ CHA</span></p>
-      <p className='description'>He has black long hair. His nose is wide. His beard is short and braided. He wears a worn leather hood.</p>
-
-
-
-    </Card >
+      front={
+        <React.Fragment>
+          <p className="alignment">{props.data.alignment}</p>
+          <p className={`relationship ${props.data.relationship}`}>{props.data.relationship}</p>
+          <p className='voice'>Has a gravel voice</p>
+          <p className='occupation'>{`${occupation_pre} ${props.data.interaction} ${props.data.occupation}, who believes in Respect`}</p>
+          <p className='description'>He has black long hair. His nose is wide. His beard is short and braided. He wears a worn leather hood.</p>
+        </React.Fragment>
+      }
+      back={
+        <React.Fragment>
+          <p className='abilities'><span className="high-ability">▲ DEX</span><span className="low-ability">▼ CHA</span></p>
+        </React.Fragment>
+      }
+    />
   )
 }
 
