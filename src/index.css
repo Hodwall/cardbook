@@ -27,3 +27,17 @@ span.credit .nickname {
   color: #00d0ff;
   margin-right: 5px;
 }
+
+/* under constructions items */
+div.bg-message {
+  margin-top: 100px;
+  text-align: center;
+  font-family: 'IM Fell DW Pica';
+  font-size: 40px;
+  color: rgb(156, 144, 144);
+}
+img.bg-icon {
+  width: 350px;
+  display: block;
+  margin: auto;
+}

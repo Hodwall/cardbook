@@ -14,5 +14,6 @@ a.nav-link {
 
 a.nav-link.active {
   color: white;
+  background: #eb6e5759;
   text-decoration: none;
 }
