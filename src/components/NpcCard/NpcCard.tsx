@@ -4,16 +4,20 @@ import { npc } from '../../features/npcsSlice.model';
 import { storeNpc, deleteNpc, removeNpc } from '../../features/npcsSlice';
 import { useAppDispatch } from '../../app/hooks';
 
-import human from '../../img/human.png';
-import dwarf from '../../img/dwarf-male.png';
-import elf from '../../img/elf-male.png';
+import humanMale from '../../img/human-male.png';
+import humanFemale from '../../img/human-female.png';
+import dwarfMale from '../../img/dwarf-male.png';
+import dwarfFemale from '../../img/dwarf-female.png';
+import elfMale from '../../img/elf-male.png';
+import elfFemale from '../../img/elf-female.png';
 
 import React from 'react';
 
-interface ancestryArt {
-  [key: string]: string;
-}
-const ancestryArt: ancestryArt = { human, dwarf, elf };
+const ancestryArt: any = { 
+  'human': {'male': humanMale, 'female': humanFemale},
+  'dwarf': {'male': dwarfMale, 'female': dwarfFemale},
+  'elf': {'male': elfMale, 'female': elfFemale}
+ };
 
 
 const NpcCard = (props: { data: npc }) => {
@@ -47,7 +51,7 @@ const NpcCard = (props: { data: npc }) => {
     <Card
       class={`npc-card ${props.data.ancestry}`}
       label={props.data.name}
-      art={ancestryArt[props.data.ancestry]}
+      art={ancestryArt[props.data.ancestry][props.data.gender]}
       stored={props.data.isStored}
       tools={
         <React.Fragment>

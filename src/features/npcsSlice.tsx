@@ -49,11 +49,14 @@ const npcsSlice = createSlice({
       state.generated = state.generated.filter((npc) => npc.id != action.payload);
       state.stored = state.stored.filter((npc) => npc.id != action.payload);
       document.cookie = JSON.stringify(state);
+    },
+    toggleGender: (state) => {
+      state.gender = state.gender === 'male' ? 'female' : 'male';
     }
   }
 })
 
-export const { addNpc, deleteAllNpcs, storeNpc, removeNpc, deleteNpc, deleteNotStoredNpcs } = npcsSlice.actions;
+export const { addNpc, deleteAllNpcs, storeNpc, removeNpc, deleteNpc, deleteNotStoredNpcs, toggleGender } = npcsSlice.actions;
 export const selectGeneratedNpcs = (state: RootState) => state.npcs.generated;
 export const selectStoredNpcs = (state: RootState) => state.npcs.stored;
 export const selectGender = (state: RootState) => state.npcs.gender;
