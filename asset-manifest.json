@@ -1,18 +1,21 @@
 {
   "files": {
-    "main.css": "/dm-toolbook/static/css/main.5f56638c.css",
-    "main.js": "/dm-toolbook/static/js/main.feeb18e0.js",
+    "main.css": "/dm-toolbook/static/css/main.e02a42c3.css",
+    "main.js": "/dm-toolbook/static/js/main.296f4fc5.js",
     "static/media/blacksmith.png": "/dm-toolbook/static/media/blacksmith.17f96ad0030f96190d84.png",
     "static/media/background_texture.png": "/dm-toolbook/static/media/background_texture.9efbaca70f36e40effd0.png",
     "static/media/dwarf-male.png": "/dm-toolbook/static/media/dwarf-male.0eb1c3e69b33768ddd68.png",
+    "static/media/elf-female.png": "/dm-toolbook/static/media/elf-female.8b9caa75b36111388417.png",
     "static/media/elf-male.png": "/dm-toolbook/static/media/elf-male.342e56ffa59b82f1a4e1.png",
-    "static/media/human.png": "/dm-toolbook/static/media/human.34144401e94f82b8e459.png",
+    "static/media/dwarf-female.png": "/dm-toolbook/static/media/dwarf-female.b55fe7de42582faade42.png",
+    "static/media/human-female.png": "/dm-toolbook/static/media/human-female.6387945c873e052b9db7.png",
+    "static/media/human-male.png": "/dm-toolbook/static/media/human-male.34144401e94f82b8e459.png",
     "index.html": "/dm-toolbook/index.html",
-    "main.5f56638c.css.map": "/dm-toolbook/static/css/main.5f56638c.css.map",
-    "main.feeb18e0.js.map": "/dm-toolbook/static/js/main.feeb18e0.js.map"
+    "main.e02a42c3.css.map": "/dm-toolbook/static/css/main.e02a42c3.css.map",
+    "main.296f4fc5.js.map": "/dm-toolbook/static/js/main.296f4fc5.js.map"
   },
   "entrypoints": [
-    "static/css/main.5f56638c.css",
-    "static/js/main.feeb18e0.js"
+    "static/css/main.e02a42c3.css",
+    "static/js/main.296f4fc5.js"
   ]
 }
