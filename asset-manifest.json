@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dm-toolbook/static/css/main.5f56638c.css",
-    "main.js": "/dm-toolbook/static/js/main.7c5d2cda.js",
+    "main.js": "/dm-toolbook/static/js/main.feeb18e0.js",
     "static/media/blacksmith.png": "/dm-toolbook/static/media/blacksmith.17f96ad0030f96190d84.png",
     "static/media/background_texture.png": "/dm-toolbook/static/media/background_texture.9efbaca70f36e40effd0.png",
     "static/media/dwarf-male.png": "/dm-toolbook/static/media/dwarf-male.0eb1c3e69b33768ddd68.png",
@@ -9,10 +9,10 @@
     "static/media/human.png": "/dm-toolbook/static/media/human.34144401e94f82b8e459.png",
     "index.html": "/dm-toolbook/index.html",
     "main.5f56638c.css.map": "/dm-toolbook/static/css/main.5f56638c.css.map",
-    "main.7c5d2cda.js.map": "/dm-toolbook/static/js/main.7c5d2cda.js.map"
+    "main.feeb18e0.js.map": "/dm-toolbook/static/js/main.feeb18e0.js.map"
   },
   "entrypoints": [
     "static/css/main.5f56638c.css",
-    "static/js/main.7c5d2cda.js"
+    "static/js/main.feeb18e0.js"
   ]
 }
