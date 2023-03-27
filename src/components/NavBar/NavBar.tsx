@@ -5,7 +5,7 @@ import Tag from '../Tag/Tag';
 import './NavBar.css';
 
 
-const NavBar = (props: { children: React.ReactNode; }) => {
+const NavBar = (props: { children?: React.ReactNode; }) => {
 	const [displayTagsDrawer, setDisplayTagsDrawer] = useState(false);
 	const [searchString, setSearchString] = useState('');
 

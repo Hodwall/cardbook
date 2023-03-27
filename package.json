@@ -3,10 +3,9 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
-  "homepage": "https://hodwall.github.io/dm-toolbook",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build --base=./",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist"
   },
