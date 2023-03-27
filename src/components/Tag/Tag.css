@@ -1,0 +1,32 @@
+.tag {
+    font-family: 'IM Fell DW Pica', serif;
+    font-weight: bold;
+    text-align: left;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: #00000041 4px 4px 10px;
+    width: 250px;
+    height: 65px;
+    text-align: left;
+}
+
+.tag-label {
+    color: white;
+    background-color: tomato;
+    font-size: 1.2rem;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    height: 45px;
+    line-height: 60px;
+    padding: 0px 10px;
+}
+
+.tag-details {
+    color: rgb(126, 126, 126);
+    font-size: 1rem;
+    height: 20px;
+    padding: 0px 10px;
+    display: flex;
+    gap: 10px;
+}

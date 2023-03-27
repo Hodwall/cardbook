@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica+SC&family=IM+Fell+English+SC&family=IM+Fell+Great+Primer+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap');
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body {
+  margin: 0px;
+  width: 100%;
+  background: #f9f9f9 url(./assets/img/background_texture.png) repeat;
+}
+
+span.credit {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  font-family: 'IM Fell DW Pica';
+  color: #6c6a6a;
+  font-size: 14px;
+}
+
+span.credit .nickname {
+  color: #00d0ff;
+  margin-right: 5px;
+}
+
+/* under constructions items */
+div.bg-message {
+  margin-top: 100px;
+  text-align: center;
+  font-family: 'IM Fell DW Pica';
+  font-size: 40px;
+  color: rgb(156, 144, 144);
+}
+
+img.bg-icon {
+  width: 350px;
+  display: block;
+  margin: auto;
+}
