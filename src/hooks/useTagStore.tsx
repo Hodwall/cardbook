@@ -23,10 +23,15 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const createTag = (tag: iTag) => {
-        updateTagStore([...tagStore, tag]);
+        updateTagStore([...tagStore, {
+            ...tag,
+            id: Date.now(),
+            is_active: true
+        }]);
     };
 
     const deleteTag = (id: number) => {
+        console.log('HERE');
         updateTagStore(tagStore.filter((tag: iTag) => tag.id != id));
     };
 

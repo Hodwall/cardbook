@@ -1,20 +1,32 @@
 import './Tag.css';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, a } from 'react-spring';
+import { useState } from 'react';
+import Card from '../Card';
 
 
 const Tag = (props: {
     label: string;
+    art?: string;
 }) => {
-    const animation = useSpring({ to: { opacity: 1, y: 0, rotateZ: 0 }, from: { opacity: 0, y: -10, rotateZ: -2 } });
     return (
-        <animated.div className='tag' style={animation}>
-            <div className='tag-label'>{props.label}</div>
-            <div className='tag-details'>
-                <span>H: 21</span>
-                <span>H: 21</span>
-            </div>
-        </animated.div>
+        <Card
+            style={'tag'}
+            label={props.label}
+            back={
+                <>
+                    <p>Treasures in tag: 10</p>
+                    <p>NPCs in tag: 10</p>
+                    <p>Locations in tag: 10</p>
+                </>
+            }
+        />
     );
+
 };
 
 export default Tag;
+
+
+
+
+

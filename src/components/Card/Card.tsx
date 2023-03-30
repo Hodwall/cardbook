@@ -6,11 +6,12 @@ const Card = (props: {
   style?: string,
   label: string,
   art?: string,
-  front: ReactNode,
+  front?: ReactNode,
   back?: ReactNode,
   front_tools?: ReactNode,
   back_tools?: ReactNode,
   is_pinned?: boolean;
+  updateFlipped?: Function;
 }) => {
   const [flipped, setFlipped] = useState(false);
 
@@ -22,14 +23,18 @@ const Card = (props: {
   const { transform, opacity, } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
-    config: { mass: 10, tension: 500, friction: 80 },
+    config: { mass: 10, friction: 150, tension: 1000 },
   });
+
+  const handleFlip = () => {
+    setFlipped(!flipped);
+    if (props.updateFlipped) props.updateFlipped(flipped);
+  };
 
   return (
     <animated.div className={`card ${props.style}`} style={animation}>
-
       <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} >
-        <div onClick={() => setFlipped(!flipped)}>
+        <div className={'card-clickable'} onClick={handleFlip}>
           <div className={'card-header'}>
             <div className="label">{props.label}</div>
             {props.art && <img className="art" src={props.art} alt={props.art} />}
@@ -43,23 +48,17 @@ const Card = (props: {
         </div>
         {props.is_pinned && <div className="stored"></div>}
       </a.div>
-
-      <a.div className="card-side back" style={{ opacity, transform, rotateY: '180deg' }}>
-        <div className="card-body">
-          <div className={'card-header'}>
-            <div className="label">{props.label}</div>
-            {props.art && <img className="art" src={props.art} alt={props.art} />}
-          </div>
-          <div className="card-body">
+      <a.div className="card-side back" style={{ opacity, transform, rotateY: '180deg', display: flipped ? 'initial' : 'none' }}>
+        <div className={'card-clickable'} onClick={handleFlip}>
+          <div className="card-body" onClick={handleFlip}>
             {props.back}
           </div>
-          <div className="card-tools">
-            {!flipped && props.back_tools}
-          </div>
+        </div>
+        <div className="card-tools">
+          {flipped && props.back_tools}
         </div>
       </a.div>
-
-    </animated.div>
+    </animated.div >
   );
 };
 

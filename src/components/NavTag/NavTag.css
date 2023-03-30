@@ -1,13 +1,25 @@
 .navtag {
     font-family: 'IM Fell DW Pica', serif;
-    font-weight: bold;
+    font-size: 0.95rem;
     text-align: left;
-    background: white;
-    color: green;
+    color: hsl(0deg 0% 100% / 90%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: #00000041 4px 4px 10px;
-    width: 250px;
-    height: 65px;
+    width: max-content;
+    padding: 0px 10px;
+    height: 30px;
     text-align: left;
+    background: hsl(19deg 100% 50%);
+    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
+}
+
+.navtag button {
+    background-color: hsl(0deg 0% 0% / 0%);
+    border: unset;
+    color: white;
+    padding-left: 10px;
 }
