@@ -38,7 +38,7 @@
 }
 
 
-.tools {
+.tools-bar {
     padding: 10px;
     background-color: hsl(0deg 42.22% 17.65%);
     display: grid;
@@ -46,7 +46,14 @@
     grid-template-columns: repeat(auto-fill, minmax(94px, 1fr));
 }
 
-.tools button {
+.tags-bar {
+    padding: 10px;
+    background-color: hsl(0deg 42.22% 17.65%);
+    display: flex;
+    grid-gap: 10px;
+}
+
+.tools-bar button {
     height: 40px;
     box-shadow: #00000024 1px 1px 11px 5px;
     background-color: rgb(255 76 76 / 19%);
@@ -60,7 +67,7 @@
     font-size: 18px;
 }
 
-.tools button.active {
+.tools-bar button.active {
     background-color: tomato;
 }
 

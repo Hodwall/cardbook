@@ -6,18 +6,22 @@ import NavBar from '../components/NavBar';
 import createNpc from '../builders/npc/npcBuilder';
 import { iNpc } from '../builders/npc/npc.model';
 
+import { useTagStore } from '../hooks/useTagStore';
+
 
 const Npcs = () => {
     const [showPinned, setShowPinned] = useState(true);
     const { npcStore, addNpc } = useNpcStore();
+    const { createTag } = useTagStore();
     const gender = 'male';
 
     return (
         <>
             <NavBar>
-                <button onClick={() => addNpc(createNpc('human', gender))}>Human</button>
+                <button onClick={() => addNpc(cregenialateNpc('human', gender))}>Human</button>
                 <button onClick={() => addNpc(createNpc('dwarf', gender))}>Dwarf</button>
                 <button onClick={() => addNpc(createNpc('elf', gender))}>Elf</button>
+                <button onClick={() => createTag({ id: 0, label: 'A test tag ;D', type: 'default', is_active: true })}>ADD A TAG</button>
             </NavBar>
             {/* tools={[
                     // <button onClick={() => dispatch(deleteAllNpcs())}>Male</button>,

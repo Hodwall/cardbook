@@ -1,13 +1,12 @@
 import { useState, createContext, useContext } from 'react';
 // import { iNpc } from '../builders/npc/npc.model';
 
-interface iTag {
+export interface iTag {
     id: number,
     label: string,
     type: string;
     is_active: boolean,
 }
-
 
 const TagStoreContext = createContext<any>(null);
 
@@ -29,6 +28,10 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
 
     const deleteTag = (id: number) => {
         updateTagStore(tagStore.filter((tag: iTag) => tag.id != id));
+    };
+
+    const deleteAllTags = () => {
+        updateTagStore([]);
     };
 
 
@@ -70,6 +73,8 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     return (
         <TagStoreContext.Provider value={{
             tagStore,
+            createTag,
+            deleteTag,
             // addNpc,
             // deleteNpc,
             // deleteAllNpcs,
@@ -82,4 +87,4 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     );
 };
 
-export const useNpcStore = () => useContext(TagStoreContext);
+export const useTagStore = () => useContext(TagStoreContext);

@@ -14,7 +14,11 @@ const Card = (props: {
 }) => {
   const [flipped, setFlipped] = useState(false);
 
-  const animation = useSpring({ to: { opacity: 1, y: 0, rotateZ: 0 }, from: { opacity: 0, y: -10, rotateZ: -2 } });
+  const animation = useSpring({
+    to: { opacity: 1, y: 0, scale: 1, rotateZ: 0, rotateX: 0 },
+    from: { opacity: 0, y: -10, scale: 1.2, rotateZ: -10, rotateX: -80 },
+    config: { mass: 5, friction: 120, tension: 1000 }
+  });
   const { transform, opacity, } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,

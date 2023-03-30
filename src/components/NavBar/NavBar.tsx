@@ -4,10 +4,15 @@ import { animated, useSpring, a } from 'react-spring';
 import Tag from '../Tag/Tag';
 import './NavBar.css';
 
+import { iTag } from '../../hooks/useTagStore';
+import NavTag from '../NavTag';
+import { useTagStore } from '../../hooks/useTagStore';
+
 
 const NavBar = (props: { children?: React.ReactNode; }) => {
 	const [displayTagsDrawer, setDisplayTagsDrawer] = useState(false);
 	const [searchString, setSearchString] = useState('');
+	const { tagStore } = useTagStore();
 
 	const animation = useSpring({
 		y: displayTagsDrawer ? 0 : -100,
@@ -33,9 +38,14 @@ const NavBar = (props: { children?: React.ReactNode; }) => {
 				<NavLink className={"nav-link"} to="/npcs">{'NPCs'}</NavLink>
 				<NavLink className={"nav-link"} to="/locations">{'LOCATIONS'}</NavLink>
 			</div>
-			<div className="tools">
+			<div className="tools-bar">
 				{props.children}
 				<button onClick={() => setDisplayTagsDrawer(!displayTagsDrawer)}>TAGS</button>
+			</div>
+			<div className="tags-bar">
+				{
+					tagStore.map((tag: iTag) => <NavTag label={'a test tag'} />)
+				}
 			</div>
 			{
 				true &&

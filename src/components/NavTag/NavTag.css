@@ -1,0 +1,13 @@
+.navtag {
+    font-family: 'IM Fell DW Pica', serif;
+    font-weight: bold;
+    text-align: left;
+    background: white;
+    color: green;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: #00000041 4px 4px 10px;
+    width: 250px;
+    height: 65px;
+    text-align: left;
+}
