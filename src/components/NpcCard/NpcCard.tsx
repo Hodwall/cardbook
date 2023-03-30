@@ -42,10 +42,8 @@ const ancestry_art: any = {
 };
 
 
-
-
 const NpcCard = (props: { data: any; }) => {
-  const { pinNpc, unpinNpc, deleteNpc } = useNpcStore();
+  const { pinNpc, unpinNpc, deleteNpc, addTagToNpc, removeTagFromNpc } = useNpcStore();
   const { tagStore, createTag } = useTagStore();
   const [flipped, setFlipped] = useState(false);
   const [searchString, setSearchString] = useState('');
@@ -92,6 +90,14 @@ const NpcCard = (props: { data: any; }) => {
     }
   };
 
+  const handleAddTag = (tag_id: number) => {
+    addTagToNpc(props.data.id, tag_id);
+  };
+
+  const handleDeleteTag = (tag_id: number) => {
+    removeTagFromNpc(props.data.id, tag_id);
+  };
+
   return (
     <Card
       style={`npc-card ${props.data.ancestry} ${displayTagsDialog && 'priority'}`}
@@ -110,9 +116,10 @@ const NpcCard = (props: { data: any; }) => {
       }
       back={
         <>
-          <p className='abilities'><span className="high-ability">▲ {props.data.high_ability}</span><span className="low-ability">▼ {props.data.low_ability}</span></p>
+          {/* <p className='abilities'><span className="high-ability">▲ {props.data.high_ability}</span><span className="low-ability">▼ {props.data.low_ability}</span></p>
           <p className="occupation">+ {abilityDescriptions.high[props.data.high_ability]}</p>
-          <p className="occupation">- {abilityDescriptions.low[props.data.low_ability]}</p>
+          <p className="occupation">- {abilityDescriptions.low[props.data.low_ability]}</p> */}
+          <div className="npc-tags">{props.data.tags?.map((tag: any, index: number) => <NavTag key={index} id={tag} label={tagStore.find((el: any) => el.id === tag)?.label} deleteHandler={handleDeleteTag} />)}</div>
         </>
       }
       front_tools={
@@ -132,7 +139,7 @@ const NpcCard = (props: { data: any; }) => {
             <animated.div className="tags-dialog" style={animation}>
               <div className="tags-results">
                 {
-                  resultsTagsDialog.map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} />)
+                  resultsTagsDialog.map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} />)
                 }
               </div>
               <form>

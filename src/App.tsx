@@ -7,11 +7,11 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <TagStoreProvider>
-        <NpcStoreProvider>
+      <NpcStoreProvider>
+        <TagStoreProvider>
           <Outlet />
-        </NpcStoreProvider>
-      </TagStoreProvider>
+        </TagStoreProvider>
+      </NpcStoreProvider>
     </div>
   );
 }

@@ -24,7 +24,8 @@ const createNpc = (ancestry: string, gender: string) => {
     interaction: doRoll(npcData.interactions),
     relationship: doRoll(npcData.relationships),
     voice: doRoll(npcData.voices),
-    description: description
+    description: description,
+    tags: []
   };
 };
 

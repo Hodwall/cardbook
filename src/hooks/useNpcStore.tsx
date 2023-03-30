@@ -15,6 +15,7 @@ export interface iNpc {
     isPinned: boolean,
     voice: string,
     description: string;
+    tags: number[];
 }
 
 const NpcStoreContext = createContext<any>(null);
@@ -61,6 +62,30 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
         updateNpcStore(store);
     };
 
+    const addTagToNpc = (npc_id: number, tag_id: number) => {
+        console.log(npc_id, tag_id);
+        let store = [...npcStore];
+        const npc_index = store.findIndex((npc: iNpc) => npc.id === npc_id);
+        if (!store[npc_index].tags.find((tag) => tag === tag_id)) {
+            store[npc_index].tags.push(tag_id);
+            updateNpcStore(store);
+        }
+    };
+
+    const removeTagFromNpc = (npc_id: number, tag_id: number) => {
+        let store = [...npcStore];
+        const npc_index = store.findIndex((npc: iNpc) => npc.id === npc_id);
+        store[npc_index].tags = store[npc_index].tags.filter((tag) => tag != tag_id);
+        updateNpcStore(store);
+    };
+
+    const removeTagFromAllNpcs = (tag_id: number) => {
+        let store = [...npcStore];
+        store.forEach((npc) => { npc.tags = npc.tags.filter((tag: number) => tag != tag_id); });
+        console.log(tag_id, store);
+        updateNpcStore(store);
+    };
+
     return (
         <NpcStoreContext.Provider value={{
             npcStore,
@@ -69,7 +94,10 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
             deleteAllNpcs,
             deleteNotPinnedNpcs,
             pinNpc,
-            unpinNpc
+            unpinNpc,
+            addTagToNpc,
+            removeTagFromNpc,
+            removeTagFromAllNpcs
         }}>
             {props.children}
         </NpcStoreContext.Provider>
