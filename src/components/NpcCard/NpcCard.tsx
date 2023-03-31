@@ -154,7 +154,12 @@ const NpcCard = (props: { data: any; }) => {
               <animated.div className="tags-dialog" style={animation} ref={ref}>
                 <div className="tags-results">
                   {
-                    resultsTagsDialog.map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} deleteHandler={handleDeleteTag} />)
+                    resultsTagsDialog.reduce((results: iTag[], tag: iTag) => {
+                      if (!props.data.tags.includes(tag.id)) {
+                        results.push(tag);
+                      }
+                      return results;
+                    }, []).map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} deleteHandler={handleDeleteTag} />)
                   }
                 </div>
                 <form>

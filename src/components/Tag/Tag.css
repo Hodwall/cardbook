@@ -14,3 +14,8 @@ div.tag {
     text-align: end;
     cursor: pointer;
 }
+
+div.tag:active {
+    transform: translateY(2px);
+    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 40px 16px hsl(0deg 0% 0% / 50%);
+}

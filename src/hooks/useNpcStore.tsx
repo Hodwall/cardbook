@@ -28,7 +28,6 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
     })());
 
     const updateNpcStore = (val: iNpc[]) => {
-        console.log(val);
         setNpcStore(val);
         localStorage.setItem('npc_store', JSON.stringify(val));
     };
@@ -85,7 +84,6 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
     const removeTagFromAllNpcs = (tag_id: number) => {
         let store = [...npcStore];
         store.forEach((npc) => { npc.tags = npc.tags.filter((tag: number) => tag != tag_id); });
-        console.log(tag_id, store);
         updateNpcStore([...store]);
     };
 

@@ -13,8 +13,6 @@ const Npcs = () => {
     const { activeTags } = useTagStore();
     const gender = 'male';
 
-    console.log(npcStore);
-
     return (
         <>
             <NavBar>

@@ -8,7 +8,7 @@ import './NavBar.css';
 
 
 const NavBar = (props: { children?: React.ReactNode; }) => {
-	const { tagStore, createTag, setTagInactive } = useTagStore();
+	const { tagStore, activeTags, createTag, setTagInactive } = useTagStore();
 	const [displayTagsDrawer, setDisplayTagsDrawer] = useState(false);
 	const [resultsTagsDrawer, setResultsTagsDrawer] = useState(tagStore);
 	const [searchString, setSearchString] = useState('');
@@ -51,7 +51,7 @@ const NavBar = (props: { children?: React.ReactNode; }) => {
 			<div className="navigation">
 				<div className="logo">
 					<span>DUNGEON MASTER'S</span>
-					<span>TOOLBOOK</span>
+					<span>DECKBOOK</span>
 				</div>
 				<NavLink className={"nav-link"} to="/treasures">{'TREASURES'}</NavLink>
 				<NavLink className={"nav-link"} to="/npcs">{'NPCs'}</NavLink>
@@ -80,7 +80,12 @@ const NavBar = (props: { children?: React.ReactNode; }) => {
 			<animated.div className="tags-drawer" style={animation}>
 				<div className="tags-result">
 					{
-						resultsTagsDrawer.map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} />)
+						resultsTagsDrawer.reduce((results: iTag[], tag: iTag) => {
+							if (!activeTags.includes(tag.id)) {
+								results.push(tag);
+							}
+							return results;
+						}, []).map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} />)
 					}
 				</div>
 				<form>
