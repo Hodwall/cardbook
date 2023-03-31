@@ -4,7 +4,8 @@ import npcData from './npcData.json';
 const names: any = npcData.names;
 const d = npcData.description;
 
-const createNpc = (ancestry: string, gender: string) => {
+
+const createNpc = (ancestry: string, gender: string, activeTags: number[]) => {
   const doRoll = (arr: string[]) => { return arr[Math.floor((Math.random() * arr.length))]; };
   const description = `He has ${doRoll(d.hair_feature)}, ${doRoll(d.hair_length)} ${doRoll(d.hair_color)} hair. `
     + `His eyes are ${doRoll(d.eyes)} and ${doRoll(d.eyes_color)}. `
@@ -25,7 +26,7 @@ const createNpc = (ancestry: string, gender: string) => {
     relationship: doRoll(npcData.relationships),
     voice: doRoll(npcData.voices),
     description: description,
-    tags: []
+    tags: [...activeTags]
   };
 };
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNpcStore, iNpc } from '../hooks/useNpcStore';
-import { useTagStore } from '../hooks/useTagStore';
+import { iTag, useTagStore } from '../hooks/useTagStore';
 import ResultsGallery from '../components/ResultsGallery';
 import NpcCard from "../components/NpcCard";
 import NavBar from '../components/NavBar';
@@ -10,14 +10,17 @@ import createNpc from '../builders/npc/npcBuilder';
 const Npcs = () => {
     const [showPinned, setShowPinned] = useState(true);
     const { npcStore, addNpc } = useNpcStore();
+    const { activeTags } = useTagStore();
     const gender = 'male';
+
+    console.log(npcStore);
 
     return (
         <>
             <NavBar>
-                <button onClick={() => addNpc(createNpc('human', gender))}>Human</button>
-                <button onClick={() => addNpc(createNpc('dwarf', gender))}>Dwarf</button>
-                <button onClick={() => addNpc(createNpc('elf', gender))}>Elf</button>
+                <button onClick={() => addNpc(createNpc('human', gender, activeTags))}>Human</button>
+                <button onClick={() => addNpc(createNpc('dwarf', gender, activeTags))}>Dwarf</button>
+                <button onClick={() => addNpc(createNpc('elf', gender, activeTags))}>Elf</button>
             </NavBar>
             {/* tools={[
                     // <button onClick={() => dispatch(deleteAllNpcs())}>Male</button>,
@@ -29,8 +32,18 @@ const Npcs = () => {
                 ]} */}
             <ResultsGallery>
                 {
-                    // npcStore.filter((npc: iNpc) => npc.isPinned === showPinned).map((npc: iNpc) => <NpcCard data={npc} />)
-                    npcStore.map((npc: iNpc) => <NpcCard key={npc.id} data={npc} />)
+                    (() => {
+                        if (activeTags.length) {
+                            return npcStore.reduce((results: iNpc[], npc: iNpc) => {
+                                if (activeTags.every((tag_id: number) => npc.tags.includes(tag_id))) {
+                                    results.push(npc);
+                                }
+                                return results;
+                            }, []);
+                        } else {
+                            return npcStore;
+                        }
+                    })().map((npc: iNpc) => <NpcCard key={npc.id} data={npc} />)
                 }
             </ResultsGallery>
         </>

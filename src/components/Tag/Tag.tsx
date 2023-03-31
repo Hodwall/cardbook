@@ -2,24 +2,19 @@ import './Tag.css';
 import { useSpring, animated, a } from 'react-spring';
 import { useState } from 'react';
 import Card from '../Card';
+import { useTagStore } from '../../hooks/useTagStore';
 
 
 const Tag = (props: {
+    id: number,
     label: string;
     art?: string;
 }) => {
+    const { setTagActive } = useTagStore();
     return (
-        <Card
-            style={'tag'}
-            label={props.label}
-            back={
-                <>
-                    <p>Treasures in tag: 10</p>
-                    <p>NPCs in tag: 10</p>
-                    <p>Locations in tag: 10</p>
-                </>
-            }
-        />
+        <div className="tag" onClick={() => setTagActive(props.id)}>
+            {props.label}
+        </div>
     );
 
 };

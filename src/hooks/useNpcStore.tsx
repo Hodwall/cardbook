@@ -28,6 +28,7 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
     })());
 
     const updateNpcStore = (val: iNpc[]) => {
+        console.log(val);
         setNpcStore(val);
         localStorage.setItem('npc_store', JSON.stringify(val));
     };
@@ -63,27 +64,29 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const addTagToNpc = (npc_id: number, tag_id: number) => {
-        console.log(npc_id, tag_id);
         let store = [...npcStore];
         const npc_index = store.findIndex((npc: iNpc) => npc.id === npc_id);
-        if (!store[npc_index].tags.find((tag) => tag === tag_id)) {
-            store[npc_index].tags.push(tag_id);
-            updateNpcStore(store);
+        if (npc_index != -1) {
+            const has_tag = store[npc_index].tags.some((tag) => tag === tag_id);
+            if (!has_tag) store[npc_index].tags.push(tag_id);
+            updateNpcStore([...store]);
         }
     };
 
     const removeTagFromNpc = (npc_id: number, tag_id: number) => {
         let store = [...npcStore];
         const npc_index = store.findIndex((npc: iNpc) => npc.id === npc_id);
-        store[npc_index].tags = store[npc_index].tags.filter((tag) => tag != tag_id);
-        updateNpcStore(store);
+        if (npc_index != -1) {
+            store[npc_index].tags = store[npc_index].tags.filter((tag) => tag != tag_id);
+            updateNpcStore([...store]);
+        }
     };
 
     const removeTagFromAllNpcs = (tag_id: number) => {
         let store = [...npcStore];
         store.forEach((npc) => { npc.tags = npc.tags.filter((tag: number) => tag != tag_id); });
         console.log(tag_id, store);
-        updateNpcStore(store);
+        updateNpcStore([...store]);
     };
 
     return (

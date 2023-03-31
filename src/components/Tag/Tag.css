@@ -1,20 +1,16 @@
-div.card.tag,
-div.card.tag .card-side {
+div.tag {
     width: 250px;
-    height: 65px;
-}
-
-div.card.tag .card-header {
-    height: 65px;
     border-radius: 6px;
     background: tomato !important;
     box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 40px 16px hsl(0deg 0% 0% / 50%), #100f0fbf 4px 4px 10px;
-}
-
-div.card.tag .card-header .label {
-    padding: 4px 14px;
-}
-
-div.card.tag .card-side.back {
-    background: white;
+    right: 0;
+    bottom: 0;
+    color: white;
+    padding-right: 10px;
+    padding-top: 16px;
+    padding-bottom: 4px;
+    font-size: 24px;
+    font-family: 'IM Fell DW Pica', serif;
+    text-align: end;
+    cursor: pointer;
 }

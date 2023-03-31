@@ -8,6 +8,7 @@ const NavTag = (props: {
     type?: string,
     clickHandler?: Function,
     deleteHandler?: Function,
+    canDelete?: boolean,
 }) => {
     const animation = useSpring({ to: { opacity: 1, y: 0, rotateZ: 0 }, from: { opacity: 0, y: -10, rotateZ: -2 } });
     const { deleteTag } = useTagStore();
@@ -17,11 +18,14 @@ const NavTag = (props: {
             e.stopPropagation();
             if (props.clickHandler) props.clickHandler(props.id);
         }}>
-            <span>{props.label}</span><span><button onClick={(e) => {
-                e.stopPropagation();
-                if (props.deleteHandler) props.deleteHandler(props.id);
-                else deleteTag(props.id);
-            }}>X</button></span>
+            <span>{props.label}</span>
+            {(props.canDelete) &&
+                <span><button onClick={(e) => {
+                    e.stopPropagation();
+                    if (props.deleteHandler) props.deleteHandler(props.id);
+                    else deleteTag(props.id);
+                }}>X</button></span>
+            }
         </animated.div>
     );
 };

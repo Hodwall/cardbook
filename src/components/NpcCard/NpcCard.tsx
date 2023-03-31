@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Card from '../Card';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
@@ -56,6 +56,20 @@ const NpcCard = (props: { data: any; }) => {
   });
   const occupation_pre = (props.data.interaction.charAt(0) === ('a' || 'e' || 'i' || 'o' || 'u')) ? 'An' : 'A';
 
+  // handles outside clicks
+  const ref = useRef<any>(null);
+  const handleClickOutside = (event: any) => {
+    if (ref.current && !ref.current.contains(event.target)) {
+      setDisplayTagsDialog(false);
+    }
+  };
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
+
   useEffect(() => {
     setSearchString('');
     setDisplayTagsDialog(false);
@@ -71,6 +85,7 @@ const NpcCard = (props: { data: any; }) => {
       }, []));
     }
   }, [tagStore, searchString]);
+
 
   const handleSearchChange = (e: any) => {
     setSearchString(e.target.value);
@@ -119,7 +134,7 @@ const NpcCard = (props: { data: any; }) => {
           {/* <p className='abilities'><span className="high-ability">▲ {props.data.high_ability}</span><span className="low-ability">▼ {props.data.low_ability}</span></p>
           <p className="occupation">+ {abilityDescriptions.high[props.data.high_ability]}</p>
           <p className="occupation">- {abilityDescriptions.low[props.data.low_ability]}</p> */}
-          <div className="npc-tags">{props.data.tags?.map((tag: any, index: number) => <NavTag key={index} id={tag} label={tagStore.find((el: any) => el.id === tag)?.label} deleteHandler={handleDeleteTag} />)}</div>
+          <div className="npc-tags">{props.data.tags?.map((tag: any, index: number) => <NavTag key={index} id={tag} label={tagStore.find((el: any) => el.id === tag)?.label} deleteHandler={handleDeleteTag} canDelete />)}</div>
         </>
       }
       front_tools={
@@ -133,19 +148,21 @@ const NpcCard = (props: { data: any; }) => {
       }
       back_tools={
         <>
-          <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}>ADD TAG</button>
           {
-            displayTagsDialog &&
-            <animated.div className="tags-dialog" style={animation}>
-              <div className="tags-results">
-                {
-                  resultsTagsDialog.map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} />)
-                }
-              </div>
-              <form>
-                <input type="text" value={searchString} onChange={handleSearchChange} onKeyDown={handleKeyDown} autoFocus />
-              </form>
-            </animated.div>
+            displayTagsDialog
+              ?
+              <animated.div className="tags-dialog" style={animation} ref={ref}>
+                <div className="tags-results">
+                  {
+                    resultsTagsDialog.map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} deleteHandler={handleDeleteTag} />)
+                  }
+                </div>
+                <form>
+                  <input type="text" value={searchString} onChange={handleSearchChange} onKeyDown={handleKeyDown} autoFocus />
+                </form>
+              </animated.div>
+              :
+              <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}>ADD TAG</button>
           }
         </>
       }
