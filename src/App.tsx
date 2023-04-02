@@ -1,19 +1,15 @@
+import { useState } from 'react';
 import { iNpc, useNpcStore } from './hooks/useNpcStore';
 import { useTagStore } from './hooks/useTagStore';
-import './App.css';
-
-import { useState } from 'react';
-import createNpc from './builders/npc/npcBuilder';
 import AppBar from './components/AppBar';
 import ResultsGallery from './components/ResultsGallery';
 import NpcCard from './components/NpcCard';
+import './App.css';
 
 
 function App() {
-  const [showPinned, setShowPinned] = useState(true);
-  const { npcStore, addNpc } = useNpcStore();
+  const { npcStore } = useNpcStore();
   const { activeTags } = useTagStore();
-  const gender = 'male';
   return (
     <div className="App">
       <AppBar />

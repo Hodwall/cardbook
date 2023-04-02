@@ -1,13 +1,9 @@
 div.card.npc-card,
 div.card.npc-card .card-side {
-  width: 250px;
-  height: 320px;
+  width: 260px;
+  height: 350px;
   background-color: white;
   z-index: 2;
-}
-
-div.card.npc-card.priority {
-  z-index: 99;
 }
 
 div.card.npc-card .card-header {
@@ -116,7 +112,7 @@ div.card.npc-card .tags-dialog {
   position: absolute;
   left: 0px;
   height: 145px;
-  width: 250px;
+  width: 260px;
   top: -150px;
   background-color: white;
   box-sizing: border-box;

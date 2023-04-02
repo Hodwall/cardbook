@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { animated, useSpring } from 'react-spring';
 import Card from '../Card';
+import Tag from '../Tag';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import human_male from '../../assets/img/human-male.png';
@@ -9,8 +11,6 @@ import dwarf_female from '../../assets/img/dwarf-female.png';
 import elf_male from '../../assets/img/elf-male.png';
 import elf_female from '../../assets/img/elf-female.png';
 import './NpcCard.css';
-import NavTag from '../Tag';
-import { animated, useSpring } from 'react-spring';
 
 
 interface abilityDescriptions {
@@ -44,83 +44,25 @@ const ancestry_art: any = {
 
 const NpcCard = (props: { data: any; }) => {
   const { pinNpc, unpinNpc, deleteNpc, addTagToNpc, removeTagFromNpc } = useNpcStore();
-  const { tagStore, createTag } = useTagStore();
-  const [flipped, setFlipped] = useState(false);
-  const [searchString, setSearchString] = useState('');
-  const [displayTagsDialog, setDisplayTagsDialog] = useState(false);
-  const [resultsTagsDialog, setResultsTagsDialog] = useState(tagStore);
-  const animation = useSpring({
-    to: { opacity: 1, y: 0, scale: 1, rotateZ: 0, rotateX: 0 },
-    from: { opacity: 0, y: -10, scale: 1.2, rotateZ: -10, rotateX: -80 },
-    config: { mass: 5, friction: 120, tension: 1000 }
-  });
   const occupation_pre = (props.data.interaction.charAt(0) === ('a' || 'e' || 'i' || 'o' || 'u')) ? 'An' : 'A';
 
-  // handles outside clicks
-  const ref = useRef<any>(null);
-  const handleClickOutside = (event: any) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setDisplayTagsDialog(false);
-    }
-  };
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
-  }, []);
-
-  useEffect(() => {
-    setSearchString('');
-    setDisplayTagsDialog(false);
-  }, [flipped]);
-
-  useEffect(() => {
-    if (!searchString || searchString === '') {
-      setResultsTagsDialog(tagStore);
-    } else {
-      setResultsTagsDialog(tagStore.reduce((results: iTag[], tag: iTag) => {
-        if (tag.label.search(searchString) != -1) results.push(tag);
-        return results;
-      }, []));
-    }
-  }, [tagStore, searchString]);
-
-
-  const handleSearchChange = (e: any) => {
-    setSearchString(e.target.value);
-  };
-
-  const handleSearchSubmit = () => {
-    console.log('search change');
-  };
-
-  const handleKeyDown = (e: any) => {
-    if (e.key === 'Enter') {
-      if (resultsTagsDialog.length === 0) {
-        let new_tag = { label: searchString, type: 'default' };
-        createTag(new_tag);
-        setSearchString('');
-      }
-    }
-  };
-
-  const handleAddTag = (tag_id: number) => {
+  const addTagHandler = (tag_id: number) => {
     addTagToNpc(props.data.id, tag_id);
   };
 
-  const handleDeleteTag = (tag_id: number) => {
+  const deleteTagHandler = (tag_id: number) => {
     removeTagFromNpc(props.data.id, tag_id);
   };
 
   return (
     <Card
-      style={`npc-card ${props.data.ancestry} ${displayTagsDialog && 'priority'}`}
+      tags={props.data.tags}
+      handleAddTag={addTagHandler}
+      handleDeleteTag={deleteTagHandler}
+      style={`npc-card ${props.data.ancestry}`}
       label={props.data.name}
       art={ancestry_art[props.data.ancestry][props.data.gender]}
-      is_pinned={props.data.isPinned}
-      updateFlipped={setFlipped}
-      front={
+      content={
         <>
           <p className="alignment">{props.data.alignment}</p>
           <p className={`relationship ${props.data.relationship}`}>{props.data.relationship}</p>
@@ -129,46 +71,13 @@ const NpcCard = (props: { data: any; }) => {
           <p className='description'>{props.data.description}</p>
         </>
       }
-      back={
-        <>
-          {/* <p className='abilities'><span className="high-ability">▲ {props.data.high_ability}</span><span className="low-ability">▼ {props.data.low_ability}</span></p>
-          <p className="occupation">+ {abilityDescriptions.high[props.data.high_ability]}</p>
-          <p className="occupation">- {abilityDescriptions.low[props.data.low_ability]}</p> */}
-          <div className="npc-tags">{props.data.tags?.map((tag: any, index: number) => <NavTag key={index} id={tag} label={tagStore.find((el: any) => el.id === tag)?.label} deleteHandler={handleDeleteTag} canDelete />)}</div>
-        </>
-      }
-      front_tools={
+      tools={
         <>
           {props.data.isPinned
             ? <button onClick={(e) => { e.preventDefault(); unpinNpc(props.data.id); }}>UNPIN</button>
             : <button onClick={(e) => { e.preventDefault(); pinNpc(props.data.id); }}>PIN</button>
           }
           <button onClick={(e) => { e.preventDefault(); deleteNpc(props.data.id); }}>DELETE</button>
-        </>
-      }
-      back_tools={
-        <>
-          {
-            displayTagsDialog
-              ?
-              <animated.div className="tags-dialog" style={animation} ref={ref}>
-                <div className="tags-results">
-                  {
-                    resultsTagsDialog.reduce((results: iTag[], tag: iTag) => {
-                      if (!props.data.tags.includes(tag.id)) {
-                        results.push(tag);
-                      }
-                      return results;
-                    }, []).map((tag: iTag, index: number) => <NavTag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} deleteHandler={handleDeleteTag} />)
-                  }
-                </div>
-                <form>
-                  <input type="text" value={searchString} onChange={handleSearchChange} onKeyDown={handleKeyDown} autoFocus />
-                </form>
-              </animated.div>
-              :
-              <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}>ADD TAG</button>
-          }
         </>
       }
     />

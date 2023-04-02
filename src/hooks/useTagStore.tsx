@@ -43,6 +43,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
             is_active: true
         }]);
         updateActiveTags([...activeTags, new_id]);
+        return new_id;
     };
 
     const deleteTag = (id: number) => {
