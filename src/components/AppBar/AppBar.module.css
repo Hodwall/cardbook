@@ -1,0 +1,154 @@
+.appbar {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    font-family: 'IM Fell DW Pica';
+    background-color: hsl(0, 45%, 17%);
+
+}
+
+.appbar button:active {
+    transform: translateY(2px);
+    box-shadow: inset hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px;
+    box-shadow: unset;
+}
+
+.header {
+    padding: 10px;
+    background: rgb(159 58 58);
+    background: linear-gradient(180deg, rgba(159 58 58) 0%, hsl(0deg 42.22% 24.65%) 50%, hsl(0deg 45% 17%) 100%);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 8px;
+    font-family: 'IM Fell DW Pica';
+    font-weight: bold;
+}
+
+.logo {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.logo span:first-child {
+    color: hsl(12, 100%, 95%);
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+.logo span {
+    color: hsl(9, 55%, 50%);
+    font-size: 2rem;
+    line-height: 2rem;
+}
+
+.header button {
+    border-radius: 10px;
+    border: 2px solid #ffffff12;
+    background-color: #9f3434;
+    color: hsl(12, 100%, 95%);
+    height: 34px;
+    cursor: pointer;
+    box-shadow: hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px;
+}
+
+.header button:active {
+    transform: translateY(2px);
+}
+
+.toolbar,
+.tagbar,
+.tags_results {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    grid-gap: 10px;
+}
+
+.toolbar button {
+    width: max-content;
+    min-height: 34px;
+    box-shadow: hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px;
+    background-color: rgb(255 76 76 / 25%);
+    border-radius: 4px;
+    color: hsl(0deg 0% 100% / 85%);
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    padding: 0px 10px;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.tags_drawer {
+    position: relative;
+    z-index: -1;
+}
+
+.tags_drawer form {
+    bottom: 0;
+    display: inline-flex;
+    width: 100%;
+    position: absolute;
+}
+
+.tags_drawer form input:first-child {
+    background: #0000004a;
+    border: none;
+    color: hsl(12, 100%, 95%);
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 1.8rem;
+    padding: 8px 10px 4px 10px;
+    width: inherit;
+}
+
+.tags_drawer form input:first-child:focus {
+    border-style: none;
+    outline: none;
+}
+
+
+@media (min-width: 600px) {
+    .header {
+        grid-template-columns: auto repeat(4, 100px);
+    }
+
+    .logo {
+        text-align: start;
+    }
+
+    .toolbar,
+    .tagbar,
+    .tags_results {
+        justify-content: left;
+    }
+}
+
+
+
+
+
+
+
+
+a.nav-link {
+    display: block;
+    height: 24px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: #00000040 1px 1px 4px 1px;
+    background-color: rgba(0, 0, 0, 0.445);
+    color: rgb(209, 197, 197);
+    text-align: left;
+    text-decoration: none;
+    font-family: 'IM Fell DW Pica', serif;
+    font-size: 18px;
+}
+
+a.nav-link.active {
+    color: white;
+    background: #eb6e5759;
+    text-decoration: none;
+}

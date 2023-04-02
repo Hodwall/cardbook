@@ -1,21 +1,25 @@
-div.tag {
-    width: 250px;
-    border-radius: 6px;
-    background: tomato !important;
-    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 40px 16px hsl(0deg 0% 0% / 50%), #100f0fbf 4px 4px 10px;
-    right: 0;
-    bottom: 0;
-    color: white;
-    padding-right: 10px;
-    padding-top: 16px;
-    padding-bottom: 4px;
-    font-size: 24px;
+.navtag {
     font-family: 'IM Fell DW Pica', serif;
-    text-align: end;
+    font-size: 0.95rem;
+    text-align: left;
+    color: hsl(0deg 0% 100% / 90%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 4px;
     cursor: pointer;
+    width: max-content;
+    padding: 0px 10px;
+    height: 30px;
+    text-align: left;
+    background: hsl(19deg 100% 50%);
+    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
 }
 
-div.tag:active {
-    transform: translateY(2px);
-    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 40px 16px hsl(0deg 0% 0% / 50%);
+.navtag button {
+    background-color: hsl(0deg 0% 0% / 0%);
+    border: unset;
+    color: white;
+    padding-left: 10px;
 }

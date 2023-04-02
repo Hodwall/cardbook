@@ -9,7 +9,7 @@ import dwarf_female from '../../assets/img/dwarf-female.png';
 import elf_male from '../../assets/img/elf-male.png';
 import elf_female from '../../assets/img/elf-female.png';
 import './NpcCard.css';
-import NavTag from '../NavTag';
+import NavTag from '../Tag';
 import { animated, useSpring } from 'react-spring';
 
 
@@ -95,7 +95,7 @@ const NpcCard = (props: { data: any; }) => {
     console.log('search change');
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       if (resultsTagsDialog.length === 0) {
         let new_tag = { label: searchString, type: 'default' };

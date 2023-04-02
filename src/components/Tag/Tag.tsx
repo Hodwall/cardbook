@@ -1,27 +1,33 @@
 import './Tag.css';
-import { useSpring, animated, a } from 'react-spring';
-import { useState } from 'react';
-import Card from '../Card';
+import { useSpring, animated } from 'react-spring';
 import { useTagStore } from '../../hooks/useTagStore';
-
 
 const Tag = (props: {
     id: number,
-    label: string;
-    art?: string;
+    label: string,
+    type?: string,
+    clickHandler?: Function,
+    deleteHandler?: Function,
+    canDelete?: boolean,
 }) => {
-    const { setTagActive } = useTagStore();
-    return (
-        <div className="tag" onClick={() => setTagActive(props.id)}>
-            {props.label}
-        </div>
-    );
+    const animation = useSpring({ to: { opacity: 1, y: 0, rotateZ: 0 }, from: { opacity: 0, y: -10, rotateZ: -2 } });
+    const { deleteTag } = useTagStore();
 
+    return (
+        <animated.div className={`navtag ${props.type}`} style={animation} onClick={(e) => {
+            e.stopPropagation();
+            if (props.clickHandler) props.clickHandler(props.id);
+        }}>
+            <span>{props.label}</span>
+            {(props.canDelete) &&
+                <span><button onClick={(e) => {
+                    e.stopPropagation();
+                    if (props.deleteHandler) props.deleteHandler(props.id);
+                    else deleteTag(props.id);
+                }}>X</button></span>
+            }
+        </animated.div>
+    );
 };
 
 export default Tag;
-
-
-
-
-
