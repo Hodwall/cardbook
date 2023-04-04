@@ -12,9 +12,12 @@ const Card = (props: {
   art?: string,
   content?: ReactNode,
   tools?: ReactNode,
+  blockFlipped?: boolean,
   updateFlipped?: Function,
   handleDeleteTag: Function,
   handleAddTag: Function,
+  editableLabel?: boolean,
+  handleLabelEdit?: Function,
 }) => {
   const { tagStore, createTag } = useTagStore();
   const [flipped, setFlipped] = useState(false);
@@ -59,9 +62,11 @@ const Card = (props: {
   }, [tagStore, searchString]);
 
   const handleFlip = () => {
-    setFlipped(!flipped);
-    setSearchString('');
-    setDisplayTagsDialog(false);
+    if (!props.blockFlipped) {
+      setFlipped(!flipped);
+      setSearchString('');
+      setDisplayTagsDialog(false);
+    }
   };
 
   const handleSearchChange = (e: any) => {
@@ -84,7 +89,12 @@ const Card = (props: {
       <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} >
         <div className={'card-clickable'} onClick={handleFlip}>
           <div className={'card-header'}>
-            <div className="label">{props.label}</div>
+            {
+              props.editableLabel ?
+                <input type="text" value={props.label} onChange={(e: any) => { if (props.handleLabelEdit) props.handleLabelEdit(e.target.value); }} />
+                :
+                <div className="label">{props.label}</div>
+            }
             {props.art && <img className="art" src={props.art} alt={props.art} />}
           </div>
           <div className="card-body">
@@ -98,7 +108,7 @@ const Card = (props: {
       <a.div className="card-side back" style={{ opacity, transform, rotateY: '180deg', display: flipped ? 'initial' : 'none' }}>
         <div className={'card-clickable'} onClick={handleFlip}>
           <div className="card-body" onClick={handleFlip}>
-            <div className="npc-tags">{
+            <div className="card-tags">{
               props.tags?.map((tag: any, index: number) =>
                 <Tag
                   key={index}

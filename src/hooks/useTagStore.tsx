@@ -1,6 +1,7 @@
 import { useState, createContext, useContext } from 'react';
 import { useNpcStore } from './useNpcStore';
-// import { iNpc } from '../builders/npc/npc.model';
+import { useCardStore } from './useCardStore';
+
 
 export interface iTag {
     id: number,
@@ -24,6 +25,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     })());
 
     const { removeTagFromAllNpcs } = useNpcStore();
+    const { removeTagFromAllCards } = useCardStore();
 
     const updateTagStore = (val: iTag[]) => {
         setTagStore(val);
@@ -49,6 +51,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     const deleteTag = (id: number) => {
         updateTagStore(tagStore.filter((tag: iTag) => tag.id != id));
         removeTagFromAllNpcs(id);
+        removeTagFromAllCards(id);
         updateActiveTags([...activeTags.filter((tag: number) => tag != id)]);
     };
 

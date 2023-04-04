@@ -1,0 +1,57 @@
+.ql-toolbar {
+    position: absolute;
+    bottom: 2px;
+    padding: 0 !important;
+    z-index: 9;
+    border: unset !important;
+}
+
+.hide_toolbar .ql-toolbar {
+    display: none !important;
+}
+
+.ql-formats {
+    margin: 0 !important;
+}
+
+.ql-formats button {
+    width: 25px !important;
+}
+
+.ql-container.ql-snow {
+    height: 270px !important;
+    border: unset !important;
+}
+
+.ql-editor {
+    font-family: 'IM Fell DW Pica', serif !important;
+    font-size: 1rem;
+    line-height: 15px !important;
+    padding: 5px 5px !important;
+}
+
+.ql-editor ul,
+.ql-editor ol {
+    padding-left: unset !important;
+}
+
+.ql-editor li {
+    padding-left: 1em !important;
+}
+
+.card-body {
+    height: 270px;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(0, 0%, 100%) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(0, 0%, 92%);
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}

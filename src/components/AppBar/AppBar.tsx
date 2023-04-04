@@ -3,6 +3,7 @@ import { animated, useSpring } from 'react-spring';
 import createNpc from '../../builders/npc/npcBuilder';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
+import { useCardStore, iCard } from '../../hooks/useCardStore';
 import Tag from '../Tag';
 import BigTag from '../BigTag';
 import styles from './AppBar.module.css';
@@ -10,6 +11,7 @@ import styles from './AppBar.module.css';
 
 const AppBar = () => {
 	const { tagStore, activeTags, createTag, setTagInactive } = useTagStore();
+	const { cardStore, addCard } = useCardStore();
 	const [toolbarSection, setToolbarSection] = useState<string | null>(null);
 	const [tagDrawerDisplay, setTagDrawerDisplay] = useState(false);
 	const [searchString, setSearchString] = useState('');
@@ -61,7 +63,7 @@ const AppBar = () => {
 			case 'blank':
 				return (
 					<>
-						<button>ADD BLANK CARD</button>
+						<button onClick={() => addCard(activeTags)}>ADD BLANK CARD</button>
 					</>
 				);
 			default:

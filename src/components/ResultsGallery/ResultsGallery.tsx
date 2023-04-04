@@ -1,5 +1,5 @@
 import './ResultsGallery.css';
-import { ReactChild, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 
 const ResultsGallery = (props: { children?: ReactNode; }) => {
