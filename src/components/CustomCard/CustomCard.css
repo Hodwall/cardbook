@@ -1,3 +1,7 @@
+.quill {
+    height: 100%;
+}
+
 .hide_toolbar .ql-toolbar {
     display: none !important;
 }
