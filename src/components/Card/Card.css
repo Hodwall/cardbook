@@ -84,6 +84,9 @@
     border: none;
     font-size: 1.55em;
     font-family: 'IM Fell DW Pica', serif;
+    margin-bottom: -0.14em;
+    margin-right: -0.08em;
+
 }
 
 .card-header input:focus {
