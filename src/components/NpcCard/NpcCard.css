@@ -1,13 +1,8 @@
-div.card.npc-card,
-div.card.npc-card .card-side {
-  width: 260px;
-  height: 350px;
-  background-color: white;
-  z-index: 2;
+.card.npc-card .card-side {
   grid-template-rows: 5em 15em 2em;
 }
 
-div.card.npc-card .card-side.card-back {
+.card.npc-card .card-side.card-back {
   grid-template-rows: 20em 2em;
 }
 
@@ -25,10 +20,6 @@ div.card.npc-card .card-side.card-back {
   width: 84%;
 }
 
-
-div.card.npc-card p {
-  line-height: 15px;
-}
 
 div.card.npc-card p.alignment {
   display: inline-block;
@@ -62,18 +53,6 @@ div.card.npc-card p.voice {
 
 div.card.npc-card p.occupation {
   text-align: justify;
-}
-
-div.card.npc-card p.abilities {
-  text-align: center;
-  margin-top: 10px;
-  font-size: 22px;
-  background-color: #efefef;
-  text-transform: uppercase;
-}
-
-div.card.npc-card p.abilities span {
-  padding: 0px 10px;
 }
 
 div.card.npc-card p.description {
