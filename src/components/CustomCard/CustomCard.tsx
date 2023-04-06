@@ -1,35 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-import { animated, useSpring } from 'react-spring';
-import Card from '../Card';
-import Tag from '../Tag';
-import { useTagStore, iTag } from '../../hooks/useTagStore';
-import { useCardStore, iCard } from '../../hooks/useCardStore';
-
-import './CustomCard.css';
-
+import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
+import { useCardStore, iCard } from '../../hooks/useCardStore';
+import Card from '../Card';
 import 'react-quill/dist/quill.snow.css';
-
+import './CustomCard.css';
 
 
 const CustomCard = (props: { data: iCard; }) => {
   const { updateCardContent, updateCardLabel, deleteCard, addTagToCard, removeTagFromCard } = useCardStore();
   const [editMode, setEditMode] = useState(false);
+  const [label, setLabel] = useState(props.data.label);
+  const [content, setContent] = useState(props.data.content || '');
 
-  const addTagHandler = (tag_id: number) => {
-    addTagToCard(props.data.id, tag_id);
-  };
-  const deleteTagHandler = (tag_id: number) => {
-    removeTagFromCard(props.data.id, tag_id);
-  };
-
-  const handleChange = (val: any) => {
-    updateCardContent(val, props.data.id);
-  };
-
-  const handleEditLabel = (val: string) => {
-    updateCardLabel(val, props.data.id);
-  };
+  useEffect(() => {
+    if (!editMode) {
+      updateCardLabel(label, props.data.id);
+      updateCardContent(content, props.data.id);
+    }
+  }, [editMode]);
 
   const modules = (() => {
     return {
@@ -45,20 +33,21 @@ const CustomCard = (props: { data: iCard; }) => {
   return (
     <Card
       tags={props.data.tags}
-      handleAddTag={addTagHandler}
-      handleDeleteTag={deleteTagHandler}
-      label={props.data.label ?? ''}
+      handleAddTag={(tag_id: number) => addTagToCard(props.data.id, tag_id)}
+      handleDeleteTag={(tag_id: number) => removeTagFromCard(props.data.id, tag_id)}
+      label={label}
       blockFlipped={editMode}
       editableLabel={editMode}
-      handleLabelEdit={handleEditLabel}
+      handleLabelEdit={(val: string) => setLabel(val)}
+      handleOutsideClick={() => setEditMode(false)}
       content={
         <>
           <ReactQuill
             className={editMode ? '' : 'hide_toolbar'}
             theme="snow"
-            value={props.data.content}
+            value={content}
             readOnly={!editMode}
-            onChange={handleChange}
+            onChange={(val: any) => setContent(val)}
             modules={modules}
           />
         </>

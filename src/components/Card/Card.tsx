@@ -2,7 +2,6 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useSpring, animated, a } from 'react-spring';
 import Tag from '../Tag';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
-
 import './Card.css';
 
 
@@ -19,6 +18,7 @@ const Card = (props: {
   handleAddTag: Function,
   editableLabel?: boolean,
   handleLabelEdit?: Function,
+  handleOutsideClick?: Function;
 }) => {
   const { tagStore, createTag } = useTagStore();
   const [flipped, setFlipped] = useState(false);
@@ -42,6 +42,7 @@ const Card = (props: {
   const handleClickOutside = (event: any) => {
     if (ref.current && !ref.current.contains(event.target)) {
       setDisplayTagsDialog(false);
+      if (props.handleOutsideClick) props.handleOutsideClick();
     }
   };
   useEffect(() => {
@@ -86,7 +87,7 @@ const Card = (props: {
   };
 
   return (
-    <animated.div className={`card ${props.style}`} style={animation}>
+    <animated.div className={`card ${props.style}`} style={animation} ref={ref}>
       <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} onClick={handleFlip}>
         <div className={'card-header'}>
           {
@@ -123,7 +124,7 @@ const Card = (props: {
               {
                 displayTagsDialog
                   ?
-                  <animated.div className={'card-tags-dialog'} style={animation} ref={ref} >
+                  <animated.div className={'card-tags-dialog'} style={animation} >
                     <div className={'card-tags-dialog-results'}>
                       {
                         resultsTagsDialog.reduce((results: iTag[], tag: iTag) => {
