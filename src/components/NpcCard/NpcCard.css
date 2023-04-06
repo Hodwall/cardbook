@@ -61,11 +61,12 @@ div.card.npc-card p.description {
   color: #b5b5b5;
 }
 
-
-
-
 div.card.npc-card.human .card-header {
   background: rgb(75 84 110);
+  background: linear-gradient(150deg, rgb(75 84 110) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+div.card.npc-card.human .card-side.card-back {
   background: linear-gradient(150deg, rgb(75 84 110) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
@@ -74,12 +75,6 @@ div.card.npc-card.dwarf .card-header {
   background: linear-gradient(150deg, rgb(77, 68, 56) 0%, rgba(0, 0, 0, 1) 100%);
 }
 
-/* div.card.npc-card.human .card-side.back {
-  background: rgb(75 84 110);
-  background: linear-gradient(159deg, rgba(75 84 110, 1) 0%, rgba(150, 157, 176, 1) 43%, rgba(184, 189, 202, 1) 64%, rgba(188, 192, 205, 1) 97%);
+div.card.npc-card.dwarf .card-side.card-back {
+  background: linear-gradient(150deg, rgb(77, 68, 56) 0%, rgba(0, 0, 0, 1) 100%);
 }
-
-div.card.npc-card.dwarf .card-side.back {
-  background: rgb(77, 68, 56);
-  background: linear-gradient(150deg, rgb(77, 68, 56) 0%, rgb(131, 129, 129) 100%);
-} */
