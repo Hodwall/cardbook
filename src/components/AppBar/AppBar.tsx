@@ -103,15 +103,17 @@ const AppBar = () => {
 					tagStore.reduce((results: iTag[], tag: iTag) => {
 						if (tag.is_active) results.push(tag);
 						return results;
-					}, []).map((tag: iTag, index: number) =>
-					(<Tag
-						key={index}
-						id={tag.id}
-						label={tag.label}
-						type={tag.type}
-						deleteHandler={() => setTagInactive(tag.id)}
-						canDelete
-					/>))
+					}, [])
+						.sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+						.map((tag: iTag, index: number) =>
+						(<Tag
+							key={index}
+							id={tag.id}
+							label={tag.label}
+							type={tag.type}
+							deleteHandler={() => setTagInactive(tag.id)}
+							canDelete
+						/>))
 				}
 			</div>
 
@@ -123,7 +125,9 @@ const AppBar = () => {
 								results.push(tag);
 							}
 							return results;
-						}, []).map((tag: iTag, index: number) => <BigTag key={index} id={tag.id} label={tag.label} />)
+						}, [])
+							.sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+							.map((tag: iTag, index: number) => <BigTag key={index} id={tag.id} label={tag.label} />)
 					}
 				</div>
 				<form onSubmit={(e: FormEvent) => { e.preventDefault(); }}>

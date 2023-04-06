@@ -108,13 +108,21 @@ const Card = (props: {
       <a.div className={'card-side card-back'} style={{ opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none' }} onClick={handleFlip}>
         <div className={'card-body'} onClick={handleFlip}>
           <div className={'card-tags'}>{
-            props.tags?.map((tag: any, index: number) =>
-              <Tag
-                key={index}
-                id={tag}
-                label={tagStore.find((el: any) => el.id === tag)?.label}
-                deleteHandler={props.handleDeleteTag ?? null}
-                canDelete />)
+            props.tags?.reduce((results: any[], tag_id: any) => {
+              results.push({
+                id: tag_id,
+                label: tagStore.find((el: any) => el.id === tag_id)?.label
+              });
+              return results;
+            }, [])
+              .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+              .map((tag: iTag, index: number) =>
+                <Tag
+                  key={index}
+                  id={tag.id}
+                  label={tag.label}
+                  deleteHandler={props.handleDeleteTag ?? null}
+                  canDelete />)
           }</div>
         </div>
         <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
@@ -132,7 +140,9 @@ const Card = (props: {
                             results.push(tag);
                           }
                           return results;
-                        }, []).map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={props.handleAddTag} deleteHandler={props.handleDeleteTag} />)
+                        }, [])
+                          .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+                          .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={props.handleAddTag} deleteHandler={props.handleDeleteTag} />)
                       }
                     </div>
                     <form>
