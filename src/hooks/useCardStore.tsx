@@ -2,7 +2,7 @@ import { useState, createContext, useContext } from 'react';
 
 export interface iCard {
     id: number,
-    label?: string,
+    label: string,
     content?: any,
     tags: number[];
 }
@@ -13,7 +13,14 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
 
     const [cardStore, setCardStore] = useState<iCard[]>((() => {
         let stored_data = localStorage.getItem('card_store');
-        if (stored_data) return JSON.parse(stored_data);
+        if (stored_data) {
+            //protection for old cards with optional labels
+            let parsed_data = JSON.parse(stored_data);
+            parsed_data.forEach((card: iCard) => {
+                if (!card.label) card.label = '';
+            });
+            return parsed_data;
+        }
         else return [];
     })());
 
@@ -26,6 +33,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     const addCard = (tags: number[] | []) => {
         updateCardStore([...cardStore, {
             id: Date.now(),
+            label: '',
             tags: tags
         }]);
     };

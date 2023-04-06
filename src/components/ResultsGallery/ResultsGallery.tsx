@@ -11,3 +11,4 @@ const ResultsGallery = (props: { children?: ReactNode; }) => {
 };
 
 export default ResultsGallery;
+
