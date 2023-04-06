@@ -6,13 +6,13 @@ import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import Tag from '../Tag';
 import BigTag from '../BigTag';
-import styles from './AppBar.module.css';
+import './AppBar.css';
 
 
 const AppBar = () => {
 	const { tagStore, activeTags, createTag, setTagInactive } = useTagStore();
 	const { cardStore, addCard } = useCardStore();
-	const [toolbarSection, setToolbarSection] = useState<string | null>(null);
+	const [toolbarSection, setToolbarSection] = useState<string>('');
 	const [tagDrawerDisplay, setTagDrawerDisplay] = useState(false);
 	const [searchString, setSearchString] = useState('');
 	const [resultsTagsDrawer, setResultsTagsDrawer] = useState(tagStore);
@@ -58,36 +58,47 @@ const AppBar = () => {
 						<button onClick={() => addNpc(createNpc('human', 'male', activeTags))}>ROLL A HUMAN</button>
 						<button onClick={() => addNpc(createNpc('elf', 'male', activeTags))}>ROLL AN ELF</button>
 						<button onClick={() => addNpc(createNpc('dwarf', 'male', activeTags))}>ROLL A DWARF</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
 					</>
 				);
 			case 'blank':
 				return (
 					<>
 						<button onClick={() => addCard(activeTags)}>ADD BLANK CARD</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
 					</>
 				);
 			default:
-				return null;
+				return (
+					<>
+						<button onClick={() => setToolbarSection('treasures')}>TREASURES</button>
+						<button onClick={() => setToolbarSection('npcs')}>NPCs</button>
+						<button onClick={() => setToolbarSection('locations')}>LOCATIONS</button>
+						<button onClick={() => setToolbarSection('blank')}>BLANK</button>
+					</>
+				);
 		}
 	};
 
 	return (
-		<div className={styles.appbar}>
-			<div className={styles.header}>
-				<div className={styles.logo}>
+		<div className={'appbar'}>
+
+			<div className={'header'}>
+				<div className={'logo'}>
 					<span>DUNGEON MASTER'S</span>
 					<span>DECKBOOK</span>
 				</div>
-				<button onClick={() => setToolbarSection('treasures')}>TREASURES</button>
-				<button onClick={() => setToolbarSection('npcs')}>NPCs</button>
-				<button onClick={() => setToolbarSection('locations')}>LOCATIONS</button>
-				<button onClick={() => setToolbarSection('blank')}>BLANK</button>
+
+				<div className={'toolbar'}>
+					{getToolbarElements(toolbarSection)}
+					<button className={'tags'} onClick={() => setTagDrawerDisplay(!tagDrawerDisplay)}>TAGS</button>
+				</div>
+
 			</div>
-			<div className={styles.toolbar}>
-				{toolbarSection && getToolbarElements(toolbarSection)}
-				<button onClick={() => setTagDrawerDisplay(!tagDrawerDisplay)}>TAGS</button>
-			</div>
-			<div className={styles.tagbar}>
+
+
+
+			<div className={'tagbar'}>
 				{
 					tagStore.reduce((results: iTag[], tag: iTag) => {
 						if (tag.is_active) results.push(tag);
@@ -103,8 +114,9 @@ const AppBar = () => {
 					/>))
 				}
 			</div>
-			<animated.div className={styles.tags_drawer} style={animation}>
-				<div className={styles.tags_results}>
+
+			<animated.div className={'tags-drawer'} style={animation}>
+				<div className={'results'}>
 					{
 						resultsTagsDrawer.reduce((results: iTag[], tag: iTag) => {
 							if (!activeTags.includes(tag.id)) {
@@ -118,6 +130,7 @@ const AppBar = () => {
 					<input type="text" value={searchString} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
 				</form>
 			</animated.div>
+
 		</div >
 	);
 };
