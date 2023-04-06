@@ -19,19 +19,24 @@
 
 .card-side.card-back {
     grid-template-rows: 20em 2em;
+    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
 }
 
 .card-side.card-back .card-body {
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     padding: 0.5em;
-    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
 }
 
 .card-side.card-back .card-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.3em;
+}
+
+.card-side.card-back .card-tools button {
+    color: hsl(0deg 0% 100%);
+    background: hsl(0deg 0% 100% / 0%);
 }
 
 .card-header {
