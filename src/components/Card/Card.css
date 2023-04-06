@@ -1,200 +1,181 @@
-div.card,
-div.card .card-side {
-  width: 260px;
-  height: 350px;
-  background-color: white;
+.card {
+    font-size: 100%;
+    height: 22em;
+    width: 16em;
+    font-family: 'IM Fell DW Pica', serif;
 }
 
-div.card .card-header {
-  height: 50px;
-  text-align: end;
-  position: relative;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-  padding-right: 10px !important;
-  background: rgb(112, 112, 112);
-  background: linear-gradient(150deg, rgb(108 96 96) 0%, rgb(58 31 31) 100%);
+.card-side {
+    position: absolute;
+    display: grid;
+    grid-template-rows: 4em 16em 2em;
+    height: inherit;
+    width: inherit;
+    cursor: pointer;
+    border-radius: 0.3em;
+    background: white;
+    box-shadow: #00000041 4px 4px 10px;
 }
 
-div.card .card-header .label {
-  position: relative;
-  height: 100%;
-  display: flex;
-  justify-content: right;
-  align-items: self-end;
-  color: white;
-  font-size: 24px;
-  font-family: 'IM Fell DW Pica', serif;
-  box-sizing: border-box;
+.card-side.card-back {
+    grid-template-rows: 20em 2em;
 }
 
-div.card .card-header .art {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+.card-side.card-back .card-body {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    padding: 0.5em;
+    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
 }
 
-div.card .card-header input {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: white;
-  background-color: #ffffff00;
-  text-align: right;
-  padding: 0px 5px 0px 5px;
-  border: none;
-  font-size: 24px;
-  font-family: 'IM Fell DW Pica', serif;
-  width: 260px;
-  box-sizing: border-box;
+.card-side.card-back .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
 }
 
-div.card .card-header input:focus {
-  border-style: none;
-  outline: none;
+.card-header {
+    display: flex;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    padding: 0.1em 0.3em;
+    box-sizing: border-box;
+    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
 }
 
-div.card p {
-  padding: 2px 0px;
-  margin: 0;
-  color: gray;
-  font-family: 'IM Fell DW Pica', serif;
+.card-header .card-label {
+    display: flex;
+    flex: 1;
+    max-height: 1.9em;
+    height: 100%;
+    width: 1em;
+    line-height: 1em;
+    align-items: flex-end;
+    justify-content: end;
+    align-self: self-end;
+    text-align: right;
+    overflow: hidden;
+    color: hsl(0 0% 100% / 1);
+    font-size: 1.55em;
+    z-index: 1;
 }
 
-div.card .card-tools {
-  display: flex;
-  flex-direction: row-reverse;
-  gap: 20px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+.card-header .card-art {
+    position: absolute;
+    top: -0.5em;
+    width: 95%;
+    height: 4.5em;
+    overflow: hidden;
 }
 
-div.card .card-tools button {
-  background-color: white;
-  border: none;
-  height: 30px;
-  font-family: 'IM Fell DW Pica', serif;
-  font-size: 1rem;
-  color: hsl(15, 5%, 80%);
-  font-weight: bold;
-  cursor: pointer;
+.card-header .card-art img {
+    position: absolute;
+    bottom: 0;
+    width: 70%;
 }
 
-div.card .card-tools button:first-child {
-  border-left: none;
-  border-bottom-left-radius: 4px;
+.card-header input {
+    color: white;
+    display: inline-flex;
+    align-self: self-end;
+    width: 100%;
+    background-color: #b14d4d00;
+    text-align: right;
+    border: none;
+    font-size: 1.55em;
+    font-family: 'IM Fell DW Pica', serif;
 }
 
-div.card .card-tools button:last-child {
-  border-right: none;
-  border-bottom-right-radius: 4px;
-}
-
-div.card div.stored {
-  position: absolute;
-  width: 25px;
-  height: 15px;
-  border-radius: 50px;
-  right: 0;
-  top: 0;
-  margin-right: 5px;
-  margin-top: 5px;
-  background: #74cf56;
-  box-shadow: rgb(143 199 129) 1px 1px 16px 4px;
-}
-
-div.card .card-side {
-  position: absolute;
-  cursor: pointer;
-  will-change: transform, opacity;
-  border-radius: 4px;
-  box-shadow: #00000041 4px 4px 10px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-div.card .back {
-  border-radius: 4px;
-}
-
-div.card .card-clickable {
-  height: 100%;
+.card-header input:focus {
+    border-style: none;
+    outline: none;
 }
 
 
-
-
-
-div.card .tags-dialog {
-  position: absolute;
-  left: 0px;
-  height: 145px;
-  width: 260px;
-  top: -150px;
-  background-color: white;
-  box-sizing: border-box;
-  border-radius: 6px;
-  box-shadow: 0px 1px 10px 0px #00000045;
-  z-index: 99999999999;
-  transform: rotate(2deg) !important;
+.card-body {
+    color: hsl(0 0% 55% / 1);
+    line-height: 1em;
+    padding: 0 0.3em;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
-div.card .tags-dialog .tags-results {
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
+.card-body p {
+    margin: 0.4em 0;
 }
 
-div.card .tags-dialog form input {
-  width: inherit;
-  height: 30px;
-  align-self: flex-end;
-  background: #0000000d;
-  border: none;
-  color: #5e5e5e;
-  font-family: 'IM Fell DW Pica', serif;
-  font-size: 1.2rem;
-  padding: 0px 0px 0px 0px;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  position: absolute;
-  bottom: 0;
-  width: -webkit-fill-available;
-  padding: 0px 10px;
+.card-tools {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 0.2em;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
 }
 
-div.card .tags-dialog form input:focus {
-  border-style: none;
-  outline: none;
+.card-tools button {
+    border: none;
+    font-family: inherit;
+    color: hsl(15, 5%, 80%);
+    background: hsl(0 0% 100% / 1);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-div.card .navtag {
-  font-size: 0.85rem;
-  padding: 0px 6px;
-  height: 24px;
-  box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 40%);
+.card-tools .card-tags-dialog {
+    position: absolute;
+    left: 0;
+    height: 9em;
+    width: 16em;
+    bottom: 0.2em;
+    border-radius: 0.3em;
+    background-color: white;
+    box-shadow: 0px 1px 10px 0px #00000045;
+    transform: rotate(2deg) !important;
 }
 
-div.card .card-side.back .card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 4px;
+.card-tools .card-tags-dialog .card-tags-dialog-results {
+    padding: 0.3em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
 }
 
-
-
-div.card .card-header .label {
-  z-index: 5;
-  text-transform: capitalize;
+.card-tools .card-tags-dialog form input {
+    position: absolute;
+    bottom: 0;
+    height: 2em;
+    width: 13.8em;
+    border: none;
+    background: hsla(0, 0%, 0%, 0.05);
+    color: gray;
+    font-family: inherit;
+    font-size: 1.1em;
+    padding: 0 0.4em;
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
 }
 
-div.card .card-body {
-  padding: 5px;
+.card-tools .card-tags-dialog form input:focus {
+    border-style: none;
+    outline: none;
 }
 
-div.card .card-side.back .card-body {
-  /* margin: 10px; */
-  background-color: white;
+.card .navtag {
+    font-size: 0.9em;
+    padding: 0 0.4em;
+    height: 1.8em;
+    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 25%);
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(0, 0%, 100%) !important;
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(0, 0%, 92%);
+}
+
+::-webkit-scrollbar {
+    width: 4px;
 }

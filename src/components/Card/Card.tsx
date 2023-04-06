@@ -1,8 +1,9 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useSpring, animated, a } from 'react-spring';
-import './Card.css';
 import Tag from '../Tag';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
+
+import './Card.css';
 
 
 const Card = (props: {
@@ -86,48 +87,44 @@ const Card = (props: {
 
   return (
     <animated.div className={`card ${props.style}`} style={animation}>
-      <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} >
-        <div className={'card-clickable'} onClick={handleFlip}>
-          <div className={'card-header'}>
-            {
-              props.editableLabel ?
-                <input type="text" value={props.label} onChange={(e: any) => { if (props.handleLabelEdit) props.handleLabelEdit(e.target.value); }} />
-                :
-                <div className="label">{props.label}</div>
-            }
-            {props.art && <img className="art" src={props.art} alt={props.art} />}
-          </div>
-          <div className="card-body">
-            {props.content}
-          </div>
+      <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} onClick={handleFlip}>
+        <div className={'card-header'}>
+          {
+            props.editableLabel ?
+              <input type="text" value={props.label} onChange={(e: any) => { if (props.handleLabelEdit) props.handleLabelEdit(e.target.value); }} />
+              :
+              <div className={'card-label'}>{props.label}</div>
+          }
+          {props.art && <div className='card-art'><img className="art" src={props.art} alt={props.art} /></div>}
         </div>
-        <div className="card-tools">
+        <div className={'card-body'}>
+          {props.content}
+        </div>
+        <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
           {!flipped && props.tools}
         </div>
       </a.div>
-      <a.div className="card-side back" style={{ opacity, transform, rotateY: '180deg', display: flipped ? 'initial' : 'none' }}>
-        <div className={'card-clickable'} onClick={handleFlip}>
-          <div className="card-body" onClick={handleFlip}>
-            <div className="card-tags">{
-              props.tags?.map((tag: any, index: number) =>
-                <Tag
-                  key={index}
-                  id={tag}
-                  label={tagStore.find((el: any) => el.id === tag)?.label}
-                  deleteHandler={props.handleDeleteTag ?? null}
-                  canDelete />)
-            }</div>
-          </div>
+      <a.div className={'card-side card-back'} style={{ opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none' }} onClick={handleFlip}>
+        <div className={'card-body'} onClick={handleFlip}>
+          <div className={'card-tags'}>{
+            props.tags?.map((tag: any, index: number) =>
+              <Tag
+                key={index}
+                id={tag}
+                label={tagStore.find((el: any) => el.id === tag)?.label}
+                deleteHandler={props.handleDeleteTag ?? null}
+                canDelete />)
+          }</div>
         </div>
-        <div className="card-tools">
+        <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
           {
             flipped &&
             <>
               {
                 displayTagsDialog
                   ?
-                  <animated.div className="tags-dialog" style={animation} ref={ref} >
-                    <div className="tags-results">
+                  <animated.div className={'card-tags-dialog'} style={animation} ref={ref} >
+                    <div className={'card-tags-dialog-results'}>
                       {
                         resultsTagsDialog.reduce((results: iTag[], tag: iTag) => {
                           if (!props.tags.includes(tag.id)) {

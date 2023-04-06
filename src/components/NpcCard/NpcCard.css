@@ -4,10 +4,25 @@ div.card.npc-card .card-side {
   height: 350px;
   background-color: white;
   z-index: 2;
+  grid-template-rows: 5em 15em 2em;
 }
 
-div.card.npc-card .card-header {
-  height: 100px;
+div.card.npc-card .card-side.card-back {
+  grid-template-rows: 20em 2em;
+}
+
+.card.npc-card .card-header .card-art {
+  position: absolute;
+  top: -0.5em;
+  width: 95%;
+  height: 5.5em;
+  overflow: hidden;
+}
+
+.card.npc-card .card-header .card-art img {
+  position: absolute;
+  bottom: 0;
+  width: 84%;
 }
 
 
