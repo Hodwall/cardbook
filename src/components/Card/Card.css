@@ -1,6 +1,6 @@
 .card {
     font-size: 100%;
-    height: 22em;
+    height: 24em;
     width: 16em;
     font-family: 'IM Fell DW Pica', serif;
 }
@@ -8,7 +8,7 @@
 .card-side {
     position: absolute;
     display: grid;
-    grid-template-rows: 4em 16em 2em;
+    grid-template-rows: 4em 18em 2em;
     height: inherit;
     width: inherit;
     cursor: pointer;
@@ -18,7 +18,7 @@
 }
 
 .card-side.card-back {
-    grid-template-rows: 20em 2em;
+    grid-template-rows: 22em 2em;
     background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
 }
 
@@ -35,6 +35,7 @@
 }
 
 .card-side.card-back .card-tools button {
+    font-size: 1.2em;
     color: hsl(0deg 0% 100%);
     background: hsl(0deg 0% 100% / 0%);
 }
@@ -125,7 +126,7 @@
     font-family: inherit;
     color: hsl(15, 5%, 80%);
     background: hsl(0 0% 100% / 1);
-    font-size: 1em;
+    font-size: 1.4em;
     font-weight: bold;
     cursor: pointer;
 }

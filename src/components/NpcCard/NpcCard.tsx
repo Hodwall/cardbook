@@ -10,6 +10,9 @@ import dwarf_male from '../../assets/img/dwarf-male.png';
 import dwarf_female from '../../assets/img/dwarf-female.png';
 import elf_male from '../../assets/img/elf-male.png';
 import elf_female from '../../assets/img/elf-female.png';
+import { MdDeleteForever } from 'react-icons/md';
+import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
+
 import './NpcCard.css';
 
 
@@ -74,10 +77,10 @@ const NpcCard = (props: { data: any; }) => {
       tools={
         <>
           {props.data.isPinned
-            ? <button onClick={(e) => { e.preventDefault(); unpinNpc(props.data.id); }}>UNPIN</button>
-            : <button onClick={(e) => { e.preventDefault(); pinNpc(props.data.id); }}>PIN</button>
+            ? <button onClick={(e) => { e.preventDefault(); unpinNpc(props.data.id); }}><RiPushpinLine /></button>
+            : <button onClick={(e) => { e.preventDefault(); pinNpc(props.data.id); }}><RiPushpinFill /></button>
           }
-          <button onClick={(e) => { e.preventDefault(); deleteNpc(props.data.id); }}>DELETE</button>
+          <button onClick={(e) => { e.preventDefault(); deleteNpc(props.data.id); }}><MdDeleteForever /></button>
         </>
       }
     />

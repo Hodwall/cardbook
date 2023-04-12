@@ -1,9 +1,9 @@
 .card.npc-card .card-side {
-  grid-template-rows: 5em 15em 2em;
+  grid-template-rows: 5em 17em 2em;
 }
 
 .card.npc-card .card-side.card-back {
-  grid-template-rows: 20em 2em;
+  grid-template-rows: 22em 2em;
 }
 
 .card.npc-card .card-header .card-art {

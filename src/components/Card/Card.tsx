@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useSpring, animated, a } from 'react-spring';
 import Tag from '../Tag';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
+import { FaTags } from 'react-icons/fa';
 import './Card.css';
 
 
@@ -150,7 +151,7 @@ const Card = (props: {
                     </form>
                   </animated.div>
                   :
-                  <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}>ADD TAG</button>
+                  <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}><FaTags /></button>
               }
             </>
           }

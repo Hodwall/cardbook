@@ -3,6 +3,8 @@ import ReactQuill from 'react-quill';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import Card from '../Card';
 import CardStat from '../CardStat/CardStat';
+import { MdDeleteForever, MdEdit, MdEditOff, MdAdd } from 'react-icons/md';
+
 import 'react-quill/dist/quill.snow.css';
 import './CustomCard.css';
 
@@ -66,9 +68,9 @@ const CustomCard = (props: { data: iCard; }) => {
       }
       tools={
         <>
-          <button onClick={() => setEditMode(!editMode)}>{editMode ? 'X' : 'EDIT'}</button>
-          {!editMode && <button onClick={() => addStatToCard(props.data.id)}>ADD STAT</button>}
-          {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}>DELETE</button>}
+          <button onClick={() => setEditMode(!editMode)}>{editMode ? <MdEditOff /> : <MdEdit />}</button>
+          {!editMode && <button onClick={() => addStatToCard(props.data.id)}><MdAdd /></button>}
+          {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>}
         </>
       }
     />

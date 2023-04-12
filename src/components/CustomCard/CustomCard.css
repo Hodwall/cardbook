@@ -1,5 +1,5 @@
 .quill {
-    height: 100%;
+    flex: 1;
 }
 
 .hide_toolbar .ql-toolbar {
@@ -12,6 +12,7 @@
     padding: 0 !important;
     z-index: 9;
     border: unset !important;
+    padding-bottom: 2px !important;
 }
 
 .ql-formats {
@@ -19,7 +20,9 @@
 }
 
 .ql-formats button {
-    width: 25px !important;
+    padding: 2px 0px !important;
+    padding-bottom: 2px !important;
+    width: 24px !important;
 }
 
 .ql-container.ql-snow {
@@ -42,4 +45,15 @@
 
 .ql-editor li {
     padding-left: 1em !important;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-stats .card-stat:last-child {
+    border-bottom: 1px solid lightgray;
+    padding: 0.2em 0;
+    margin-bottom: 0.2em;
 }
