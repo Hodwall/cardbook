@@ -50,6 +50,20 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         updateCardStore(cardStore.filter((card: iCard) => card.id != id));
     };
 
+    const copyCard = (id: number) => {
+        let store = [...cardStore];
+        const card_index = store.findIndex((card: iCard) => card.id === id);
+        if (card_index != -1) {
+            updateCardStore([...store, {
+                id: Date.now(),
+                label: store[card_index].label,
+                content: store[card_index].content,
+                stats: [...store[card_index].stats],
+                tags: [...store[card_index].tags]
+            }]);
+        }
+    };
+
     const addTagToCard = (card_id: number, tag_id: number) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
@@ -137,6 +151,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             cardStore,
             addCard,
             deleteCard,
+            copyCard,
             addTagToCard,
             removeTagFromCard,
             removeTagFromAllCards,

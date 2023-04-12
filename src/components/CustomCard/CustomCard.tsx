@@ -4,13 +4,14 @@ import { useCardStore, iCard } from '../../hooks/useCardStore';
 import Card from '../Card';
 import CardStat from '../CardStat/CardStat';
 import { MdDeleteForever, MdEdit, MdEditOff, MdAdd } from 'react-icons/md';
+import { IoIosCopy } from 'react-icons/io';
 
 import 'react-quill/dist/quill.snow.css';
 import './CustomCard.css';
 
 
 const CustomCard = (props: { data: iCard; }) => {
-  const { updateCardContent, updateCardLabel, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, removeStatFromCard } = useCardStore();
+  const { updateCardContent, updateCardLabel, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, removeStatFromCard } = useCardStore();
   const [editMode, setEditMode] = useState(false);
   const [label, setLabel] = useState(props.data.label);
   const [content, setContent] = useState(props.data.content || '');
@@ -70,6 +71,7 @@ const CustomCard = (props: { data: iCard; }) => {
         <>
           <button onClick={() => setEditMode(!editMode)}>{editMode ? <MdEditOff /> : <MdEdit />}</button>
           {!editMode && <button onClick={() => addStatToCard(props.data.id)}><MdAdd /></button>}
+          {!editMode && <button onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>}
           {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>}
         </>
       }
