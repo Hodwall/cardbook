@@ -1,0 +1,64 @@
+.card-stats {
+    border-bottom: 1px solid lightgray;
+    padding: 0.2em 0;
+    margin-bottom: 0.2em;
+}
+
+.card-stat {
+    display: inline-grid;
+    grid-template-columns: 10.1em 5em;
+    padding: 0.2em 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 2em;
+}
+
+.card-stat span,
+.card-stat input,
+.card-stat button {
+    font-family: 'IM Fell DW Pica', serif;
+    height: 100%;
+    line-height: 100%;
+    display: inline-flex;
+    align-items: end;
+}
+
+.card-stat span {
+    font-size: 1.1em;
+    overflow: hidden;
+}
+
+.card-stat input {
+    background-color: hsl(0deg 0% 0% / 3.14%);
+    border-radius: 0.2em;
+    border: unset;
+    padding: 0 0.2em;
+    font-size: 1.1em;
+    overflow: scroll;
+}
+
+.card-stat input.edit-value {
+    font-size: 1.6em;
+    text-align: right;
+    font-weight: bold;
+    color: hsl(0 0% 30% / 1);
+}
+
+.card-stat input.edit-label {
+    color: hsl(0 0% 30% / 1);
+}
+
+.card-stat input:focus {
+    border-style: none;
+    outline: none;
+}
+
+.card-stat button {
+    font-size: 1em;
+    background-color: tomato;
+    line-height: 1.4em;
+    color: white;
+    border-style: none;
+    border-radius: 0.2em;
+    box-shadow: 1px 1px 3px 0px hsl(0deg 0% 0% / 30%);
+}

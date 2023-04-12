@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import Card from '../Card';
+import CardStat from '../CardStat/CardStat';
 import 'react-quill/dist/quill.snow.css';
 import './CustomCard.css';
 
 
 const CustomCard = (props: { data: iCard; }) => {
-  const { updateCardContent, updateCardLabel, deleteCard, addTagToCard, removeTagFromCard } = useCardStore();
+  const { updateCardContent, updateCardLabel, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, removeStatFromCard } = useCardStore();
   const [editMode, setEditMode] = useState(false);
   const [label, setLabel] = useState(props.data.label);
   const [content, setContent] = useState(props.data.content || '');
@@ -42,6 +43,17 @@ const CustomCard = (props: { data: iCard; }) => {
       handleOutsideClick={() => setEditMode(false)}
       content={
         <>
+          <div className={'card-stats'}>
+            {
+              props.data.stats?.map((stat) =>
+                <CardStat
+                  stat={stat}
+                  cardId={props.data.id}
+                  editMode={editMode}
+                />
+              )
+            }
+          </div>
           <ReactQuill
             className={editMode ? '' : 'hide_toolbar'}
             theme="snow"
@@ -55,6 +67,7 @@ const CustomCard = (props: { data: iCard; }) => {
       tools={
         <>
           <button onClick={() => setEditMode(!editMode)}>{editMode ? 'X' : 'EDIT'}</button>
+          {!editMode && <button onClick={() => addStatToCard(props.data.id)}>ADD STAT</button>}
           {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}>DELETE</button>}
         </>
       }

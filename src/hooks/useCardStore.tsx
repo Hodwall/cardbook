@@ -1,9 +1,16 @@
 import { useState, createContext, useContext } from 'react';
 
+export interface iCardStat {
+    id: number,
+    label: string,
+    value: number | null,
+}
+
 export interface iCard {
     id: number,
     label: string,
     content?: any,
+    stats: iCardStat[],
     tags: number[];
 }
 
@@ -14,10 +21,11 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     const [cardStore, setCardStore] = useState<iCard[]>((() => {
         let stored_data = localStorage.getItem('card_store');
         if (stored_data) {
-            //protection for old cards with optional labels
+            //protection for old cards with optional parameters
             let parsed_data = JSON.parse(stored_data);
             parsed_data.forEach((card: iCard) => {
                 if (!card.label) card.label = '';
+                if (!card.stats) card.stats = [];
             });
             return parsed_data;
         }
@@ -27,13 +35,13 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     const updateCardStore = (val: iCard[]) => {
         setCardStore(val);
         localStorage.setItem('card_store', JSON.stringify(val));
-        console.log(cardStore);
     };
 
     const addCard = (tags: number[] | []) => {
         updateCardStore([...cardStore, {
             id: Date.now(),
             label: '',
+            stats: [],
             tags: tags
         }]);
     };
@@ -85,6 +93,45 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         }
     };
 
+    const addStatToCard = (id: number) => {
+        let store = [...cardStore];
+        const card_index = store.findIndex((card: iCard) => card.id === id);
+        if (card_index != -1) {
+            store[card_index].stats.push({
+                id: Date.now(),
+                label: '',
+                value: null,
+            });
+            updateCardStore([...store]);
+        }
+    };
+
+    const removeStatFromCard = (stat_id: number, card_id: number) => {
+        console.log('removing');
+        let store = [...cardStore];
+        const card_index = store.findIndex((card: iCard) => card.id === card_id);
+        if (card_index != -1) {
+            console.log(store[card_index].stats);
+            store[card_index].stats = [...store[card_index].stats.filter((stat: iCardStat) => stat.id != stat_id)];
+            console.log(store[card_index].stats);
+            updateCardStore(store);
+        }
+    };
+
+    const updateStat = (stat_id: number, card_id: number, data: { label: string, value: number; }) => {
+        let store = [...cardStore];
+        const card_index = store.findIndex((card: iCard) => card.id === card_id);
+        if (card_index != -1) {
+            const stat_index = store[card_index].stats?.findIndex((stat: iCardStat) => stat.id === stat_id);
+            if (stat_index != -1) {
+                //@ts-ignore
+                store[card_index].stats[stat_index].label = data.label;
+                store[card_index].stats[stat_index].value = data.value;
+                updateCardStore(store);
+            }
+        }
+    };
+
     return (
         <CardStoreContext.Provider value={{
             cardStore,
@@ -94,7 +141,10 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             removeTagFromCard,
             removeTagFromAllCards,
             updateCardContent,
-            updateCardLabel
+            updateCardLabel,
+            addStatToCard,
+            removeStatFromCard,
+            updateStat
         }}>
             {props.children}
         </CardStoreContext.Provider>

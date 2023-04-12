@@ -30,8 +30,9 @@
 .ql-editor {
     font-family: 'IM Fell DW Pica', serif !important;
     font-size: 1rem;
-    line-height: 15px !important;
-    padding: 5px 5px !important;
+    line-height: 1rem;
+    padding: 0.2em 0 !important;
+    text-align: justify;
 }
 
 .ql-editor ul,
