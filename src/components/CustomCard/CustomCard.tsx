@@ -5,14 +5,13 @@ import Card from '../Card';
 import CardStat from '../CardStat/CardStat';
 import { MdDeleteForever, MdEdit, MdEditOff, MdAdd } from 'react-icons/md';
 import { IoIosCopy } from 'react-icons/io';
-import ColorPicker from '../ColorPicker/ColorPicker';
 
 import 'react-quill/dist/quill.snow.css';
 import './CustomCard.css';
 
 
 const CustomCard = (props: { data: iCard; }) => {
-  const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, removeStatFromCard } = useCardStore();
+  const { updateCardContent, updateCardLabel, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, removeStatFromCard } = useCardStore();
   const [editMode, setEditMode] = useState(false);
   const [label, setLabel] = useState(props.data.label);
   const [content, setContent] = useState(props.data.content || '');
@@ -35,18 +34,12 @@ const CustomCard = (props: { data: iCard; }) => {
     };
   })();
 
-  const handleChangeColor = (color: any) => {
-    updateCardColor(color, props.data.id);
-    console.log(color);
-  };
-
   return (
     <Card
       tags={props.data.tags}
       handleAddTag={(tag_id: number) => addTagToCard(props.data.id, tag_id)}
       handleDeleteTag={(tag_id: number) => removeTagFromCard(props.data.id, tag_id)}
       label={label}
-      color={props.data.color}
       blockFlipped={editMode}
       editableLabel={editMode}
       handleLabelEdit={(val: string) => setLabel(val)}
@@ -80,7 +73,6 @@ const CustomCard = (props: { data: iCard; }) => {
           {!editMode && <button onClick={() => addStatToCard(props.data.id)}><MdAdd /></button>}
           {!editMode && <button onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>}
           {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>}
-          {!editMode && <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />}
         </>
       }
     />

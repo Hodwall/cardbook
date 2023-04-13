@@ -8,14 +8,13 @@
 .card-side {
     position: absolute;
     display: grid;
-    grid-template-rows: 4.5em 17.5em 2em;
+    grid-template-rows: 4em 18em 2em;
     height: inherit;
     width: inherit;
     cursor: pointer;
     border-radius: 0.3em;
     background: white;
     box-shadow: #00000041 4px 4px 10px;
-    box-sizing: border-box;
 }
 
 .card-side.card-back {
@@ -27,10 +26,6 @@
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     padding: 0.5em;
-    border-bottom-left-radius: 0.3em;
-    border-bottom-right-radius: 0.3em;
-    border: 0.15em solid #ffffff1a;
-    margin: 0.35em 0.35em 0em 0.35em;
 }
 
 .card-side.card-back .card-tags {
@@ -52,10 +47,6 @@
     padding: 0.1em 0.3em;
     box-sizing: border-box;
     background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
-    border-bottom: 1em white;
-    /* border-bottom-style: double; */
-    margin: 0.35em;
-    margin-bottom: 0;
 }
 
 .card-header .card-label {
@@ -116,11 +107,6 @@
     padding: 0 0.3em;
     box-sizing: border-box;
     overflow-y: auto;
-    border: 0.15em solid #a5a5a51a;
-    border-bottom-left-radius: 0.3em;
-    border-bottom-right-radius: 0.3em;
-    border-top: none;
-    margin: 0 0.35em;
 }
 
 .card-body p {
@@ -200,5 +186,5 @@
 }
 
 ::-webkit-scrollbar {
-    width: 0.2em;
+    width: 4px;
 }
