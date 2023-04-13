@@ -9,6 +9,7 @@ export interface iCardStat {
 export interface iCard {
     id: number,
     label: string,
+    color?: string,
     content?: any,
     stats: iCardStat[],
     tags: number[];
@@ -57,6 +58,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             updateCardStore([...store, {
                 id: Date.now(),
                 label: store[card_index].label,
+                color: store[card_index].color,
                 content: store[card_index].content,
                 stats: [...store[card_index].stats],
                 tags: [...store[card_index].tags]
@@ -103,6 +105,15 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         const card_index = store.findIndex((card: iCard) => card.id === id);
         if (card_index != -1) {
             store[card_index].label = label;
+            updateCardStore([...store]);
+        }
+    };
+
+    const updateCardColor = (color: string, id: number) => {
+        let store = [...cardStore];
+        const card_index = store.findIndex((card: iCard) => card.id === id);
+        if (card_index != -1) {
+            store[card_index].color = color;
             updateCardStore([...store]);
         }
     };
@@ -157,6 +168,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             removeTagFromAllCards,
             updateCardContent,
             updateCardLabel,
+            updateCardColor,
             addStatToCard,
             removeStatFromCard,
             updateStat

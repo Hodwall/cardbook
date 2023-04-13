@@ -12,6 +12,7 @@ const Card = (props: {
   label: string,
   art?: string,
   content?: ReactNode,
+  color?: string,
   tools?: ReactNode,
   blockFlipped?: boolean,
   updateFlipped?: Function,
@@ -90,7 +91,9 @@ const Card = (props: {
   return (
     <animated.div className={`card ${props.style}`} style={animation} ref={ref}>
       <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} onClick={handleFlip}>
-        <div className={'card-header'}>
+        <div className={'card-header'} style={{
+          background: `linear-gradient(150deg, ${props.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`
+        }}>
           {
             props.editableLabel ?
               <input type="text" value={props.label} onChange={(e: any) => { if (props.handleLabelEdit) props.handleLabelEdit(e.target.value); }} />
@@ -106,7 +109,10 @@ const Card = (props: {
           {!flipped && props.tools}
         </div>
       </a.div>
-      <a.div className={'card-side card-back'} style={{ opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none' }} onClick={handleFlip}>
+      <a.div className={'card-side card-back'} style={{
+        opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none',
+        background: `linear-gradient(150deg, ${props.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`
+      }} onClick={handleFlip}>
         <div className={'card-body'} onClick={handleFlip}>
           <div className={'card-tags'}>{
             props.tags?.reduce((results: any[], tag_id: any) => {

@@ -1,6 +1,6 @@
-.card.npc-card .card-side {
+/* .card.npc-card .card-side {
   grid-template-rows: 5em 17em 2em;
-}
+} */
 
 .card.npc-card .card-side.card-back {
   grid-template-rows: 22em 2em;
@@ -8,8 +8,8 @@
 
 .card.npc-card .card-header .card-art {
   position: absolute;
-  top: -0.5em;
-  width: 95%;
+  top: -1em;
+  width: 90%;
   height: 5.5em;
   overflow: hidden;
 }
