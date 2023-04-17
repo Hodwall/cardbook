@@ -58,6 +58,7 @@ const ColorPicker = (props: {
                         onClick={handleClose}
                     />
                     <ChromePicker
+                        disableAlpha
                         color={color}
                         onChange={handleColorChange}
                     />

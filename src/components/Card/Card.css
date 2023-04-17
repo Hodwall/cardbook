@@ -8,19 +8,19 @@
 .card-side {
     position: absolute;
     display: grid;
-    grid-template-rows: 4.5em 17.5em 2em;
+    grid-template-rows: 3.6em 18.4em 2em;
     height: inherit;
     width: inherit;
     cursor: pointer;
     border-radius: 0.3em;
-    background: white;
     box-shadow: #00000041 4px 4px 10px;
     box-sizing: border-box;
+    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
+    background-blend-mode: hard-light;
 }
 
 .card-side.card-back {
     grid-template-rows: 22em 2em;
-    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
 }
 
 .card-side.card-back .card-body {
@@ -29,7 +29,6 @@
     padding: 0.5em;
     border-bottom-left-radius: 0.3em;
     border-bottom-right-radius: 0.3em;
-    border: 0.15em solid #ffffff1a;
     margin: 0.35em 0.35em 0em 0.35em;
 }
 
@@ -51,9 +50,7 @@
     border-top-right-radius: inherit;
     padding: 0.1em 0.3em;
     box-sizing: border-box;
-    background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
     border-bottom: 1em white;
-    /* border-bottom-style: double; */
     margin: 0.35em;
     margin-bottom: 0;
 }
@@ -61,18 +58,15 @@
 .card-header .card-label {
     display: flex;
     flex: 1;
-    max-height: 1.9em;
-    height: 100%;
     width: 1em;
     line-height: 1em;
-    align-items: flex-end;
     justify-content: end;
-    align-self: self-end;
     text-align: right;
     overflow: hidden;
     color: hsl(0 0% 100% / 1);
     font-size: 1.55em;
     z-index: 1;
+    white-space: break-spaces;
 }
 
 .card-header .card-art {
@@ -89,26 +83,32 @@
     width: 70%;
 }
 
-.card-header input {
+.card-header textarea {
+    resize: none;
     color: white;
-    display: inline-flex;
-    align-self: self-end;
     width: 100%;
-    background-color: #b14d4d00;
-    text-align: right;
-    border: none;
+    height: 100%;
+    font-family: inherit;
     font-size: 1.55em;
-    font-family: 'IM Fell DW Pica', serif;
-    margin-bottom: -0.14em;
-    margin-right: -0.08em;
-
+    background: none;
+    text-align: right;
+    line-height: 1em;
+    overflow: hidden;
+    padding: 0;
+    border: none;
 }
 
-.card-header input:focus {
+.card-header textarea:focus {
     border-style: none;
     outline: none;
 }
 
+.card-side:not(.card-back) .card-body {
+    background-color: white;
+    height: fit-content;
+    max-height: 100%;
+    align-self: end;
+}
 
 .card-body {
     color: hsl(0 0% 55% / 1);
@@ -116,11 +116,11 @@
     padding: 0 0.3em;
     box-sizing: border-box;
     overflow-y: auto;
-    border: 0.15em solid #a5a5a51a;
+    border: 0.15em solid hsla(0, 0%, 100%, 0.25);
     border-bottom-left-radius: 0.3em;
     border-bottom-right-radius: 0.3em;
-    border-top: none;
     margin: 0 0.35em;
+    border-radius: 0.3em;
 }
 
 .card-body p {
@@ -138,8 +138,8 @@
 .card-tools button {
     border: none;
     font-family: inherit;
-    color: hsl(15, 5%, 80%);
-    background: hsl(0 0% 100% / 1);
+    color: white;
+    background: none;
     font-size: 1.4em;
     font-weight: bold;
     cursor: pointer;

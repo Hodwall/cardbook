@@ -13,6 +13,7 @@ const Card = (props: {
   art?: string,
   content?: ReactNode,
   color?: string,
+  background?: string,
   tools?: ReactNode,
   blockFlipped?: boolean,
   updateFlipped?: Function,
@@ -90,13 +91,14 @@ const Card = (props: {
 
   return (
     <animated.div className={`card ${props.style}`} style={animation} ref={ref}>
-      <a.div className={'card-side'} style={{ opacity: opacity.to(o => 1 - o), transform }} onClick={handleFlip}>
-        <div className={'card-header'} style={{
-          background: `linear-gradient(150deg, ${props.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`
-        }}>
+      <a.div className={'card-side'} style={{
+        opacity: opacity.to(o => 1 - o), transform,
+        background: `${props.background ? `url(${props.background})` : ''} 0 0 / auto 100%, linear-gradient(150deg, ${props.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`,
+      }} onClick={handleFlip}>
+        <div className={'card-header'}>
           {
             props.editableLabel ?
-              <input type="text" value={props.label} onChange={(e: any) => { if (props.handleLabelEdit) props.handleLabelEdit(e.target.value); }} />
+              <textarea value={props.label} onChange={(e: any) => { if (props.handleLabelEdit) props.handleLabelEdit(e.target.value); }} />
               :
               <div className={'card-label'}>{props.label}</div>
           }
@@ -111,7 +113,7 @@ const Card = (props: {
       </a.div>
       <a.div className={'card-side card-back'} style={{
         opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none',
-        background: `linear-gradient(150deg, ${props.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`
+        background: `${props.background ? `url(${props.background})` : ''} 0 0 / auto 100%, linear-gradient(150deg, ${props.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`,
       }} onClick={handleFlip}>
         <div className={'card-body'} onClick={handleFlip}>
           <div className={'card-tags'}>{

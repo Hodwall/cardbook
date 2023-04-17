@@ -25,6 +25,11 @@
     width: 24px !important;
 }
 
+.ql-formats .ql-fill,
+.ql-formats .ql-stroke {
+    stroke: white !important;
+}
+
 .ql-container.ql-snow {
     height: 100% !important;
     border: unset !important;
