@@ -105,13 +105,14 @@
 
 .card-side:not(.card-back) .card-body {
     background-color: white;
+    background-color: hsl(32deg 40% 95%);
     height: fit-content;
     max-height: 100%;
     align-self: end;
 }
 
 .card-body {
-    color: hsl(0 0% 55% / 1);
+    color: hsl(0 0% 40% / 1);
     line-height: 1em;
     padding: 0 0.3em;
     box-sizing: border-box;

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChromePicker } from 'react-color';
 import { MdColorLens } from 'react-icons/md';
+import './ColorPicker.css';
 
 
 const ColorPicker = (props: {
@@ -34,7 +35,6 @@ const ColorPicker = (props: {
     };
 
     const handleColorChange = (color: any) => {
-        console.log(color);
         if (props.changeColorHandler) props.changeColorHandler(color.hex);
         setColor(color.hex);
     };

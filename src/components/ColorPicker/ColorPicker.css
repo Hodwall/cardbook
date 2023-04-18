@@ -1,0 +1,5 @@
+.chrome-picker {
+    position: relative;
+    bottom: 200px;
+    transform: rotate(4deg);
+}
