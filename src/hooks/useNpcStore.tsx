@@ -90,6 +90,7 @@ export const NpcStoreProvider = (props: { children: React.ReactNode; }) => {
     return (
         <NpcStoreContext.Provider value={{
             npcStore,
+            updateNpcStore,
             addNpc,
             deleteNpc,
             deleteAllNpcs,

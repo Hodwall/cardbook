@@ -4,7 +4,7 @@ import Card from '../Card';
 import Tag from '../Tag';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
-import human_male from '../../assets/img/human-male.png';
+import human_male from '../../assets/img/human-male-full.png';
 import human_female from '../../assets/img/human-female.png';
 import dwarf_male from '../../assets/img/dwarf-male.png';
 import dwarf_female from '../../assets/img/dwarf-female.png';
@@ -64,6 +64,7 @@ const NpcCard = (props: { data: any; }) => {
       handleDeleteTag={deleteTagHandler}
       style={`npc-card ${props.data.ancestry}`}
       label={props.data.name}
+      color={'#4b546e'}
       art={ancestry_art[props.data.ancestry][props.data.gender]}
       content={
         <>

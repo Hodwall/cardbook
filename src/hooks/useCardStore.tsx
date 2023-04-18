@@ -171,6 +171,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     return (
         <CardStoreContext.Provider value={{
             cardStore,
+            updateCardStore,
             addCard,
             deleteCard,
             copyCard,

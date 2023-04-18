@@ -102,7 +102,7 @@ const Card = (props: {
               :
               <div className={'card-label'}>{props.label}</div>
           }
-          {props.art && <div className='card-art'><img className="art" src={props.art} alt={props.art} /></div>}
+          {/* {props.art && <div className='card-art'><img className="art" src={props.art} alt={props.art} /></div>} */}
         </div>
         <div className={'card-body'}>
           {props.content}

@@ -1,22 +1,24 @@
-import { useEffect, useState, FormEvent } from 'react';
+import { useEffect, useState, FormEvent, useRef } from 'react';
 import { animated, useSpring } from 'react-spring';
 import createNpc from '../../builders/npc/npcBuilder';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
-import { useCardStore, iCard } from '../../hooks/useCardStore';
+import { useCardStore } from '../../hooks/useCardStore';
 import Tag from '../Tag';
 import BigTag from '../BigTag';
 import './AppBar.css';
 
 
 const AppBar = () => {
-	const { tagStore, activeTags, createTag, setTagInactive } = useTagStore();
-	const { cardStore, addCard } = useCardStore();
+	const { tagStore, activeTags, createTag, setTagInactive, updateTagStore } = useTagStore();
+	const { cardStore, addCard, updateCardStore } = useCardStore();
+	const { npcStore, updateNpcStore, addNpc } = useNpcStore();
 	const [toolbarSection, setToolbarSection] = useState<string>('');
 	const [tagDrawerDisplay, setTagDrawerDisplay] = useState(false);
 	const [searchString, setSearchString] = useState('');
 	const [resultsTagsDrawer, setResultsTagsDrawer] = useState(tagStore);
-	const { addNpc } = useNpcStore();
+	const [file, setFile] = useState<File | null>();
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	const animation = useSpring({
 		y: tagDrawerDisplay ? 0 : -100,
@@ -49,6 +51,42 @@ const AppBar = () => {
 		}
 	};
 
+	const handleUploadClick = () => {
+		inputRef.current?.click();
+	};
+
+	const handleFileChange = (e: any) => {
+		if (e.target.files) setFile(e.target.files[0]);
+	};
+
+	const exportData = () => {
+		const store = {
+			cardStore: [...cardStore],
+			npcStore: [...npcStore],
+			tagStore: [...tagStore]
+		};
+		var a = document.createElement("a");
+		//@ts-ignore
+		var file = new Blob([JSON.stringify(store)], { type: 'text/plain' });
+		a.href = URL.createObjectURL(file);
+		a.download = 'deckbook-backup.json';
+		a.click();
+	};
+
+	const importData = () => {
+		if (file) {
+			let reader = new FileReader();
+			reader.readAsText(file);
+			reader.onload = (event: any) => {
+				const new_data = JSON.parse(event.target.result);
+				updateCardStore(new_data.cardStore);
+				updateNpcStore(new_data.npcStore);
+				updateTagStore(new_data.tagStore);
+				setFile(null);
+			};
+		}
+	};
+
 	const getToolbarElements = (section: string) => {
 		switch (section) {
 			case 'npcs':
@@ -68,6 +106,18 @@ const AppBar = () => {
 						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
 					</>
 				);
+			case 'data':
+				return (
+					<>
+						<button onClick={handleUploadClick}>
+							{file ? `${file.name}` : 'Click to select'}
+						</button>
+						<input type="file" ref={inputRef} onChange={handleFileChange} style={{ display: 'none' }} accept=".json" />
+						<button onClick={() => importData()}>IMPORT DATA</button>
+						<button onClick={() => exportData()}>EXPORT DATA</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
+					</>
+				);
 			default:
 				return (
 					<>
@@ -75,6 +125,7 @@ const AppBar = () => {
 						<button onClick={() => setToolbarSection('npcs')}>NPCs</button>
 						<button onClick={() => setToolbarSection('locations')}>LOCATIONS</button>
 						<button onClick={() => setToolbarSection('blank')}>BLANK</button>
+						<button onClick={() => setToolbarSection('data')}>DATA</button>
 					</>
 				);
 		}

@@ -79,6 +79,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     return (
         <TagStoreContext.Provider value={{
             tagStore,
+            updateTagStore,
             activeTags,
             createTag,
             deleteTag,

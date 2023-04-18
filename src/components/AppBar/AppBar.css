@@ -104,6 +104,15 @@
     outline: none;
 }
 
+.import-data-form label {
+    cursor: pointer;
+}
+
+#upload-file {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
 
 
 
