@@ -15,7 +15,7 @@ const Tag = (props: {
     const { deleteTag } = useTagStore();
     const { activeDeck, getDeck } = useDeckStore();
 
-    const is_in_deck = activeDeck && getDeck(activeDeck).tags.indexOf(props.id) !== -1;
+    const is_in_deck = activeDeck && getDeck(activeDeck)?.tags.indexOf(props.id) !== -1;
 
     return (
         <animated.div className={`navtag ${props.type} ${is_in_deck && 'in-deck'}`} style={animation} onClick={(e) => {

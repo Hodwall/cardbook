@@ -15,7 +15,7 @@ function App() {
   const { activeTags } = useTagStore();
   const { activeDeck, getDeck } = useDeckStore();
 
-  const deckTags = activeDeck ? getDeck(activeDeck).tags : [];
+  const deckTags = activeDeck ? getDeck(activeDeck)?.tags : [];
 
   return (
     <div className="App">

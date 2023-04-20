@@ -189,7 +189,7 @@ const AppBar = () => {
 					{activeDeck &&
 						<>
 							<button onClick={handleReturnDeck}>RETURN DECK</button>
-							<button>{getDeck(activeDeck).label}</button>
+							<button>{getDeck(activeDeck)?.label}</button>
 						</>
 					}
 					{!activeDeck && <input type="text" value={deckLabel} onChange={(e) => setDeckLabel(e.target.value)} onKeyDown={handleCreateDeck} />}
