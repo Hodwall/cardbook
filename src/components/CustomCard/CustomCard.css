@@ -37,8 +37,8 @@
 
 .ql-editor {
     font-family: 'IM Fell DW Pica', serif !important;
-    font-size: 1rem;
-    line-height: 1rem;
+    font-size: 1.15em;
+    line-height: 1em;
     padding: 0.2em 0 !important;
     text-align: justify;
 }
@@ -55,10 +55,4 @@
 .card-body {
     display: flex;
     flex-direction: column;
-}
-
-.card-stats .card-stat:last-child {
-    border-bottom: 1px solid lightgray;
-    padding: 0.2em 0;
-    margin-bottom: 0.2em;
 }

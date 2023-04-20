@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChromePicker } from 'react-color';
+import { ChromePicker, SliderPicker } from 'react-color';
 import { MdColorLens } from 'react-icons/md';
 import './ColorPicker.css';
 
 
 const ColorPicker = (props: {
     defaultColor?: string,
+    pickerStyle?: string,
     changeColorHandler?: Function,
+    useColorStyle?: string,
 }) => {
     const [display, setDisplay] = useState(false);
-    const [color, setColor] = useState(false);
+    const [color, setColor] = useState(props.defaultColor ?? false);
 
     // handles outside clicks
     const ref = useRef<any>(null);
@@ -41,7 +43,7 @@ const ColorPicker = (props: {
 
     return (
         <>
-            <button onClick={handleClick}><MdColorLens /></button>
+            <button className={"color-picker"} onClick={handleClick} style={props.useColorStyle ? { backgroundColor: `${props.useColorStyle}` } : {}}><MdColorLens /></button>
             {
                 display &&
                 <div style={{
@@ -57,11 +59,17 @@ const ColorPicker = (props: {
                     }}
                         onClick={handleClose}
                     />
-                    <ChromePicker
-                        disableAlpha
-                        color={color}
-                        onChange={handleColorChange}
-                    />
+                    {
+                        (() => {
+                            switch (props.pickerStyle) {
+                                case 'slider':
+                                    return <SliderPicker color={color} onChange={handleColorChange} />;
+                                default:
+                                    return <ChromePicker color={color} onChange={handleColorChange} />;
+                            }
+                        })()
+                    }
+
                 </div>
             }
         </>

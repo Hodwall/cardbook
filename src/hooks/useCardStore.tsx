@@ -3,6 +3,7 @@ import { useState, createContext, useContext } from 'react';
 export interface iCardStat {
     id: number,
     label: string,
+    color?: string,
     value: number | null,
 }
 
@@ -154,15 +155,16 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         }
     };
 
-    const updateStat = (stat_id: number, card_id: number, data: { label: string, value: number; }) => {
+    const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: number, color?: string; }) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {
             const stat_index = store[card_index].stats?.findIndex((stat: iCardStat) => stat.id === stat_id);
             if (stat_index != -1) {
                 //@ts-ignore
-                store[card_index].stats[stat_index].label = data.label;
-                store[card_index].stats[stat_index].value = data.value;
+                if (data.label) store[card_index].stats[stat_index].label = data.label;
+                if (data.value) store[card_index].stats[stat_index].value = data.value;
+                if (data.color) store[card_index].stats[stat_index].color = data.color;
                 updateCardStore(store);
             }
         }

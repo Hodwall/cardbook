@@ -85,7 +85,7 @@ const CustomCard = (props: { data: iCard; }) => {
           {!editMode && <button onClick={() => addStatToCard(props.data.id)}><MdAdd /></button>}
           {!editMode && <button onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>}
           {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>}
-          {!editMode && <ColorPicker changeColorHandler={handleChangeColor} />}
+          {!editMode && <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />}
           {!editMode && <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />}
         </>
       }
