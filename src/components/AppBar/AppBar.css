@@ -64,11 +64,42 @@
     background-color: hsl(0, 50%, 50%)
 }
 
+.appbar .tag-deck-bar {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 0.6em;
+    height: 2em;
+}
+
 .appbar .tagbar {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5em;
-    padding: 0.6em;
+}
+
+.appbar .deckbar {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-self: self-end;
+    gap: 0.4em;
+    width: 30%;
+}
+
+.appbar .deckbar input {
+    border: none;
+    color: hsl(12, 100%, 95%);
+    background: hsla(0, 0%, 0%, 0.30);
+    font-family: inherit;
+    width: 80%;
+    height: 100%;
+    border-radius: 0.4em;
+    font-size: 1.5em;
+    overflow: hidden;
+}
+
+.appbar .deckbar input:focus {
+    border: unset;
+    outline: unset;
 }
 
 .tags-drawer {

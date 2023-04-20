@@ -7,7 +7,6 @@ export interface iTag {
     id: number,
     label: string,
     type: string;
-    is_active: boolean,
 }
 
 const TagStoreContext = createContext<any>(null);
@@ -33,6 +32,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const updateActiveTags = (val: number[]) => {
+        console.log('UPDATING TAGS', val);
         setActiveTags(val);
         localStorage.setItem('active_tags', JSON.stringify(val));
     };
@@ -41,8 +41,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         const new_id = Date.now();
         updateTagStore([...tagStore, {
             ...tag,
-            id: new_id,
-            is_active: true
+            id: new_id
         }]);
         updateActiveTags([...activeTags, new_id]);
         return new_id;
@@ -61,18 +60,10 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const setTagActive = (id: number) => {
-        let store = [...tagStore];
-        const tag_index = store.findIndex((tag: iTag) => tag.id === id);
-        store[tag_index].is_active = true;
-        updateTagStore(store);
         if (!activeTags.find((tag) => tag === id)) updateActiveTags([...activeTags, id]);
     };
 
     const setTagInactive = (id: number) => {
-        let store = [...tagStore];
-        const tag_index = store.findIndex((tag: iTag) => tag.id === id);
-        store[tag_index].is_active = false;
-        updateTagStore(store);
         updateActiveTags([...activeTags.filter((tag: number) => tag != id)]);
     };
 
@@ -81,6 +72,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
             tagStore,
             updateTagStore,
             activeTags,
+            updateActiveTags,
             createTag,
             deleteTag,
             deleteAllTags,

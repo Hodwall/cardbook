@@ -1,6 +1,7 @@
 import { iNpc, useNpcStore } from './hooks/useNpcStore';
 import { useTagStore } from './hooks/useTagStore';
 import { iCard, useCardStore } from './hooks/useCardStore';
+import { useDeckStore } from './hooks/useDeckStore';
 import AppBar from './components/AppBar';
 import ResultsGallery from './components/ResultsGallery';
 import NpcCard from './components/NpcCard';
@@ -12,6 +13,9 @@ function App() {
   const { npcStore } = useNpcStore();
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
+  const { activeDeck, getDeck } = useDeckStore();
+
+  const deckTags = activeDeck ? getDeck(activeDeck).tags : [];
 
   return (
     <div className="App">
@@ -23,11 +27,11 @@ function App() {
             let cards = [];
             if (activeTags.length > 0) {
               npcs = npcStore.reduce((results: iNpc[], npc: iNpc) => {
-                if (activeTags.every((tag_id: number) => npc.tags.includes(tag_id))) results.push(npc);
+                if (activeTags.every((tag_id: number) => npc.tags.includes(tag_id)) || (deckTags.some((tag_id: number) => npc.tags.includes(tag_id)))) results.push(npc);
                 return results;
               }, []);
               cards = cardStore.reduce((results: iCard[], card: iCard) => {
-                if (activeTags.every((tag_id: number) => card.tags.includes(tag_id))) results.push(card);
+                if (activeTags.every((tag_id: number) => card.tags.includes(tag_id)) || (deckTags.some((tag_id: number) => card.tags.includes(tag_id)))) results.push(card);
                 return results;
               }, []);
             } else {

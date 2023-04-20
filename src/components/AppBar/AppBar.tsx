@@ -4,20 +4,26 @@ import createNpc from '../../builders/npc/npcBuilder';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore } from '../../hooks/useCardStore';
+import { iDeck, useDeckStore } from '../../hooks/useDeckStore';
 import Tag from '../Tag';
+import Deck from '../Deck';
 import BigTag from '../BigTag';
 import './AppBar.css';
 
 
 const AppBar = () => {
-	const { tagStore, activeTags, createTag, setTagInactive, updateTagStore } = useTagStore();
+	const { tagStore, activeTags, updateActiveTags, createTag, setTagInactive, updateTagStore } = useTagStore();
+	const { deckStore, createDeck, deleteDeck, activeDeck, updateActiveDeck, getDeck } = useDeckStore();
 	const { cardStore, addCard, updateCardStore } = useCardStore();
 	const { npcStore, updateNpcStore, addNpc } = useNpcStore();
+
 	const [toolbarSection, setToolbarSection] = useState<string>('');
 	const [tagDrawerDisplay, setTagDrawerDisplay] = useState(false);
 	const [searchString, setSearchString] = useState('');
+	const [deckLabel, setDeckLabel] = useState('');
 	const [resultsTagsDrawer, setResultsTagsDrawer] = useState(tagStore);
 	const [file, setFile] = useState<File | null>();
+
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	const animation = useSpring({
@@ -41,7 +47,7 @@ const AppBar = () => {
 		setSearchString(e.target.value);
 	};
 
-	const handleKeyDown = (e: any) => {
+	const handleSearchKeyDown = (e: any) => {
 		if (e.key === 'Enter') {
 			if (resultsTagsDrawer.length === 0) {
 				let new_tag = { label: searchString, type: 'default' };
@@ -57,6 +63,18 @@ const AppBar = () => {
 
 	const handleFileChange = (e: any) => {
 		if (e.target.files) setFile(e.target.files[0]);
+	};
+
+	const handleCreateDeck = (e: any) => {
+		if (e.key === 'Enter') {
+			createDeck(e.target.value, activeTags);
+			setDeckLabel('');
+		}
+	};
+
+	const handleReturnDeck = () => {
+		updateActiveDeck(null);
+		updateActiveTags([]);
 	};
 
 	const exportData = () => {
@@ -147,26 +165,37 @@ const AppBar = () => {
 
 			</div>
 
-
-
-			<div className={'tagbar'}>
-				{
-					tagStore.reduce((results: iTag[], tag: iTag) => {
-						if (tag.is_active) results.push(tag);
-						return results;
-					}, [])
-						.sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
-						.map((tag: iTag, index: number) =>
-						(<Tag
-							key={index}
-							id={tag.id}
-							label={tag.label}
-							type={tag.type}
-							deleteHandler={() => setTagInactive(tag.id)}
-							canDelete
-						/>))
-				}
+			<div className={'tag-deck-bar'}>
+				<div className={'tagbar'}>
+					{
+						activeTags.reduce((results: iTag[], tag_id: number) => {
+							results.push(tagStore.find((tag: iTag) => tag.id === tag_id));
+							return results;
+						}, [])
+							.sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+							.map((tag: iTag, index: number) =>
+							(<Tag
+								key={index}
+								id={tag.id}
+								label={tag.label}
+								type={tag.type}
+								deleteHandler={() => setTagInactive(tag.id)}
+								canDelete
+							/>))
+					}
+				</div>
+				<div className={'deckbar'}>
+					<button onClick={() => updateActiveTags([])}>CLEAR ACTIVE TAGS</button>
+					{activeDeck &&
+						<>
+							<button onClick={handleReturnDeck}>RETURN DECK</button>
+							<button>{getDeck(activeDeck).label}</button>
+						</>
+					}
+					{!activeDeck && <input type="text" value={deckLabel} onChange={(e) => setDeckLabel(e.target.value)} onKeyDown={handleCreateDeck} />}
+				</div>
 			</div>
+
 
 			<animated.div className={'tags-drawer'} style={animation}>
 				<div className={'results'}>
@@ -180,9 +209,19 @@ const AppBar = () => {
 							.sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
 							.map((tag: iTag, index: number) => <BigTag key={index} id={tag.id} label={tag.label} />)
 					}
+					{
+						!activeDeck && deckStore.sort((a: iDeck, b: iDeck) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+							.map((deck: iDeck, index: number) =>
+							(<Deck
+								key={index}
+								id={deck.id}
+								label={deck.label}
+								tags={deck.tags}
+							/>))
+					}
 				</div>
 				<form onSubmit={(e: FormEvent) => { e.preventDefault(); }}>
-					<input type="text" value={searchString} onChange={handleSearchChange} onKeyDown={handleKeyDown} />
+					<input type="text" value={searchString} onChange={(e) => setSearchString(e.target.value)} onKeyDown={handleSearchKeyDown} />
 				</form>
 			</animated.div>
 

@@ -23,3 +23,8 @@
     color: white;
     padding-left: 10px;
 }
+
+.navtag.in-deck {
+    background: hsl(224, 60%, 60%);
+    box-shadow: inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
+}

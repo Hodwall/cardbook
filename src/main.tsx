@@ -4,15 +4,18 @@ import App from './App';
 import { NpcStoreProvider } from './hooks/useNpcStore';
 import { TagStoreProvider } from './hooks/useTagStore';
 import { CardStoreProvider } from './hooks/useCardStore';
+import { DeckStoreProvider } from './hooks/useDeckStore';
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <CardStoreProvider>
       <NpcStoreProvider>
-        <TagStoreProvider>
-          <App />
-        </TagStoreProvider>
+        <DeckStoreProvider>
+          <TagStoreProvider>
+            <App />
+          </TagStoreProvider>
+        </DeckStoreProvider>
       </NpcStoreProvider>
     </CardStoreProvider>
   </React.StrictMode>,
