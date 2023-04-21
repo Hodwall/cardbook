@@ -32,9 +32,8 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const updateActiveTags = (val: number[]) => {
-        console.log('UPDATING TAGS', val);
-        setActiveTags(val);
-        localStorage.setItem('active_tags', JSON.stringify(val));
+        setActiveTags(val || []);
+        localStorage.setItem('active_tags', JSON.stringify(val || []));
     };
 
     const createTag = (tag: iTag) => {

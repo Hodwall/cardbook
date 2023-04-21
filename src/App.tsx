@@ -1,6 +1,6 @@
-import { iNpc, useNpcStore } from './hooks/useNpcStore';
+import { useNpcStore, iNpc } from './hooks/useNpcStore';
 import { useTagStore } from './hooks/useTagStore';
-import { iCard, useCardStore } from './hooks/useCardStore';
+import { useCardStore, iCard } from './hooks/useCardStore';
 import { useDeckStore } from './hooks/useDeckStore';
 import AppBar from './components/AppBar';
 import ResultsGallery from './components/ResultsGallery';
@@ -13,41 +13,48 @@ function App() {
   const { npcStore } = useNpcStore();
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
-  const { activeDeck, getDeck } = useDeckStore();
+  const { activeDeck } = useDeckStore();
 
-  const deckTags = activeDeck ? getDeck(activeDeck)?.tags : [];
+  let required_tags: number[] = [];
+  let optional_tags: number[] = [];
+
+  if (activeDeck) {
+    console.log(activeDeck);
+    if (activeDeck.isStrict) {
+      required_tags = [... new Set([...activeDeck.tags, ...activeTags])];
+    } else {
+      required_tags = [...(activeTags.filter((tag: number) => !activeDeck.tags.includes(tag)))];
+      optional_tags = [...activeDeck.tags];
+    }
+  } else {
+    required_tags = [...activeTags];
+  }
+
+  const filterCards = (cards: any[]) => {
+    let result_cards = [...cards];
+    if (activeTags.length > 0) {
+      if (optional_tags.length > 0) {
+        result_cards = result_cards.reduce((results: any[], card: any) => {
+          if (optional_tags.some((tag_id: number) => card.tags.includes(tag_id))) results.push(card);
+          return results;
+        }, []);
+      }
+      if (required_tags.length > 0) {
+        result_cards = result_cards.reduce((results: any[], card: any) => {
+          if (required_tags.every((tag_id: number) => card.tags.includes(tag_id))) results.push(card);
+          return results;
+        }, []);
+      }
+    }
+    return result_cards.sort((a: iCard, b: iCard) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0);
+  };
 
   return (
     <div className="App">
       <AppBar />
       <ResultsGallery>
-        {
-          (() => {
-            let npcs = [];
-            let cards = [];
-            if (activeTags.length > 0) {
-              npcs = npcStore.reduce((results: iNpc[], npc: iNpc) => {
-                if (activeTags.every((tag_id: number) => npc.tags.includes(tag_id)) || (deckTags.some((tag_id: number) => npc.tags.includes(tag_id)))) results.push(npc);
-                return results;
-              }, []);
-              cards = cardStore.reduce((results: iCard[], card: iCard) => {
-                if (activeTags.every((tag_id: number) => card.tags.includes(tag_id)) || (deckTags.some((tag_id: number) => card.tags.includes(tag_id)))) results.push(card);
-                return results;
-              }, []);
-            } else {
-              npcs = npcStore;
-              cards = cardStore;
-            }
-            const npcs_sorted = npcs.sort((a: iNpc, b: iNpc) => (a.name > b.name) ? 1 : (a.name < b.name) ? -1 : 0);
-            const cards_sorted = cards.sort((a: iCard, b: iCard) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0);
-            return (
-              <>
-                {npcs_sorted.map((npc: iNpc) => <NpcCard key={npc.id} data={npc} />)}
-                {cards_sorted.map((card: iCard) => <CustomCard key={card.id} data={card} />)}
-              </>
-            );
-          })()
-        }
+        {filterCards(npcStore).map((card: iCard) => <NpcCard key={card.id} data={card} />)}
+        {filterCards(cardStore).map((card: iCard) => <CustomCard key={card.id} data={card} />)}
       </ResultsGallery>
     </div>
   );

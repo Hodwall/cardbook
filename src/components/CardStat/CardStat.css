@@ -13,11 +13,13 @@
     display: flex;
     flex-direction: column;
     width: 3.3em;
+    height: 2.5em;
 }
 
 .card-stat span {
     line-height: 0.4em;
     padding-top: 0.7em;
+    padding-bottom: 0.2em;
     letter-spacing: 0.001em;
 }
 
@@ -32,6 +34,7 @@
     font-weight: bold;
     text-transform: uppercase;
     justify-content: center;
+    z-index: 2;
 }
 
 .card-stat input {
@@ -67,9 +70,8 @@
     border: unset;
     background: hsl(36 12% 65% / 1);
     box-shadow: inset 0px 0px 20px 0px hsl(0deg 0% 0% / 40%), hsl(0deg 0% 0% / 25%) 0px 0px 0px;
+    -moz-appearance: textfield;
 }
-
-
 
 .card-stat button {
     font-size: 1em;
@@ -107,7 +109,20 @@
     z-index: 99999;
 }
 
+.card-stat-total-effect {
+    position: relative;
+    margin-top: -2.6em !important;
+    margin-left: -0.1em;
+    border-radius: 0.4em;
+    width: 3.6em;
+    height: 1.8em;
+    content: " ";
+    z-index: 1 !important;
+    background: hsl(36deg 20.11% 67.47%);
+    transform: rotate(7deg);
+}
+
 .card-stat>div {
-    z-index: 99999 !important;
+    z-index: 99999;
     margin-top: -1.05em;
 }

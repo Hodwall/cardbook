@@ -11,7 +11,7 @@
     cursor: pointer;
     width: max-content;
     padding: 0px 10px;
-    height: 30px;
+    height: 2em;
     text-align: left;
     background: hsl(19deg 100% 50%);
     box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
@@ -21,10 +21,14 @@
     background-color: hsl(0deg 0% 0% / 0%);
     border: unset;
     color: white;
-    padding-left: 10px;
+    margin-top: 0.3em;
 }
 
 .navtag.in-deck {
     background: hsl(224, 60%, 60%);
     box-shadow: inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
+}
+
+.navtag.in-deck.strict {
+    box-shadow: inset 0px 0px 4px 0px hsl(11.47deg 100% 50.46%), inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
 }

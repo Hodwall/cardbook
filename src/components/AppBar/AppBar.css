@@ -46,7 +46,8 @@
     gap: 0.5em;
 }
 
-.appbar .header .toolbar button {
+.appbar .header .toolbar button,
+.appbar .deckbar button {
     height: 2.5em;
     font-family: inherit;
     font-size: 1em;
@@ -68,7 +69,8 @@
     display: grid;
     grid-template-columns: auto 1fr;
     padding: 0.6em;
-    height: 2em;
+    padding-top: 0;
+    min-height: 2.2em;
 }
 
 .appbar .tagbar {
@@ -81,20 +83,20 @@
     display: flex;
     flex-direction: row-reverse;
     justify-self: self-end;
-    gap: 0.4em;
-    width: 30%;
+    gap: 0.5em;
+    width: 35em;
 }
 
 .appbar .deckbar input {
     border: none;
     color: hsl(12, 100%, 95%);
-    background: hsla(0, 0%, 0%, 0.30);
+    background: hsla(0, 0%, 0%, 60%);
     font-family: inherit;
-    width: 80%;
-    height: 100%;
+    width: 90%;
     border-radius: 0.4em;
-    font-size: 1.5em;
+    font-size: 1.3em;
     overflow: hidden;
+    height: 1.6em;
 }
 
 .appbar .deckbar input:focus {
@@ -102,13 +104,29 @@
     outline: unset;
 }
 
+.appbar .deckbar button {
+    background-color: hsl(221, 50%, 50%);
+    box-shadow: hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px, inset hsl(221.41deg 31.85% 24.69% / 75%) -3px -3px 20px 0px;
+    height: 2em;
+}
+
+.appbar .deckbar button.strict {
+    box-shadow: inset 0px 0px 20px 0px hsl(11.47deg 100% 40%), inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px
+}
+
 .tags-drawer {
     position: relative;
     z-index: -1;
+    pointer-events: all;
+}
+
+.tags-drawer.hidden {
+    pointer-events: none;
 }
 
 .tags-drawer .results {
     display: flex;
+    flex-wrap: wrap;
     padding: 0.6em;
     gap: 0.5em;
 }
@@ -167,7 +185,7 @@
     }
 }
 
-
+/* 
 a.nav-link {
     display: block;
     height: 24px;
@@ -186,4 +204,4 @@ a.nav-link.active {
     color: white;
     background: #eb6e5759;
     text-decoration: none;
-}
+} */

@@ -1,7 +1,4 @@
 import './BigTag.css';
-import { useSpring, animated, a } from 'react-spring';
-import { PointerEvent, useState } from 'react';
-import Card from '../Card';
 import { useTagStore } from '../../hooks/useTagStore';
 
 

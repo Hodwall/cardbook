@@ -1,7 +1,7 @@
 div.tag {
     width: max-content;
     border-radius: 4px;
-    background: tomato !important;
+    background: tomato;
     box-shadow: inset 0px 0px 3px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 22px 15px hsl(0deg 0% 0% / 44%), #100f0fbf 4px 4px 10px;
     color: white;
     padding-right: 10px;

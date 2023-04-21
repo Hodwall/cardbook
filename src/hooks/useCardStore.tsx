@@ -4,6 +4,7 @@ export interface iCardStat {
     id: number,
     label: string,
     color?: string,
+    useTotal?: boolean,
     value: number | null,
 }
 
@@ -13,6 +14,7 @@ export interface iCard {
     color?: string,
     background?: string,
     content?: any,
+    isFlipped?: boolean,
     stats: iCardStat[],
     tags: number[];
 }
@@ -41,8 +43,9 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const addCard = (tags: number[] | []) => {
+        const new_id = Date.now();
         updateCardStore([...cardStore, {
-            id: Date.now(),
+            id: new_id,
             label: '',
             stats: [],
             tags: tags
@@ -50,14 +53,17 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const deleteCard = (id: number) => {
-        updateCardStore(cardStore.filter((card: iCard) => card.id != id));
+        let store = [...cardStore];
+        store = cardStore.filter((card: iCard) => card.id != id);
+        store = [...updateStatTotals(store)];
+        updateCardStore(store);
     };
 
     const copyCard = (id: number) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === id);
         if (card_index != -1) {
-            updateCardStore([...store, {
+            store = [...store, {
                 id: Date.now(),
                 label: store[card_index].label,
                 color: store[card_index].color,
@@ -65,7 +71,9 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
                 content: store[card_index].content,
                 stats: [...store[card_index].stats],
                 tags: [...store[card_index].tags]
-            }]);
+            }];
+            store = [...updateStatTotals(store)];
+            updateCardStore(store);
         }
     };
 
@@ -75,7 +83,8 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         if (card_index != -1) {
             const has_tag = store[card_index].tags.some((tag) => tag === tag_id);
             if (!has_tag) store[card_index].tags.push(tag_id);
-            updateCardStore([...store]);
+            store = [...updateStatTotals(store)];
+            updateCardStore(store);
         }
     };
 
@@ -84,14 +93,16 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {
             store[card_index].tags = store[card_index].tags.filter((tag) => tag != tag_id);
-            updateCardStore([...store]);
+            store = [...updateStatTotals(store)];
+            updateCardStore(store);
         }
     };
 
     const removeTagFromAllCards = (tag_id: number) => {
         let store = [...cardStore];
         store.forEach((card) => { card.tags = card.tags.filter((tag: number) => tag != tag_id); });
-        updateCardStore([...store]);
+        store = [...updateStatTotals(store)];
+        updateCardStore(store);
     };
 
     const updateCardContent = (content: any, id: number) => {
@@ -99,7 +110,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         const card_index = store.findIndex((card: iCard) => card.id === id);
         if (card_index != -1) {
             store[card_index].content = content;
-            updateCardStore([...store]);
+            updateCardStore(store);
         }
     };
 
@@ -108,7 +119,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         const card_index = store.findIndex((card: iCard) => card.id === id);
         if (card_index != -1) {
             store[card_index].label = label;
-            updateCardStore([...store]);
+            updateCardStore(store);
         }
     };
 
@@ -117,7 +128,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         const card_index = store.findIndex((card: iCard) => card.id === id);
         if (card_index != -1) {
             store[card_index].color = color;
-            updateCardStore([...store]);
+            updateCardStore(store);
         }
     };
 
@@ -126,49 +137,83 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         const card_index = store.findIndex((card: iCard) => card.id === id);
         if (card_index != -1) {
             store[card_index].background = background;
-            updateCardStore([...store]);
+            updateCardStore(store);
         }
     };
 
-    const addStatToCard = (id: number) => {
+    const addStatToCard = (card_id: number) => {
         let store = [...cardStore];
-        const card_index = store.findIndex((card: iCard) => card.id === id);
+        const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {
             store[card_index].stats.push({
                 id: Date.now(),
                 label: '',
+                useTotal: false,
                 value: null,
             });
-            updateCardStore([...store]);
+            updateCardStore(store);
         }
     };
 
     const removeStatFromCard = (stat_id: number, card_id: number) => {
-        console.log('removing');
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
+        console.log(store[card_index].stats);
         if (card_index != -1) {
-            console.log(store[card_index].stats);
             store[card_index].stats = [...store[card_index].stats.filter((stat: iCardStat) => stat.id != stat_id)];
+            console.log(store[card_index].stats);
+            store = [...updateStatTotals(store)];
             console.log(store[card_index].stats);
             updateCardStore(store);
         }
     };
 
-    const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: number, color?: string; }) => {
+    const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: number, color?: string; useTotal?: boolean; }) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {
             const stat_index = store[card_index].stats?.findIndex((stat: iCardStat) => stat.id === stat_id);
             if (stat_index != -1) {
-                //@ts-ignore
                 if (data.label) store[card_index].stats[stat_index].label = data.label;
                 if (data.value) store[card_index].stats[stat_index].value = data.value;
                 if (data.color) store[card_index].stats[stat_index].color = data.color;
+                if (typeof data.useTotal === 'boolean') store[card_index].stats[stat_index].useTotal = !!data.useTotal;
+                if (data.value || typeof data.useTotal === 'boolean') store = [...updateStatTotals(store)];
                 updateCardStore(store);
             }
         }
     };
+
+    const updateStatTotals = (store: iCard[]) => {
+        let tmp_store = [...store];
+        tmp_store.forEach((card_to_update) => {
+            if (card_to_update.stats && card_to_update.stats.length > 0) {
+                card_to_update.stats.forEach((stat_to_update) => {
+                    if (stat_to_update.useTotal) {
+                        //found a card with a stat that uses total
+                        let values: number[] = [];
+                        tmp_store.forEach((card_being_checked: iCard) => {
+                            if (card_being_checked.id === card_to_update.id) return;
+                            // If all the tags in the card to update are in the card being checked
+                            if (card_to_update.tags.every((tag) => card_being_checked.tags.includes(tag))) {
+                                const valid_stat = card_being_checked.stats.find((stat_being_checked) => stat_being_checked.label?.toLowerCase() === stat_to_update.label?.toLowerCase());
+                                if (valid_stat) {
+                                    if (valid_stat.useTotal) return;
+                                    values.push(valid_stat.value || 0);
+                                }
+                            }
+                        });
+                        stat_to_update.value = values.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
+                    }
+                });
+            }
+        });
+        return tmp_store;
+    };
+
+
+
+
 
     return (
         <CardStoreContext.Provider value={{
@@ -186,7 +231,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             updateCardBackground,
             addStatToCard,
             removeStatFromCard,
-            updateStat
+            updateStat,
         }}>
             {props.children}
         </CardStoreContext.Provider>
