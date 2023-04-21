@@ -169,13 +169,14 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: number, color?: string; useTotal?: boolean; }) => {
+        console.log(data);
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {
             const stat_index = store[card_index].stats?.findIndex((stat: iCardStat) => stat.id === stat_id);
             if (stat_index != -1) {
                 if (data.label) store[card_index].stats[stat_index].label = data.label;
-                if (data.value) store[card_index].stats[stat_index].value = data.value;
+                if (typeof data.value !== 'undefined') store[card_index].stats[stat_index].value = data.value;
                 if (data.color) store[card_index].stats[stat_index].color = data.color;
                 if (typeof data.useTotal === 'boolean') store[card_index].stats[stat_index].useTotal = !!data.useTotal;
                 if (data.value || typeof data.useTotal === 'boolean') store = [...updateStatTotals(store)];
