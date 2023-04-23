@@ -69,7 +69,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
                 color: store[card_index].color,
                 background: store[card_index].background,
                 content: store[card_index].content,
-                stats: [...store[card_index].stats],
+                stats: store[card_index].stats.map((stat, index) => { return { ...stat, id: Date.now() + index }; }),
                 tags: [...store[card_index].tags]
             }];
             store = [...updateStatTotals(store)];
