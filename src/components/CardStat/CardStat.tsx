@@ -58,7 +58,7 @@ const CardStat = (props: {
                     </>
                     :
                     <>
-                        <input className={'edit-value'} type="number" value={value} onChange={handleUpdateValue} style={{ backgroundColor: `${props.stat.color}` }} disabled={props.stat.useTotal} />
+                        <input className={'edit-value'} type="text" value={value} onChange={handleUpdateValue} style={{ backgroundColor: `${props.stat.color}` }} disabled={props.stat.useTotal} />
                         <input className={'edit-label'} type="text" value={label} onChange={handleUpdateLabel} style={useTotal ? { fontWeight: 'bold' } : {}} />
                     </>
             }

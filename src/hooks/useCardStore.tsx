@@ -179,7 +179,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
                 if (typeof data.value !== 'undefined') store[card_index].stats[stat_index].value = data.value;
                 if (data.color) store[card_index].stats[stat_index].color = data.color;
                 if (typeof data.useTotal === 'boolean') store[card_index].stats[stat_index].useTotal = !!data.useTotal;
-                if (data.value || typeof data.useTotal === 'boolean') store = [...updateStatTotals(store)];
+                if (data.label || data.value || typeof data.useTotal === 'boolean') store = [...updateStatTotals(store)];
                 updateCardStore(store);
             }
         }
@@ -204,7 +204,10 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
                                 }
                             }
                         });
-                        stat_to_update.value = values.reduce((acc, curr) => parseInt(acc) + parseInt(curr), 0);
+                        stat_to_update.value = values.reduce((acc, curr) => {
+                            let current_value = Number(curr);
+                            return parseInt(acc) + (isNaN(current_value) ? 0 : current_value);
+                        }, 0);
                     }
                 });
             }
