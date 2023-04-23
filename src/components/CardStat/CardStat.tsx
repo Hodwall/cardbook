@@ -39,8 +39,10 @@ const CardStat = (props: {
         setColor(color);
     };
     const handleUpdateUseTotal = () => {
-        updateStat(props.stat.id, props.cardId, { useTotal: !useTotal });
-        setUseTotal(!useTotal);
+        if (props.stat.label) {
+            updateStat(props.stat.id, props.cardId, { useTotal: !useTotal });
+            setUseTotal(!useTotal);
+        }
     };
 
     return (
@@ -52,12 +54,12 @@ const CardStat = (props: {
                             <button className={'remove-stat'} onClick={() => removeStatFromCard(props.stat.id, props.cardId)}>X</button>
                             <ColorPicker pickerStyle={'slider'} changeColorHandler={handleUpdateColor} useColorStyle={color} defaultColor={props.stat.color} />
                         </div>
-                        <input className={'edit-label'} type="text" value={label} onChange={handleUpdateLabel} />
+                        <span style={useTotal ? { fontWeight: 'bold' } : {}} onClick={handleUpdateUseTotal}>{label}</span>
                     </>
                     :
                     <>
-                        <input className={'edit-value'} type="number" value={value} onChange={handleUpdateValue} style={{ backgroundColor: `${props.stat.color}` }} />
-                        <span style={useTotal ? { color: 'tomato' } : {}} onClick={handleUpdateUseTotal}>{label}</span>
+                        <input className={'edit-value'} type="number" value={value} onChange={handleUpdateValue} style={{ backgroundColor: `${props.stat.color}` }} disabled={props.stat.useTotal} />
+                        <input className={'edit-label'} type="text" value={label} onChange={handleUpdateLabel} style={useTotal ? { fontWeight: 'bold' } : {}} />
                     </>
             }
             {

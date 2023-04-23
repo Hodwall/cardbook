@@ -2,10 +2,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    gap: 0.3em;
-    padding-bottom: 0.2em;
+    gap: 0.1em;
     padding-top: 0.2em;
     border-bottom: 0.15em solid hsl(36 38% 90% / 1);
+}
+
+.card-stats:empty {
+    border-bottom: none;
 }
 
 .card-stat {
@@ -13,64 +16,59 @@
     display: flex;
     flex-direction: column;
     width: 3.3em;
-    height: 2.5em;
+    position: relative;
 }
 
-.card-stat span {
-    line-height: 0.4em;
-    padding-top: 0.7em;
-    padding-bottom: 0.2em;
-    letter-spacing: 0.001em;
+.card-stat span,
+.card-stat input.edit-label {
+    background: none;
+    border: none;
+    color: #434040;
+    line-height: 1em;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    padding-top: 0.2em;
+    overflow: hidden;
+    white-space: nowrap;
 }
+
+.card-stat input.edit-label:focus {
+    border: unset;
+    outline: unset;
+    background-color: hsl(36 12% 85% / 1);
+    border-radius: 0.3em;
+    transition: background-color 0.2s;
+
+}
+
 
 .card-stat span,
 .card-stat input,
 .card-stat button {
     font-family: 'IM Fell DW Pica', serif;
-    display: inline-flex;
-    overflow: hidden;
-    font-size: 0.6em;
-    white-space: nowrap;
-    font-weight: bold;
-    text-transform: uppercase;
-    justify-content: center;
-    z-index: 2;
-}
-
-.card-stat input {
-    padding: 0;
-}
-
-.card-stat input:focus {
-    border-style: none;
-    outline: none;
-}
-
-.card-stat input.edit-label {
-    font-size: 0.6em;
-    color: hsl(0 0% 30% / 1);
-    line-height: 0.2em;
-    padding-top: 0.2em;
-    margin-top: 0.4em;
-    border: unset;
-    border-radius: 0.3em;
-    background-color: hsl(0deg 0% 0% / 10%);
 }
 
 .card-stat input.edit-value {
-    font-size: 1.5em;
-    text-align: center;
-    padding-bottom: 0.2em;
-    font-weight: normal;
-    color: white;
-    height: 1.2em;
-    width: 2.2em;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: unset;
     background: hsl(36 12% 65% / 1);
-    box-shadow: inset 0px 0px 20px 0px hsl(0deg 0% 0% / 40%), hsl(0deg 0% 0% / 25%) 0px 0px 0px;
-    -moz-appearance: textfield;
+    border: none;
+    border-radius: 0.3em;
+    height: 1.2em;
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: inset -7px -6px 8px 0px hsl(0deg 0% 0% / 10%);
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    font-family: 'IM Fell DW Pica', serif;
+    z-index: 9;
+}
+
+.card-stat input.edit-value:focus {
+    border: none;
+    outline: none;
 }
 
 .card-stat button {
@@ -81,19 +79,29 @@
     box-shadow: 1px 1px 3px 0px hsl(0deg 0% 0% / 30%);
 }
 
-
 .card-stats button.color-picker {
     text-align: left;
     padding-right: 2em;
-    height: 1.4em;
+    height: 1.8em;
     background: hsl(36 12% 65% / 1);
     box-shadow: inset 0px 0px 20px 0px hsl(0deg 0% 0% / 40%), hsl(0deg 0% 0% / 25%) 0px 0px 0px;
+    position: relative;
+    z-index: 8;
+}
+
+.card-stats .card-stat-edit {
+    position: relative;
+}
+
+.card-stats .card-stat-edit~span {
+    margin-bottom: 0.4em;
+    padding-top: 0.4em;
 }
 
 .card-stats .card-stat-edit button.remove-stat {
     background-color: tomato;
-    position: relative;
-    top: 1.35em;
+    position: absolute;
+    z-index: 9;
     font-size: 0.8em;
     margin-left: 2.5em;
     transform: rotate(8deg);
@@ -110,19 +118,12 @@
 }
 
 .card-stat-total-effect {
-    position: relative;
-    margin-top: -2.6em !important;
-    margin-left: -0.1em;
+    position: absolute;
+    top: 0;
     border-radius: 0.4em;
-    width: 3.6em;
-    height: 1.8em;
-    content: " ";
+    width: 3.3em;
+    height: 1.9em;
     z-index: 1 !important;
-    background: hsl(36deg 20.11% 67.47%);
-    transform: rotate(7deg);
-}
-
-.card-stat>div {
-    z-index: 99999;
-    margin-top: -1.05em;
+    background: hsl(36deg 1.11% 42.17%);
+    transform: rotate(6.5deg);
 }

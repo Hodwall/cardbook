@@ -25,9 +25,23 @@
     width: 24px !important;
 }
 
-.ql-formats .ql-fill,
+/* .ql-formats .ql-fill,
 .ql-formats .ql-stroke {
     stroke: white !important;
+} */
+
+.ql-toolbar .ql-stroke {
+    fill: none !important;
+    stroke: #fff !important;
+}
+
+.ql-toolbar .ql-fill {
+    fill: #fff !important;
+    stroke: none !important;
+}
+
+.ql-toolbar .ql-picker {
+    color: #fff !important;
 }
 
 .ql-container.ql-snow {
@@ -37,7 +51,7 @@
 
 .ql-editor {
     font-family: 'IM Fell DW Pica', serif !important;
-    font-size: 1.15em;
+    font-size: 1.05em;
     line-height: 1em;
     padding: 0.2em 0 !important;
     text-align: justify;
@@ -55,4 +69,17 @@
 .card-body {
     display: flex;
     flex-direction: column;
+}
+
+div.quill span.ql-formats span.ql-color.ql-picker.ql-color-picker span.ql-picker-options {
+    position: absolute;
+    top: -8.15em;
+    right: -6.2em;
+    border-radius: 0.3em;
+    z-index: 99;
+    transform: rotate(1deg);
+}
+
+button:disabled {
+    color: gray;
 }

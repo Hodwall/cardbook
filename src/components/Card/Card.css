@@ -20,7 +20,7 @@
 }
 
 .card-side.card-back {
-    grid-template-rows: 22em 2em;
+    grid-template-rows: 23em 2em;
 }
 
 .card-side.card-back .card-body {

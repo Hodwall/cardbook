@@ -3,7 +3,8 @@ import ReactQuill from 'react-quill';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import Card from '../Card';
 import CardStat from '../CardStat/CardStat';
-import { MdDeleteForever, MdEdit, MdEditOff, MdAdd } from 'react-icons/md';
+import { MdDeleteForever, MdEdit, MdEditOff, MdBarChart, MdAddCircle } from 'react-icons/md';
+import { RiArrowGoBackFill } from 'react-icons/ri';
 import { IoIosCopy } from 'react-icons/io';
 import ColorPicker from '../ColorPicker/ColorPicker';
 import BackgroundPicker from '../BackgroundPicker/BackgroundPicker';
@@ -15,6 +16,7 @@ import './CustomCard.css';
 const CustomCard = (props: { data: iCard; }) => {
   const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground } = useCardStore();
   const [editMode, setEditMode] = useState(false);
+  const [editStatsMode, setEditStatsMode] = useState(false);
   const [label, setLabel] = useState(props.data.label);
   const [content, setContent] = useState(props.data.content || '');
 
@@ -64,7 +66,7 @@ const CustomCard = (props: { data: iCard; }) => {
                 <CardStat
                   stat={stat}
                   cardId={props.data.id}
-                  editMode={editMode}
+                  editMode={editStatsMode}
                 />
               )
             }
@@ -79,14 +81,34 @@ const CustomCard = (props: { data: iCard; }) => {
           />
         </>
       }
+
       tools={
         <>
-          <button onClick={() => setEditMode(!editMode)}>{editMode ? <MdEditOff /> : <MdEdit />}</button>
-          {!editMode && <button onClick={() => addStatToCard(props.data.id)}><MdAdd /></button>}
-          {!editMode && <button onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>}
-          {!editMode && <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>}
-          {!editMode && <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />}
-          {!editMode && <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />}
+          {
+            (() => {
+              if (editMode) {
+                return <button onClick={() => setEditMode(false)}><RiArrowGoBackFill /></button>;
+              } else if (editStatsMode) {
+                return (
+                  <>
+                    <button onClick={() => setEditStatsMode(false)}><RiArrowGoBackFill /></button>
+                    <button onClick={() => addStatToCard(props.data.id)}><MdAddCircle /></button>
+                  </>
+                );
+              } else {
+                return (
+                  <>
+                    <button onClick={() => setEditMode(true)}><MdEdit /></button>
+                    <button onClick={() => setEditStatsMode(true)}><MdBarChart /></button>
+                    <button onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
+                    <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>
+                    <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />
+                    <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />
+                  </>
+                );
+              }
+            })()
+          }
         </>
       }
     />
