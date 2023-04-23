@@ -7,6 +7,7 @@ import ResultsGallery from './components/ResultsGallery';
 import NpcCard from './components/NpcCard';
 import CustomCard from './components/CustomCard/CustomCard';
 import './App.css';
+import Card from './components/Card';
 
 
 function App() {
@@ -53,8 +54,8 @@ function App() {
     <div className="App">
       <AppBar />
       <ResultsGallery>
-        {filterCards(npcStore).map((card: iCard) => <NpcCard key={card.id} data={card} />)}
-        {filterCards(cardStore).map((card: iCard) => <CustomCard key={card.id} data={card} />)}
+        {/* {filterCards(npcStore).map((card: iCard) => <NpcCard key={card.id} data={card} />)} */}
+        {filterCards(cardStore).map((card: iCard) => <Card key={card.id} data={card} />)}
       </ResultsGallery>
     </div>
   );

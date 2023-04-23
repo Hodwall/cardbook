@@ -17,7 +17,6 @@ const CardStat = (props: {
 }) => {
     const [label, setLabel] = useState(props.stat.label);
     const [value, setValue] = useState<any>(props.stat.value);
-    const [color, setColor] = useState<string | undefined>(props.stat.color);
     const [useTotal, setUseTotal] = useState<boolean>(props.stat.useTotal || false);
     const { updateStat, removeStatFromCard } = useCardStore();
 
@@ -36,7 +35,6 @@ const CardStat = (props: {
     };
     const handleUpdateColor = (color: any) => {
         updateStat(props.stat.id, props.cardId, { color: color });
-        setColor(color);
     };
     const handleUpdateUseTotal = () => {
         if (props.stat.label) {
@@ -52,7 +50,7 @@ const CardStat = (props: {
                     <>
                         <div className={'card-stat-edit'}>
                             <button className={'remove-stat'} onClick={() => removeStatFromCard(props.stat.id, props.cardId)}>X</button>
-                            <ColorPicker pickerStyle={'slider'} changeColorHandler={handleUpdateColor} useColorStyle={color} defaultColor={props.stat.color} />
+                            <ColorPicker pickerStyle={'slider'} changeColorHandler={handleUpdateColor} useColorStyle={props.stat.color} defaultColor={props.stat.color} />
                         </div>
                         <span style={useTotal ? { fontWeight: 'bold' } : {}} onClick={handleUpdateUseTotal}>{label}</span>
                     </>
