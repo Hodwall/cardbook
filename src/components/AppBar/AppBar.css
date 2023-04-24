@@ -12,6 +12,15 @@
     box-shadow: unset;
 }
 
+.appbar button svg {
+    font-size: 1.4em;
+    vertical-align: bottom;
+}
+
+.appbar button span>svg {
+    margin-right: 0.4em;
+}
+
 .appbar .header {
     display: grid;
     grid-template-columns: 16em 1fr;
@@ -167,11 +176,47 @@
 
 @media (max-width: 800px) {
     .appbar .header {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .appbar .header .ham-menu {
+        background: unset;
+        border: unset;
+        color: white;
+        text-align: right;
+        font-size: 1.4em;
     }
 
     .appbar .header .toolbar {
         flex-direction: column;
+        grid-column-end: span 2;
+    }
+
+    .appbar .header .toolbar .toolbar-drawer.hidden {
+        z-index: -1;
+    }
+
+    .appbar .header .toolbar .toolbar-drawer-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    .appbar .tag-deck-bar {
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+    }
+
+    .appbar .deckbar {
+        width: 100%;
+    }
+
+    .appbar .deckbar input {
+        width: 100%;
+    }
+
+    .results-gallery {
+        justify-content: center;
     }
 
     .logo {

@@ -218,6 +218,10 @@
     display: none !important;
 }
 
+.hide_toolbar .ql-editor {
+    pointer-events: none;
+}
+
 .ql-toolbar {
     position: absolute;
     bottom: 2px;

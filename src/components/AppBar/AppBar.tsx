@@ -4,12 +4,15 @@ import createNpc from '../../builders/npc/npcBuilder';
 import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore } from '../../hooks/useCardStore';
-import { iDeck, useDeckStore } from '../../hooks/useDeckStore';
+import { useDeckStore } from '../../hooks/useDeckStore';
+import useWindowSize from '../../hooks/useWindowSize';
 import Tag from '../Tag';
 import Deck from '../Deck';
 import BigTag from '../BigTag';
-import { MdSave } from 'react-icons/md';
+import { MdInsertDriveFile, MdOutlineInsertDriveFile, MdOutlineMale } from 'react-icons/md';
 import { RiArrowGoBackFill } from 'react-icons/ri';
+import { FaTags, FaDiceD20 } from 'react-icons/fa';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import './AppBar.css';
 
 
@@ -18,8 +21,10 @@ const AppBar = () => {
 	const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags } = useDeckStore();
 	const { cardStore, addCard, updateCardStore } = useCardStore();
 	const { npcStore, updateNpcStore, addNpc } = useNpcStore();
+	const { width } = useWindowSize();
 
 	const [toolbarSection, setToolbarSection] = useState<string>('');
+	const [toolbarDisplay, setToolbarDisplay] = useState(true);
 	const [tagDrawerDisplay, setTagDrawerDisplay] = useState(false);
 	const [resultsTagsDrawer, setResultsTagsDrawer] = useState(tagStore);
 	const [searchString, setSearchString] = useState('');
@@ -33,6 +38,12 @@ const AppBar = () => {
 		y: tagDrawerDisplay ? 0 : -100,
 		height: tagDrawerDisplay ? '400px' : '0px',
 		opacity: tagDrawerDisplay ? 1 : 0,
+	});
+
+	const animation_toolbar = useSpring({
+		y: toolbarDisplay ? 0 : -100,
+		height: toolbarDisplay ? '400px' : '0px',
+		opacity: toolbarDisplay ? 1 : 0,
 	});
 
 	// SEARCH TAGS
@@ -111,49 +122,62 @@ const AppBar = () => {
 		setDeckStrictMode(!deckStrictMode);
 	};
 
+	// HANDLERS
+	const handleToggleToolbarDisplay = () => {
+		if (tagDrawerDisplay) setTagDrawerDisplay(false);
+		setToolbarDisplay(!toolbarDisplay);
+	};
+
+	const handleToggleTagsDisplay = () => {
+		if (toolbarDisplay) setToolbarDisplay(false);
+		setTagDrawerDisplay(!tagDrawerDisplay);
+	};
+
 	const getToolbarElements = (section: string) => {
 		switch (section) {
 			case 'npcs':
 				return (
 					<>
-						<button>MALE</button>
+						<button><span><MdOutlineMale />MALE</span></button>
 						<button onClick={() => addNpc(createNpc('human', 'male', activeTags))}>ROLL A HUMAN</button>
 						<button onClick={() => addNpc(createNpc('elf', 'male', activeTags))}>ROLL AN ELF</button>
 						<button onClick={() => addNpc(createNpc('dwarf', 'male', activeTags))}>ROLL A DWARF</button>
-						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
 					</>
 				);
-			case 'custom':
+			case 'generators':
 				return (
 					<>
-						<button onClick={() => addCard(activeTags)}>ADD CUSTOM CARD</button>
-						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
+						<button onClick={() => setToolbarSection('npcs')}>NPCs</button>
+						<button onClick={() => setToolbarSection('locations')}>BUILDINGS</button>
+						<button onClick={() => setToolbarSection('locations')}>DUNGEONS</button>
+						<button onClick={() => setToolbarSection('locations')}>TRAVEL</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
 					</>
 				);
 			case 'data':
 				return (
 					<>
 						<button onClick={() => inputRef.current?.click()}>
-							{file ? `${file.name}` : 'Click to select'}
+							{file ? <span><MdInsertDriveFile />`${file.name}`</span> : <span><MdOutlineInsertDriveFile />Select a file ...</span>}
 						</button>
 						<input type="file" ref={inputRef} onChange={handleFileChange} style={{ display: 'none' }} accept=".json" />
-						<button onClick={() => importData()}>IMPORT DATA</button>
-						<button onClick={() => exportData()}>EXPORT DATA</button>
-						<button className={'return'} onClick={() => setToolbarSection('')}>RETURN</button>
+						<button onClick={() => importData()}>IMPORT</button>
+						<button onClick={() => exportData()}>EXPORT</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
 					</>
 				);
 			default:
 				return (
 					<>
-						<button onClick={() => setToolbarSection('treasures')}>TREASURES</button>
-						<button onClick={() => setToolbarSection('npcs')}>NPCs</button>
-						<button onClick={() => setToolbarSection('locations')}>LOCATIONS</button>
-						<button onClick={() => setToolbarSection('custom')}>CUSTOM</button>
-						<button onClick={() => setToolbarSection('data')}>DATA</button>
+						<button onClick={() => addCard(activeTags)}>ADD EMPTY CARD</button>
+						<button onClick={() => setToolbarSection('generators')}>GENERATE CARD</button>
+						<button onClick={() => setToolbarSection('data')}>MANAGE DATA</button>
 					</>
 				);
 		}
 	};
+
 
 	return (
 		<div className={'appbar'}>
@@ -163,12 +187,20 @@ const AppBar = () => {
 					<span>DUNGEON MASTER'S</span>
 					<span>DECKBOOK</span>
 				</div>
-
+				{width < 800 && <button className={'ham-menu'} onClick={handleToggleToolbarDisplay}><GiHamburgerMenu /></button>}
 				<div className={'toolbar'}>
-					{getToolbarElements(toolbarSection)}
-					<button className={'tags'} onClick={() => setTagDrawerDisplay(!tagDrawerDisplay)}>TAGS</button>
+					{
+						width < 800 ?
+							<animated.div className={`toolbar-drawer ${toolbarDisplay ? '' : 'hidden'}`} style={animation_toolbar}>
+								<div className={`toolbar-drawer-options`}>
+									{getToolbarElements(toolbarSection)}
+								</div>
+							</animated.div>
+							:
+							getToolbarElements(toolbarSection)
+					}
+					<button className={'tags'} onClick={handleToggleTagsDisplay}><FaTags /></button>
 				</div>
-
 			</div>
 
 			<div className={'tag-deck-bar'}>
