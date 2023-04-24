@@ -65,7 +65,7 @@ const Card = (props: { data: iCard; }) => {
       toolbar: [
         ['bold', 'italic', 'underline', 'strike', 'blockquote'],
         [{ 'color': [] }],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'lists': [{ 'list': 'ordered' }, { 'list': 'bullet' }] }],
         ['link'],
       ]
     };
@@ -156,13 +156,25 @@ const Card = (props: { data: iCard; }) => {
               )
             }
           </div>
+          <div id={`#toolbar`} className={`ql-toolbar ql-snow ${editMode ? '' : 'hidden'} toolbar-${props.data.id}`}>
+            <button className="ql-bold" />
+            <button className="ql-italic" />
+            <button className="ql-underline" />
+            <button className="ql-blockquote" />
+            <button className="ql-list" value="ordered" />
+            <button className="ql-list" value="bullet" />
+            <select className="ql-align" />
+            <select className="ql-color" />
+            <button className="ql-link" />
+          </div>
           <ReactQuill
-            className={editMode ? '' : 'hide_toolbar'}
             theme="snow"
             value={content}
             readOnly={!editMode}
             onChange={(val: any) => setContent(val)}
-            modules={modules}
+            modules={{
+              toolbar: `.toolbar-${props.data.id}`,
+            }}
           />
         </div>
         <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>

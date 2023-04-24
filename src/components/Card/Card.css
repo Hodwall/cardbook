@@ -210,42 +210,70 @@
 
 
 
-/******/
-.quill {
-    flex: 1;
+
+/** REACT QUILL EDITOR TRICKERY **/
+.ql-toolbar.ql-snow {
+    position: absolute;
+    border: none;
+    bottom: 0.2em;
+    padding: 0;
+    margin: 0;
+    left: 0.4em;
 }
 
-.hide_toolbar .ql-toolbar {
+.ql-toolbar.ql-snow.hidden {
     display: none !important;
 }
 
-.hide_toolbar .ql-editor {
-    pointer-events: none;
-}
 
-.ql-toolbar {
+.ql-toolbar.ql-snow .ql-picker-options {
+    color: black;
     position: absolute;
-    bottom: 2px;
-    padding: 0 !important;
-    z-index: 9;
-    border: unset !important;
-    padding-bottom: 2px !important;
+    top: -8.6em !important;
+    margin-bottom: 0;
+    z-index: 99 !important;
 }
 
-.ql-formats {
-    margin: 0 !important;
+.ql-toolbar.ql-snow .ql-color-picker {
+    position: relative;
 }
 
-.ql-formats button {
-    padding: 2px 0px !important;
-    padding-bottom: 2px !important;
-    width: 24px !important;
+.ql-toolbar.ql-snow .ql-color-picker .ql-picker-options {
+    top: -6.9em !important;
+    margin-left: -3.7em;
+    border-radius: 0.3em;
+    z-index: 99;
+    transform: rotate(1deg);
+    position: absolute;
 }
 
-/* .ql-formats .ql-fill,
-.ql-formats .ql-stroke {
-    stroke: white !important;
-} */
+.ql-toolbar.ql-snow button {
+    height: 1.4em;
+    padding: 0.1em 0.1em;
+    width: 1.3em;
+    font-size: inherit;
+}
+
+.ql-toolbar.ql-snow>span {
+    width: 1.8em;
+    height: 1.4em !important;
+    padding-top: 0.05em;
+    font-size: inherit;
+}
+
+.ql-snow .ql-editor blockquote {
+    padding-left: 0.8em;
+}
+
+.ql-toolbar.ql-snow .ql-picker-options .ql-stroke {
+    fill: none !important;
+    stroke: #000000 !important;
+}
+
+.ql-toolbar.ql-snow .ql-picker-options .ql-fill {
+    fill: #000000 !important;
+    stroke: none !important;
+}
 
 .ql-toolbar .ql-stroke {
     fill: none !important;
@@ -272,7 +300,6 @@
     font-size: 0.85em;
     line-height: 1em;
     padding: 0.2em 0 !important;
-    text-align: justify;
 }
 
 .ql-editor ul,
@@ -287,15 +314,6 @@
 .card-body {
     display: flex;
     flex-direction: column;
-}
-
-div.quill span.ql-formats span.ql-color.ql-picker.ql-color-picker span.ql-picker-options {
-    position: absolute;
-    top: -8.15em;
-    right: -6.2em;
-    border-radius: 0.3em;
-    z-index: 99;
-    transform: rotate(1deg);
 }
 
 button:disabled {
