@@ -5,6 +5,7 @@ import { useNpcStore } from '../../hooks/useNpcStore';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
+import { useSettingsStore } from '../../hooks/useSettingsStore';
 import useWindowSize from '../../hooks/useWindowSize';
 import Tag from '../Tag';
 import Deck from '../Deck';
@@ -21,6 +22,7 @@ const AppBar = () => {
 	const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags } = useDeckStore();
 	const { cardStore, addCard, updateCardStore } = useCardStore();
 	const { npcStore, updateNpcStore, addNpc } = useNpcStore();
+	const { settingsStore, updateCardScale } = useSettingsStore();
 	const { width } = useWindowSize();
 
 	const [toolbarSection, setToolbarSection] = useState<string>('');
@@ -30,6 +32,7 @@ const AppBar = () => {
 	const [searchString, setSearchString] = useState('');
 	const [deckLabel, setDeckLabel] = useState('');
 	const [deckStrictMode, setDeckStrictMode] = useState(activeDeck?.isStrict);
+	const [cardScale, setCardScale] = useState(settingsStore.cardScale);
 	const [file, setFile] = useState<File | null>();
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -45,6 +48,10 @@ const AppBar = () => {
 		height: toolbarDisplay ? '400px' : '0px',
 		opacity: toolbarDisplay ? 1 : 0,
 	});
+
+	useEffect(() => {
+		updateCardScale(cardScale);
+	}, [cardScale]);
 
 	// SEARCH TAGS
 	useEffect(() => {
@@ -155,6 +162,17 @@ const AppBar = () => {
 						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
 					</>
 				);
+			case 'settings':
+				return (
+					<>
+						<div className={'card-scale'}>
+							<input type="range" min="50" max="150" value={cardScale} onChange={(e: any) => setCardScale(e.target.value)} />
+							<span>CARD SCALE {cardScale}%</span>
+						</div>
+						<button onClick={() => setCardScale(100)}>RESET</button>
+						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
+					</>
+				);
 			case 'data':
 				return (
 					<>
@@ -172,6 +190,7 @@ const AppBar = () => {
 					<>
 						<button onClick={() => addCard(activeTags)}>ADD EMPTY CARD</button>
 						<button onClick={() => setToolbarSection('generators')}>GENERATE CARD</button>
+						<button onClick={() => setToolbarSection('settings')}>SETTINGS</button>
 						<button onClick={() => setToolbarSection('data')}>MANAGE DATA</button>
 					</>
 				);

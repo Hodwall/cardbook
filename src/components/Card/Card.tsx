@@ -3,6 +3,7 @@ import { useSpring, animated, a } from 'react-spring';
 import ReactQuill from 'react-quill';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
+import { useSettingsStore } from '../../hooks/useSettingsStore';
 import BackgroundPicker from '../BackgroundPicker/BackgroundPicker';
 import CardStat from '../CardStat/CardStat';
 import ColorPicker from '../ColorPicker/ColorPicker';
@@ -18,6 +19,7 @@ import './Card.css';
 const Card = (props: { data: iCard; }) => {
   const { tagStore, createTag } = useTagStore();
   const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground } = useCardStore();
+  const { settingsStore } = useSettingsStore();
   const [editMode, setEditMode] = useState(false);
   const [editStatsMode, setEditStatsMode] = useState(false);
   const [label, setLabel] = useState(props.data.label);
@@ -116,10 +118,12 @@ const Card = (props: { data: iCard; }) => {
     }
   };
 
+  console.log(settingsStore.cardScale);
+
   const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`;
 
   return (
-    <animated.div className={`card`} style={animation} ref={ref}>
+    <animated.div className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>
 
       <a.div className={'card-side'} style={{
         opacity: opacity.to(o => 1 - o), transform,
