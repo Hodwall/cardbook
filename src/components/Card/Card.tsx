@@ -100,7 +100,6 @@ const Card = (props: { data: iCard; }) => {
     if (!editMode && !editStatsMode) {
       setFlipped(!flipped);
       setSearchTagsString('');
-      setDisplayTagsDialog(false);
     }
   };
 
@@ -118,7 +117,13 @@ const Card = (props: { data: iCard; }) => {
     }
   };
 
-  console.log(settingsStore.cardScale);
+  const handleAddTag = (tag_id: number) => {
+    addTagToCard(props.data.id, tag_id);
+  };
+
+  const handleRemoveTag = (tag_id: number) => {
+    removeTagFromCard(props.data.id, tag_id);
+  };
 
   const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`;
 
@@ -141,8 +146,9 @@ const Card = (props: { data: iCard; }) => {
         <div className={'card-body'}>
           <div className={'card-stats'}>
             {
-              props.data.stats?.map((stat) =>
+              props.data.stats?.map((stat, index) =>
                 <CardStat
+                  key={index}
                   stat={stat}
                   cardId={props.data.id}
                   editMode={editStatsMode}
@@ -212,7 +218,7 @@ const Card = (props: { data: iCard; }) => {
                   key={index}
                   id={tag.id}
                   label={tag.label}
-                  deleteHandler={removeTagFromCard(props.data.id, tag.id)}
+                  deleteHandler={handleRemoveTag}
                   canDelete />)
           }</div>
         </div>
@@ -233,7 +239,7 @@ const Card = (props: { data: iCard; }) => {
                           return results;
                         }, [])
                           .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
-                          .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={addTagToCard(props.data.id, tag.id)} deleteHandler={removeTagFromCard(props.data.id, tag.id)} />)
+                          .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} deleteHandler={handleRemoveTag} />)
                       }
                     </div>
                     <form>
