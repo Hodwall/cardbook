@@ -1,4 +1,5 @@
 import { useState, createContext, useContext } from 'react';
+import { GiConsoleController } from 'react-icons/gi';
 
 export interface iCardStat {
     id: number,
@@ -38,6 +39,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     })());
 
     const updateCardStore = (val: iCard[]) => {
+        console.log('updating card store', val);
         setCardStore(val);
         localStorage.setItem('card_store', JSON.stringify(val));
     };
@@ -48,7 +50,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             id: new_id,
             label: '',
             stats: [],
-            tags: tags
+            tags: [...tags]
         }]);
     };
 
@@ -78,12 +80,17 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const addTagToCard = (card_id: number, tag_id: number) => {
+        console.log('adding tag', card_id, tag_id);
         let store = [...cardStore];
+        console.log('store before', store);
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
+        console.log('card index: ', card_index);
         if (card_index != -1) {
             const has_tag = store[card_index].tags.some((tag) => tag === tag_id);
+            console.log(store[card_index].tags);
             if (!has_tag) store[card_index].tags.push(tag_id);
             store = [...updateStatTotals(store)];
+            console.log('store after', store);
             updateCardStore(store);
         }
     };
