@@ -16,7 +16,6 @@ function App() {
   let optional_tags: number[] = [];
 
   if (activeDeck) {
-    console.log(activeDeck);
     if (activeDeck.isStrict) {
       required_tags = [... new Set([...activeDeck.tags, ...activeTags])];
     } else {

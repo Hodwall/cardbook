@@ -18,9 +18,9 @@ import './AppBar.css';
 
 const AppBar = () => {
 	const { tagStore, activeTags, updateActiveTags, createTag, setTagInactive, updateTagStore, getTagByLabel } = useTagStore();
-	const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags } = useDeckStore();
+	const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags, updateDeckStore } = useDeckStore();
 	const { cardStore, addCard, createCard, updateCardStore } = useCardStore();
-	const { settingsStore, updateCardScale } = useSettingsStore();
+	const { settingsStore, updateCardScale, updateSettingsStore } = useSettingsStore();
 	const { width } = useWindowSize();
 
 	const [toolbarSection, setToolbarSection] = useState<string>('');
@@ -85,13 +85,15 @@ const AppBar = () => {
 	const exportData = () => {
 		const store = {
 			cardStore: [...cardStore],
-			tagStore: [...tagStore]
+			deckStore: [...deckStore],
+			settingsStore: settingsStore,
+			tagStore: [...tagStore],
 		};
 		var a = document.createElement("a");
 		//@ts-ignore
 		var file = new Blob([JSON.stringify(store)], { type: 'text/plain' });
 		a.href = URL.createObjectURL(file);
-		a.download = 'deckbook-backup.json';
+		a.download = `deckbook-backup-${Date.now()}.json`;
 		a.click();
 	};
 
@@ -102,7 +104,9 @@ const AppBar = () => {
 			reader.onload = (event: any) => {
 				const new_data = JSON.parse(event.target.result);
 				updateCardStore(new_data.cardStore);
+				updateDeckStore(new_data.deckStore);
 				updateTagStore(new_data.tagStore);
+				updateSettingsStore(new_data.settingsStore);
 				setFile(null);
 			};
 		}

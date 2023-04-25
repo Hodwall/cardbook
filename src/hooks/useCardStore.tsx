@@ -38,7 +38,6 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     })());
 
     const updateCardStore = (val: iCard[]) => {
-        console.log('updating card store', val);
         setCardStore(val);
         localStorage.setItem('card_store', JSON.stringify(val));
     };
@@ -99,17 +98,12 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const addTagToCard = (card_id: number, tag_id: number) => {
-        console.log('adding tag', card_id, tag_id);
         let store = [...cardStore];
-        console.log('store before', store);
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
-        console.log('card index: ', card_index);
         if (card_index != -1) {
             const has_tag = store[card_index].tags.some((tag) => tag === tag_id);
-            console.log(store[card_index].tags);
             if (!has_tag) store[card_index].tags.push(tag_id);
             store = [...updateStatTotals(store)];
-            console.log('store after', store);
             updateCardStore(store);
         }
     };
@@ -184,18 +178,14 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
     const removeStatFromCard = (stat_id: number, card_id: number) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
-        console.log(store[card_index].stats);
         if (card_index != -1) {
             store[card_index].stats = [...store[card_index].stats.filter((stat: iCardStat) => stat.id != stat_id)];
-            console.log(store[card_index].stats);
             store = [...updateStatTotals(store)];
-            console.log(store[card_index].stats);
             updateCardStore(store);
         }
     };
 
     const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: number, color?: string; useTotal?: boolean; }) => {
-        console.log(data);
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {

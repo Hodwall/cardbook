@@ -45,7 +45,6 @@ export const DeckStoreProvider = (props: { children: React.ReactNode; }) => {
 
     const createDeck = (label: string, isStrict: boolean, tags: number[]) => {
         const new_id = Date.now();
-        console.log(tags);
         updateDeckStore([...deckStore, {
             id: new_id,
             label: label,
@@ -98,6 +97,7 @@ export const DeckStoreProvider = (props: { children: React.ReactNode; }) => {
     return (
         <DeckStoreContext.Provider value={{
             deckStore,
+            updateDeckStore,
             activeDeck,
             updateActiveDeck,
             createDeck,

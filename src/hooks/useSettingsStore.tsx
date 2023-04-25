@@ -29,6 +29,7 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
     return (
         <SettingsStoreContext.Provider value={{
             settingsStore,
+            updateSettingsStore,
             updateCardScale,
         }}>
             {props.children}

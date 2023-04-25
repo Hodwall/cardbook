@@ -91,7 +91,6 @@ const Card = (props: { data: iCard; }) => {
     document.addEventListener('mouseup', function (event) {
       const diffX = Math.abs(event.pageX - startX);
       const diffY = Math.abs(event.pageY - startY);
-      console.log(diffX, diffY);
       if (diffX < delta && diffY < delta) {
         handleClickOutside(event);
       }
