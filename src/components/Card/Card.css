@@ -225,11 +225,12 @@
     display: none !important;
 }
 
-
 .ql-toolbar.ql-snow .ql-picker-options {
     color: black;
     position: absolute;
-    top: -8.6em !important;
+    border-radius: 0.3em;
+    left: -0.1em;
+    top: -8.3em !important;
     margin-bottom: 0;
     z-index: 99 !important;
 }
@@ -240,11 +241,29 @@
 
 .ql-toolbar.ql-snow .ql-color-picker .ql-picker-options {
     top: -6.9em !important;
-    margin-left: -3.7em;
+    left: -3.3em;
     border-radius: 0.3em;
     z-index: 99;
     transform: rotate(1deg);
     position: absolute;
+    width: 8.6em;
+    padding: 0.2em;
+    margin: 0.1em;
+    border: unset;
+    min-width: unset;
+}
+
+.ql-toolbar.ql-snow .ql-picker-options .ql-picker-item {
+    height: 1.9em;
+    width: 1.9em;
+    padding: 0.4em 0.4em;
+    margin: 0.1em;
+}
+
+.ql-toolbar.ql-snow .ql-color-picker .ql-picker-options .ql-picker-item {
+    height: 0.9em;
+    width: 0.9em;
+    /* padding: 0.4em 0.4em; */
 }
 
 .ql-toolbar.ql-snow button {
@@ -259,6 +278,10 @@
     height: 1.4em !important;
     padding-top: 0.05em;
     font-size: inherit;
+}
+
+.ql-toolbar.ql-snow span.ql-picker-label {
+    padding: 0em 0.23em;
 }
 
 .ql-snow .ql-editor blockquote {
