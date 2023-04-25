@@ -1,5 +1,5 @@
 import { useState, createContext, useContext } from 'react';
-import { GiConsoleController } from 'react-icons/gi';
+
 
 export interface iCardStat {
     id: number,
@@ -23,7 +23,6 @@ export interface iCard {
 const CardStoreContext = createContext<any>(null);
 
 export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
-
     const [cardStore, setCardStore] = useState<iCard[]>((() => {
         let stored_data = localStorage.getItem('card_store');
         if (stored_data) {
@@ -51,6 +50,26 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             label: '',
             stats: [],
             tags: [...tags]
+        }]);
+    };
+
+    const createCard = (data: {
+        label?: 'string',
+        color?: 'string',
+        background?: 'string',
+        content?: 'any',
+        stats?: iCardStat[],
+        tags: number[];
+    }) => {
+        const new_id = Date.now();
+        updateCardStore([...cardStore, {
+            id: new_id,
+            label: data.label || '',
+            color: data.color,
+            background: data.background,
+            content: data.content,
+            stats: data.stats || [],
+            tags: [...data.tags]
         }]);
     };
 
@@ -231,6 +250,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             cardStore,
             updateCardStore,
             addCard,
+            createCard,
             deleteCard,
             copyCard,
             addTagToCard,

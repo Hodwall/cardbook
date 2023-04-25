@@ -8,20 +8,20 @@
     "cha"
   ],
   "alignments": [
-    "lawful good",
-    "neutral good",
-    "chaotic good",
-    "lawful neutral",
-    "neutral",
-    "chaotic neutral",
-    "lawful evil",
-    "neutral evil",
-    "chaotic evil"
+    "Lawful Good",
+    "Neutral Good",
+    "Chaotic Good",
+    "Lawful Neutral",
+    "Neutral",
+    "Chaotic Neutral",
+    "Lawful Evil",
+    "Neutral Evil",
+    "Chaotic Evil"
   ],
   "relationships": [
-    "friendly",
-    "indifferent",
-    "hostile"
+    "Friendly",
+    "Indifferent",
+    "Hostile"
   ],
   "age": [
     "young",
@@ -232,7 +232,7 @@
         "Wolff",
         "Wolfgang"
       ],
-      "female": [        
+      "female": [
         "Adelaide",
         "Agatha",
         "Agnes",

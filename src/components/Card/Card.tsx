@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSpring, animated, a } from 'react-spring';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import { useSettingsStore } from '../../hooks/useSettingsStore';
@@ -134,6 +134,14 @@ const Card = (props: { data: iCard; }) => {
 
   const handleRemoveTag = (tag_id: number) => {
     removeTagFromCard(props.data.id, tag_id);
+  };
+
+  const content_test = {
+    ops: [
+      { insert: 'Gandalf', attributes: { bold: true } },
+      { insert: ' the ' },
+      { insert: 'Grey', attributes: { color: '#cccccc' } }
+    ]
   };
 
   const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`;

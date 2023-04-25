@@ -1,17 +1,13 @@
-import { useNpcStore, iNpc } from './hooks/useNpcStore';
 import { useTagStore } from './hooks/useTagStore';
 import { useCardStore, iCard } from './hooks/useCardStore';
 import { useDeckStore } from './hooks/useDeckStore';
 import AppBar from './components/AppBar';
 import ResultsGallery from './components/ResultsGallery';
-import NpcCard from './components/NpcCard';
-import CustomCard from './components/CustomCard/CustomCard';
 import './App.css';
 import Card from './components/Card';
 
 
 function App() {
-  const { npcStore } = useNpcStore();
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
   const { activeDeck } = useDeckStore();
@@ -54,7 +50,6 @@ function App() {
     <div className="App">
       <AppBar />
       <ResultsGallery>
-        {/* {filterCards(npcStore).map((card: iCard) => <NpcCard key={card.id} data={card} />)} */}
         {filterCards(cardStore).map((card: iCard) => <Card key={card.id} data={card} />)}
       </ResultsGallery>
     </div>

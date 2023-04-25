@@ -1,7 +1,6 @@
 import { useEffect, useState, FormEvent, useRef } from 'react';
 import { animated, useSpring } from 'react-spring';
-import createNpc from '../../builders/npc/npcBuilder';
-import { useNpcStore } from '../../hooks/useNpcStore';
+import rollNpc from '../../builders/npc/npcBuilder';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
@@ -10,7 +9,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 import Tag from '../Tag';
 import Deck from '../Deck';
 import BigTag from '../BigTag';
-import { MdInsertDriveFile, MdOutlineInsertDriveFile, MdOutlineMale } from 'react-icons/md';
+import { MdInsertDriveFile, MdOutlineInsertDriveFile, MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { FaTags, FaDiceD20 } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -18,10 +17,9 @@ import './AppBar.css';
 
 
 const AppBar = () => {
-	const { tagStore, activeTags, updateActiveTags, createTag, setTagInactive, updateTagStore } = useTagStore();
+	const { tagStore, activeTags, updateActiveTags, createTag, setTagInactive, updateTagStore, getTagByLabel } = useTagStore();
 	const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags } = useDeckStore();
-	const { cardStore, addCard, updateCardStore } = useCardStore();
-	const { npcStore, updateNpcStore, addNpc } = useNpcStore();
+	const { cardStore, addCard, createCard, updateCardStore } = useCardStore();
 	const { settingsStore, updateCardScale } = useSettingsStore();
 	const { width } = useWindowSize();
 
@@ -33,6 +31,7 @@ const AppBar = () => {
 	const [deckLabel, setDeckLabel] = useState('');
 	const [deckStrictMode, setDeckStrictMode] = useState(activeDeck?.isStrict);
 	const [cardScale, setCardScale] = useState(settingsStore.cardScale);
+	const [npcGender, setNpcGender] = useState('male');
 	const [file, setFile] = useState<File | null>();
 
 	const inputRef = useRef<HTMLInputElement | null>(null);
@@ -86,7 +85,6 @@ const AppBar = () => {
 	const exportData = () => {
 		const store = {
 			cardStore: [...cardStore],
-			npcStore: [...npcStore],
 			tagStore: [...tagStore]
 		};
 		var a = document.createElement("a");
@@ -104,7 +102,6 @@ const AppBar = () => {
 			reader.onload = (event: any) => {
 				const new_data = JSON.parse(event.target.result);
 				updateCardStore(new_data.cardStore);
-				updateNpcStore(new_data.npcStore);
 				updateTagStore(new_data.tagStore);
 				setFile(null);
 			};
@@ -145,10 +142,10 @@ const AppBar = () => {
 			case 'npcs':
 				return (
 					<>
-						<button><span><MdOutlineMale />MALE</span></button>
-						<button onClick={() => addNpc(createNpc('human', 'male', activeTags))}>ROLL A HUMAN</button>
-						<button onClick={() => addNpc(createNpc('elf', 'male', activeTags))}>ROLL AN ELF</button>
-						<button onClick={() => addNpc(createNpc('dwarf', 'male', activeTags))}>ROLL A DWARF</button>
+						<button onClick={() => setNpcGender(`${npcGender === 'male' ? 'female' : 'male'}`)}><span>{npcGender === 'male' ? <MdOutlineMale /> : <MdOutlineFemale />}{npcGender}</span></button>
+						<button onClick={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])]))}>ROLL A HUMAN</button>
+						<button onClick={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])]))}>ROLL AN ELF</button>
+						<button onClick={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])]))}>ROLL A DWARF</button>
 						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
 					</>
 				);

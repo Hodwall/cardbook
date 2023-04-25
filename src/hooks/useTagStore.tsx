@@ -24,7 +24,6 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         else return [];
     })());
 
-    const { removeTagFromAllNpcs } = useNpcStore();
     const { removeTagFromAllCards } = useCardStore();
     const { deckStore, updateDeckTags, deleteDeck, deleteAllDecks } = useDeckStore();
 
@@ -38,7 +37,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         localStorage.setItem('active_tags', JSON.stringify(val || []));
     };
 
-    const createTag = (tag: iTag) => {
+    const createTag = (tag: any) => {
         const new_id = Date.now();
         updateTagStore([...tagStore, {
             ...tag,
@@ -50,7 +49,6 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
 
     const deleteTag = (id: number) => {
         updateTagStore(tagStore.filter((tag: iTag) => tag.id != id));
-        removeTagFromAllNpcs(id);
         removeTagFromAllCards(id);
         updateActiveTags([...activeTags.filter((tag: number) => tag != id)]);
         deckStore.forEach((deck: iDeck) => {
@@ -77,6 +75,10 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         updateActiveTags([...activeTags.filter((tag: number) => tag != id)]);
     };
 
+    const getTagByLabel = (label: string) => {
+        return tagStore.find((tag) => tag.label = label)?.id || createTag({ label: label });
+    };
+
     return (
         <TagStoreContext.Provider value={{
             tagStore,
@@ -87,7 +89,8 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
             deleteTag,
             deleteAllTags,
             setTagActive,
-            setTagInactive
+            setTagInactive,
+            getTagByLabel,
         }}>
             {props.children}
         </TagStoreContext.Provider>
