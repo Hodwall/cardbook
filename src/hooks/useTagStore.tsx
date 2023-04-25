@@ -1,6 +1,7 @@
 import { useState, createContext, useContext } from 'react';
 import { useNpcStore } from './useNpcStore';
 import { useCardStore } from './useCardStore';
+import { useDeckStore, iDeck } from './useDeckStore';
 
 
 export interface iTag {
@@ -25,6 +26,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
 
     const { removeTagFromAllNpcs } = useNpcStore();
     const { removeTagFromAllCards } = useCardStore();
+    const { deckStore, updateDeckTags, deleteDeck, deleteAllDecks } = useDeckStore();
 
     const updateTagStore = (val: iTag[]) => {
         setTagStore(val);
@@ -51,11 +53,20 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         removeTagFromAllNpcs(id);
         removeTagFromAllCards(id);
         updateActiveTags([...activeTags.filter((tag: number) => tag != id)]);
+        deckStore.forEach((deck: iDeck) => {
+            if (deck.tags.findIndex((tag: number) => tag === id) !== -1) {
+                const filtered_tags = deck.tags.filter((tag) => tag != id);
+                if (filtered_tags.length > 0) updateDeckTags(deck.id, filtered_tags);
+                else deleteDeck(deck.id);
+            }
+        });
+
     };
 
     const deleteAllTags = () => {
         updateTagStore([]);
         updateActiveTags([]);
+        deleteAllDecks();
     };
 
     const setTagActive = (id: number) => {

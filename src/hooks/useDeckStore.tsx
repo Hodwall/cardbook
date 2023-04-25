@@ -87,6 +87,10 @@ export const DeckStoreProvider = (props: { children: React.ReactNode; }) => {
         if (activeDeck && activeDeck.id === id) updateActiveDeck(null);
     };
 
+    const deleteAllDecks = () => {
+        updateDeckStore([]);
+    };
+
     const getDeck = (id: number) => {
         return deckStore.find((deck: iDeck) => deck.id === id);
     };
@@ -98,6 +102,7 @@ export const DeckStoreProvider = (props: { children: React.ReactNode; }) => {
             updateActiveDeck,
             createDeck,
             deleteDeck,
+            deleteAllDecks,
             updateDeckLabel,
             updateDeckIsStrict,
             updateDeckTags,
