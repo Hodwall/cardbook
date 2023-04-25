@@ -13,7 +13,7 @@
 
 .background-picker form {
     display: inline-grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 10.5em 2.7em 2.7em;
 }
 
 .background-picker input {
@@ -22,6 +22,8 @@
     color: gray;
     font-family: inherit;
     font-size: 1em;
+    padding: 0 0.4em;
+    height: 1.6em;
 }
 
 .background-picker input:focus {
@@ -29,7 +31,7 @@
     outline: none;
 }
 
-.background-picker button {
+.background-picker form button {
     font-size: 1.6em;
     padding: 0px;
     height: 1em;

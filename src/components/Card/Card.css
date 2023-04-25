@@ -318,6 +318,11 @@
     font-size: unset;
 }
 
+.ql-container.ql-snow.ql-disabled {
+    pointer-events: none;
+    user-select: none;
+}
+
 .ql-editor {
     font-family: 'IM Fell DW Pica', serif !important;
     font-size: 0.85em;
