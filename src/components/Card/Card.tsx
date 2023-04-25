@@ -81,10 +81,21 @@ const Card = (props: { data: iCard; }) => {
     }
   };
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
-    return () => {
-      document.removeEventListener('click', handleClickOutside, true);
-    };
+    const delta = 6;
+    let startX: number;
+    let startY: number;
+    document.addEventListener('mousedown', function (event) {
+      startX = event.pageX;
+      startY = event.pageY;
+    });
+    document.addEventListener('mouseup', function (event) {
+      const diffX = Math.abs(event.pageX - startX);
+      const diffY = Math.abs(event.pageY - startY);
+      console.log(diffX, diffY);
+      if (diffX < delta && diffY < delta) {
+        handleClickOutside(event);
+      }
+    });
   }, []);
 
   // HANDLERS
