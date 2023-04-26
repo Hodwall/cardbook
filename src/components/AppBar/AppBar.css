@@ -6,26 +6,39 @@
     background-color: hsl(0, 45%, 17%);
 }
 
-.appbar button {
+.appbar button,
+.appbar div.btn {
     text-transform: uppercase;
+    font-weight: normal;
+}
+
+.appbar div.btn {
+    display: flex;
+}
+
+.appbar div.btn span {
+    align-self: center;
 }
 
 .appbar button.file-select {
     text-transform: unset;
 }
 
+/* .appbar div.btn:active */
 .appbar button:active {
     transform: translateY(2px);
     box-shadow: inset hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px;
     box-shadow: unset;
 }
 
-.appbar button svg {
+.appbar button svg,
+.appbar span svg {
     font-size: 1.4em;
     vertical-align: bottom;
 }
 
-.appbar button span>svg {
+.appbar button span>svg,
+.appbar span>svg {
     margin-right: 0.4em;
 }
 
@@ -65,6 +78,7 @@
 }
 
 .appbar .header .toolbar button,
+.appbar .header .toolbar div.btn,
 .appbar .deckbar button {
     height: 2.5em;
     font-family: inherit;

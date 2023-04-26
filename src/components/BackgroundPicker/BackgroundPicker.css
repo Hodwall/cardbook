@@ -11,6 +11,14 @@
     z-index: 2;
 }
 
+.background-picker-btn {
+    color: white;
+}
+
+.card-tools .background-picker-btn {
+    font-size: 1.3em;
+}
+
 .background-picker form {
     display: inline-grid;
     grid-template-columns: 10.5em 2.7em 2.7em;
@@ -37,4 +45,26 @@ div.background-picker form button {
     height: 1em !important;
     color: gray !important;
     border-radius: 0.2em;
+}
+
+
+.toolbar div.background-picker {
+    position: absolute;
+    font-size: 1.2em;
+    right: 0.6em;
+    margin-left: auto;
+    height: 1.6em;
+    width: 16em;
+    bottom: 0.9em;
+    border-radius: 0.3em;
+    background-color: white;
+    color: gray;
+    box-shadow: 0px -2px 10px 2px #00000045;
+    transform: rotate(2deg) !important;
+    z-index: 2;
+}
+
+.toolbar div.background-picker form {
+    display: inline-grid;
+    grid-template-columns: 10.2em 3.7em 2.7em;
 }

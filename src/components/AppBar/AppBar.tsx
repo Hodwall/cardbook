@@ -1,6 +1,7 @@
 import { useEffect, useState, FormEvent, useRef } from 'react';
 import { animated, useSpring } from 'react-spring';
-import rollNpc from '../../builders/npc/npcBuilder';
+import rollNpc from '../../builders/npcBuilder';
+import { rollDungeonRoom } from '../../builders/dungeonBuilder';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
 import { useCardStore } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
@@ -14,13 +15,14 @@ import { RiArrowGoBackFill } from 'react-icons/ri';
 import { FaTags, FaDiceD20 } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import './AppBar.css';
+import BackgroundPicker from '../BackgroundPicker/BackgroundPicker';
 
 
 const AppBar = () => {
 	const { tagStore, activeTags, updateActiveTags, createTag, setTagInactive, updateTagStore, getTagByLabel } = useTagStore();
 	const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags, updateDeckStore } = useDeckStore();
 	const { cardStore, addCard, createCard, updateCardStore } = useCardStore();
-	const { settingsStore, updateCardScale, updateSettingsStore } = useSettingsStore();
+	const { settingsStore, updateCardScale, updateSettingsStore, updateCardDefaultBg } = useSettingsStore();
 	const { width } = useWindowSize();
 
 	const [toolbarSection, setToolbarSection] = useState<string>('');
@@ -147,19 +149,40 @@ const AppBar = () => {
 				return (
 					<>
 						<button onClick={() => setNpcGender(`${npcGender === 'male' ? 'female' : 'male'}`)}><span>{npcGender === 'male' ? <MdOutlineMale /> : <MdOutlineFemale />}{npcGender}</span></button>
-						<button onClick={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])]))}>ROLL A HUMAN</button>
-						<button onClick={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])]))}>ROLL AN ELF</button>
-						<button onClick={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])]))}>ROLL A DWARF</button>
-						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
+
+						<div className={'btn'}>
+							<BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_human_${npcGender}`, url)} disabledOutsideClickHandler />
+							<span onClick={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_human_${npcGender}`]))}>ROLL A HUMAN</span>
+						</div>
+						<div className={'btn'}>
+							<BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_elf_${npcGender}`, url)} disabledOutsideClickHandler />
+							<span onClick={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_elf_${npcGender}`]))}>ROLL AN ELF</span>
+						</div>
+						<div className={'btn'}>
+							<BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_dwarf_${npcGender}`, url)} disabledOutsideClickHandler />
+							<span onClick={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_dwarf_${npcGender}`]))}>ROLL A DWARF</span>
+						</div>
+						<button className={'return'} onClick={() => setToolbarSection('generators')}><RiArrowGoBackFill /></button>
+					</>
+				);
+			case 'dungeons':
+				return (
+					<>
+						<div className={'btn'}>
+							<BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg('dungeon_mine', url)} disabledOutsideClickHandler />
+							<span onClick={() => createCard(rollDungeonRoom('mine', [... new Set([...activeTags, getTagByLabel('DUNGEON ROOM')])], settingsStore.cardDefaultBg['dungeon_mine']))}>ROLL A MINE ROOM</span>
+						</div>
+						<button className={'return'} onClick={() => setToolbarSection('generators')}><RiArrowGoBackFill /></button>
 					</>
 				);
 			case 'generators':
 				return (
 					<>
 						<button onClick={() => setToolbarSection('npcs')}>NPCs</button>
-						<button onClick={() => setToolbarSection('locations')}>BUILDINGS</button>
-						<button onClick={() => setToolbarSection('locations')}>DUNGEONS</button>
-						<button onClick={() => setToolbarSection('locations')}>TRAVEL</button>
+						<button onClick={() => setToolbarSection('locations')}>QUESTS</button> {/* LIKE JOB POSTERS DMG73 */}
+						<button onClick={() => setToolbarSection('locations')}>SETTLEMENTS</button> {/* CARD FOR SETTLEMENT, THEN ONE FOR BUILDING RANDOMS */}
+						<button onClick={() => setToolbarSection('dungeons')}>DUNGEONS</button>
+						<button onClick={() => setToolbarSection('locations')}>TRAVEL</button> {/* ADD WEATHER TO CARD? */}
 						<button className={'return'} onClick={() => setToolbarSection('')}><RiArrowGoBackFill /></button>
 					</>
 				);

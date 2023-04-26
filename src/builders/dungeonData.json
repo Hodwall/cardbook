@@ -1,0 +1,45 @@
+{
+  "chamber_state": [
+    "Rubble, ceiling partially collapsed",
+    "Holes, floor partially collapsed",
+    "Ashes, contents mostly burned",
+    "Used as a campsite",
+    "Pool of water, chamber's original contents are water damaged",
+    "Furniture wrecked but still present",
+    "Converted to some other use (roll on the general dungeons chambers table)",
+    "Stripped bare",
+    "Pristine and in original state"
+  ],
+  "chamber_contents": [
+    "Monster (dominant inhabitant)",
+    "Monster (dominant inhabitant) with treasure",
+    "Monster (pet or allied creature)",
+    "Monster (pet or allied creature) guardiang treasure",
+    "Monster (random creature)",
+    "Monster (random creature) with treasure",
+    "Dungeon Hazard with incidental treasure",
+    "Obstacle (see random obstacles)",
+    "Trap (see random traps)",
+    "Trap protecting treasure",
+    "Trick",
+    "Empty room",
+    "Empty room with dungeon hazard",
+    "Empty room with treasure"
+  ],
+  "chambers": {
+    "mine": [
+      "Barracks for miners",
+      "Bedroom for a supervisor or manager",
+      "Chapel dedicated to a patron deity of miners, earth or protection",
+      "Cistern providing drinking water for miners",
+      "Guardroom",
+      "Kitchen used to feed workers",
+      "Laboratory used to conduct tests on strange minerals extracted from the mine",
+      "Lode where metal ore is mined (75 percent chance of being depleted)",
+      "Office used by the mine supervisor",
+      "Smithy for repairing damaged goods",
+      "Storage for tools and other equipment",
+      "strong room or vault used to store ore for transport to the surface"
+    ]
+  }
+}

@@ -5,23 +5,28 @@ import './BackgroundPicker.css';
 
 const BackgroundPicker = (props: {
     changeBackgroundHandler?: Function,
+    disabledOutsideClickHandler?: boolean,
 }) => {
     const [display, setDisplay] = useState(false);
 
     // handles outside clicks
     const ref = useRef<any>(null);
     const handleClickOutside = (event: any) => {
-        if (ref.current && !ref.current.contains(event.target)) setDisplay(false);
+        if (props.disabledOutsideClickHandler) return;
+        else if (ref.current && !ref.current.contains(event.target)) setDisplay(false);
     };
     useEffect(() => {
         document.addEventListener('click', handleClickOutside, true);
         return () => document.removeEventListener('click', handleClickOutside, true);
     }, []);
 
-    const handleClick = () => setDisplay(!display);
+    const handleClick = (e: any) => {
+        e.stopPropagation();
+        setDisplay(!display);
+    };
 
     const handleBackgroundChange = (e: any) => {
-        e.preventDefault();
+        e.stopPropagation();
         const url = new URL(e.target[0].value);
         if (url) {
             if (props.changeBackgroundHandler) props.changeBackgroundHandler(e.target[0].value);
@@ -36,14 +41,14 @@ const BackgroundPicker = (props: {
 
     return (
         <>
-            <button onClick={handleClick}><MdImage /></button>
+            <span className={'background-picker-btn'} onClick={handleClick}><MdImage /></span>
             {
                 display &&
                 <div className={'background-picker'} ref={ref}>
                     <form onSubmit={handleBackgroundChange}>
                         <input name="url_input" />
-                        <button type="submit" value="Submit"><MdSave /></button>
-                        <button onClick={deleteBackground}><MdHideImage /></button>
+                        <input type="submit" value="SAVE" />
+                        <span onClick={deleteBackground}><MdHideImage /></span>
                     </form>
                 </div>
             }

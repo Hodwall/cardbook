@@ -3,7 +3,7 @@ const names: any = npcData.names;
 const d = npcData.description;
 
 
-const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) => {
+const rollNpc = (ancestry: string, gender: string, activeTags: number[] | [], defaultBg?: string) => {
   const doRoll = (arr: string[]) => { return arr[Math.floor((Math.random() * arr.length))]; };
   const pronoun = gender === 'male' ? ['he', 'his'] : ['she', 'her'];
   const pronoun_uppercase = gender === 'male' ? ['He', 'His'] : ['She', 'Her'];
@@ -41,7 +41,7 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
 
   const ancestry_colors: any = {
     'human': '#2A92D4',
-    'elf': '#68D42A',
+    'elf': '#92D42A',
     'dwarf': '#7C695C',
   };
 
@@ -49,6 +49,7 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
     label: `${data.name}
     ${data.ancestry}`,
     color: ancestry_colors[data.ancestry],
+    background: defaultBg,
     // background: 'https://cdn.openart.ai/stable_diffusion/6913ee5a973ce7cb4584ccd59d7bd665fe2b5875_2000x2000.webp',
     tags: data.tags,
     content: {
@@ -61,7 +62,7 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
         { insert: `A ${data.age}, ${data.personality} ${data.occupation}`, attributes: { bold: true } },
         { insert: `\n` },
         { insert: `\n` },
-        { insert: `${data.description}`, attributes: { italics: true } }
+        { insert: `${data.description}`, attributes: { italic: true } }
       ]
     },
   };

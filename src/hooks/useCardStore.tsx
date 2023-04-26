@@ -32,6 +32,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             parsed_data.forEach((card: iCard) => {
                 if (!card.label) card.label = '';
                 if (!card.stats) card.stats = [];
+                if (!card.isPinned) card.isPinned = false;
             });
             return parsed_data;
         }
@@ -48,6 +49,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         updateCardStore([...cardStore, {
             id: new_id,
             label: '',
+            isPinned: false,
             stats: [],
             tags: [...tags]
         }]);
@@ -68,6 +70,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             color: data.color,
             background: data.background,
             content: data.content,
+            isPinned: false,
             stats: data.stats || [],
             tags: [...data.tags]
         }]);
