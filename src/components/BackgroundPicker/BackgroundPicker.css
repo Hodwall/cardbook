@@ -31,10 +31,10 @@
     outline: none;
 }
 
-.background-picker form button {
-    font-size: 1.6em;
-    padding: 0px;
-    height: 1em;
-    color: gray;
+div.background-picker form button {
+    font-size: 1.6em !important;
+    padding: 0px !important;
+    height: 1em !important;
+    color: gray !important;
     border-radius: 0.2em;
 }

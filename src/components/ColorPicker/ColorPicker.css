@@ -8,7 +8,7 @@
 .slider-picker {
     position: fixed;
     bottom: 0;
-    left: 0;
+    left: 1.5em;
     width: 12em;
     background-color: white;
     border: 0.5em solid white;
