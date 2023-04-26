@@ -7,10 +7,13 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
   const doRoll = (arr: string[]) => { return arr[Math.floor((Math.random() * arr.length))]; };
   const pronoun = gender === 'male' ? ['he', 'his'] : ['she', 'her'];
   const pronoun_uppercase = gender === 'male' ? ['He', 'His'] : ['She', 'Her'];
-  const description = `${pronoun_uppercase[0]} has ${doRoll(d.hair_feature)}, ${doRoll(d.hair_length)} ${doRoll(d.hair_color)} hair. `
+
+  const hair_type = doRoll(d.hair_length);
+  const hair = (hair_type === 'bald') ? `is bald.` : `has ${doRoll(d.hair_feature)}, ${hair_type} ${doRoll(d.hair_color)} hair. `;
+  const description = `${pronoun_uppercase[0]} ${hair}`
     + `${pronoun_uppercase[1]} eyes are ${doRoll(d.eyes)} and ${doRoll(d.eyes_color)}. `
     + `${pronoun_uppercase[1]} nose is ${doRoll(d.nose)} and ${pronoun[1]} mouth ${doRoll(d.mouth)}. `
-    + `${pronoun_uppercase[0]} wears ${doRoll(d.accesories)} and a ${doRoll(d.accesories)}.`;
+    + `${pronoun_uppercase[0]} wears ${doRoll(d.clothes)} and carries a ${doRoll(d.accesories)}.`;
 
   const data = {
     id: Date.now(),
@@ -23,7 +26,7 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
     alignment: doRoll(npcData.alignments),
     age: doRoll(npcData.age),
     occupation: doRoll(npcData.occupations),
-    interaction: doRoll(npcData.interactions),
+    personality: doRoll(npcData.personality),
     relationship: doRoll(npcData.relationships),
     voice: doRoll(npcData.voices),
     description: description,
@@ -55,7 +58,7 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
         { insert: `\n` },
         { insert: `${data.voice}`, attributes: { color: '#14cedb' } },
         { insert: `\n` },
-        { insert: `A ${data.age}, ${data.interaction} ${data.occupation}`, attributes: { bold: true } },
+        { insert: `A ${data.age}, ${data.personality} ${data.occupation}`, attributes: { bold: true } },
         { insert: `\n` },
         { insert: `\n` },
         { insert: `${data.description}`, attributes: { italics: true } }
