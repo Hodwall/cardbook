@@ -12,13 +12,14 @@ import { FaTags } from 'react-icons/fa';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { IoIosCopy } from 'react-icons/io';
 import { MdAddCircle, MdBarChart, MdDeleteForever, MdEdit } from 'react-icons/md';
+import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
 import 'react-quill/dist/quill.snow.css';
 import './Card.css';
 
 
 const Card = (props: { data: iCard; }) => {
   const { tagStore, createTag } = useTagStore();
-  const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground } = useCardStore();
+  const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground, setCardPinned } = useCardStore();
   const { settingsStore } = useSettingsStore();
   const [editMode, setEditMode] = useState(false);
   const [editStatsMode, setEditStatsMode] = useState(false);
@@ -212,6 +213,7 @@ const Card = (props: { data: iCard; }) => {
                     return (
                       <>
                         <div className={'card-tools-left'}>
+                          <button onClick={() => setCardPinned(!props.data.isPinned, props.data.id)}>{props.data.isPinned ? <RiPushpinFill /> : <RiPushpinLine />}</button>
                           <button className={'copy-button'} onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
                           <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>
                         </div>

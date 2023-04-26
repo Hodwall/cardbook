@@ -42,7 +42,8 @@ function App() {
         }, []);
       }
     }
-    return result_cards.sort((a: iCard, b: iCard) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0);
+    // return result_cards.sort((a: iCard, b: iCard) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0);
+    return result_cards.sort((a: iCard, b: iCard) => (Number(b.isPinned) - Number(a.isPinned)) === 0 ? ((a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0) : (Number(b.isPinned) - Number(a.isPinned)));
   };
 
   return (

@@ -15,6 +15,7 @@ export interface iCard {
     color?: string,
     background?: string,
     content?: any,
+    isPinned?: boolean,
     isFlipped?: boolean,
     stats: iCardStat[],
     tags: number[];
@@ -161,6 +162,15 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         }
     };
 
+    const setCardPinned = (pinned: boolean, id: number) => {
+        let store = [...cardStore];
+        const card_index = store.findIndex((card: iCard) => card.id === id);
+        if (card_index != -1) {
+            store[card_index].isPinned = pinned;
+            updateCardStore(store);
+        }
+    };
+
     const addStatToCard = (card_id: number) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
@@ -231,10 +241,6 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         return tmp_store;
     };
 
-
-
-
-
     return (
         <CardStoreContext.Provider value={{
             cardStore,
@@ -253,6 +259,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             addStatToCard,
             removeStatFromCard,
             updateStat,
+            setCardPinned,
         }}>
             {props.children}
         </CardStoreContext.Provider>
