@@ -135,14 +135,6 @@ const Card = (props: { data: iCard; }) => {
     removeTagFromCard(props.data.id, tag_id);
   };
 
-  const content_test = {
-    ops: [
-      { insert: 'Gandalf', attributes: { bold: true } },
-      { insert: ' the ' },
-      { insert: 'Grey', attributes: { color: '#cccccc' } }
-    ]
-  };
-
   const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`;
 
   return (
@@ -213,12 +205,14 @@ const Card = (props: { data: iCard; }) => {
                   } else {
                     return (
                       <>
-                        <button onClick={() => setEditMode(true)}><MdEdit /></button>
-                        <button onClick={() => setEditStatsMode(true)}><MdBarChart /></button>
-                        <button onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
-                        <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>
-                        <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />
-                        <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />
+                        <div className={'card-tools-left'}>
+                          <button className={'copy-button'} onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
+                          <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>
+                        </div>
+                        <div className={'card-tools-right'}>
+                          <button onClick={() => setEditStatsMode(true)}><MdBarChart /></button>
+                          <button onClick={() => setEditMode(true)}><MdEdit /></button>
+                        </div>
                       </>
                     );
                   }
@@ -277,7 +271,15 @@ const Card = (props: { data: iCard; }) => {
                     </form>
                   </animated.div>
                   :
-                  <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}><FaTags /></button>
+                  <>
+                    <div className={'card-tools-left'}>
+                      <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />
+                      <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />
+                    </div>
+                    <div className={'card-tools-right'}>
+                      <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}><FaTags /></button>
+                    </div>
+                  </>
               }
             </>
           }

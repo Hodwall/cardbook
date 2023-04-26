@@ -37,7 +37,7 @@ const rollNpc = (ancestry: string, gender: string, activeTags: number[] | []) =>
   };
 
   const ancestry_colors: any = {
-    'human': '#2AB8D4',
+    'human': '#2A92D4',
     'elf': '#68D42A',
     'dwarf': '#7C695C',
   };

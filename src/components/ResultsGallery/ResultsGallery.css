@@ -1,14 +1,6 @@
-/* .results-gallery {
-  padding: 30px 10px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
-  grid-gap: 12px;
-  justify-content: space-evenly;
-} */
-
 .results-gallery {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  padding: 30px 10px;
+  gap: 1em;
+  padding: 1.2em 0.6em;
 }

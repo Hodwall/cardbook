@@ -13,7 +13,7 @@
     width: inherit;
     cursor: pointer;
     border-radius: 0.3em;
-    box-shadow: #00000041 4px 4px 10px;
+    box-shadow: #00000041 4px 4px 10px, #00000041 2px 2px 2px;
     box-sizing: border-box;
     background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
     background-blend-mode: hard-light;
@@ -39,7 +39,8 @@
 }
 
 .card-side.card-back .card-tools button {
-    font-size: 1.2em;
+    font-size: 1.3em;
+    padding-top: 0.1em;
     color: hsl(0deg 0% 100%);
     background: hsl(0deg 0% 100% / 0%);
 }
@@ -132,10 +133,15 @@
 
 .card-tools {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     padding: 0.2em;
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
+}
+
+.card-tools .card-tools-right {
+    flex-grow: 1;
+    text-align: right;
 }
 
 .card-tools button {
@@ -146,6 +152,11 @@
     font-size: 1.4em;
     font-weight: bold;
     cursor: pointer;
+}
+
+.card-tools button.copy-button {
+    font-size: 1.1em;
+    vertical-align: text-bottom;
 }
 
 .card-tools .card-tags-dialog {
@@ -166,7 +177,7 @@
     flex-wrap: wrap;
     overflow: scroll;
     gap: 0.4em;
-    height: 7.3em;
+    max-height: 7.3em;
 }
 
 .card-tools .card-tags-dialog form input {

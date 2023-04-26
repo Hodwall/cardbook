@@ -6,6 +6,14 @@
     background-color: hsl(0, 45%, 17%);
 }
 
+.appbar button {
+    text-transform: uppercase;
+}
+
+.appbar button.file-select {
+    text-transform: unset;
+}
+
 .appbar button:active {
     transform: translateY(2px);
     box-shadow: inset hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px;
@@ -35,6 +43,7 @@
     text-align: center;
     display: grid;
     grid-template-columns: 1fr;
+    user-select: none;
 }
 
 .appbar .header .logo span:first-child {
@@ -170,6 +179,7 @@
 }
 
 .tags-drawer {
+    height: 22.3em;
     position: relative;
     z-index: -1;
     pointer-events: all;
@@ -184,6 +194,8 @@
     flex-wrap: wrap;
     padding: 0.6em;
     gap: 0.5em;
+    max-height: 18.5em;
+    overflow-y: scroll;
 }
 
 .tags-drawer form {

@@ -1,5 +1,6 @@
-import './BigTag.css';
 import { useTagStore } from '../../hooks/useTagStore';
+import { MdDeleteForever } from 'react-icons/md';
+import './BigTag.css';
 
 
 const BigTag = (props: {
@@ -13,7 +14,7 @@ const BigTag = (props: {
             <button onClick={(e: any) => {
                 e.stopPropagation();
                 deleteTag(props.id);
-            }}>X</button>
+            }}><MdDeleteForever /></button>
             {props.label}
         </div>
     );

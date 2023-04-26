@@ -38,13 +38,13 @@ const AppBar = () => {
 
 	const animation = useSpring({
 		y: tagDrawerDisplay ? 0 : -100,
-		height: tagDrawerDisplay ? '400px' : '0px',
+		height: tagDrawerDisplay ? '22.3em' : '0em',
 		opacity: tagDrawerDisplay ? 1 : 0,
 	});
 
 	const animation_toolbar = useSpring({
 		y: toolbarDisplay ? 0 : -100,
-		height: toolbarDisplay ? '400px' : '0px',
+		height: toolbarDisplay ? '22.3em' : '0em',
 		opacity: toolbarDisplay ? 1 : 0,
 	});
 
@@ -177,8 +177,8 @@ const AppBar = () => {
 			case 'data':
 				return (
 					<>
-						<button onClick={() => inputRef.current?.click()}>
-							{file ? <span><MdInsertDriveFile />`${file.name}`</span> : <span><MdOutlineInsertDriveFile />Select a file ...</span>}
+						<button onClick={() => inputRef.current?.click()} className={'file-select'}>
+							{file ? <span><MdInsertDriveFile />{file.name}</span> : <span><MdOutlineInsertDriveFile />Select a file ...</span>}
 						</button>
 						<input type="file" ref={inputRef} onChange={handleFileChange} style={{ display: 'none' }} accept=".json" />
 						<button onClick={() => importData()}>IMPORT</button>
