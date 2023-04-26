@@ -194,12 +194,18 @@ const Card = (props: { data: iCard; }) => {
               {
                 (() => {
                   if (editMode) {
-                    return <button onClick={() => setEditMode(false)}><RiArrowGoBackFill /></button>;
+                    return (
+                      <div className={'card-tools-right'}>
+                        <button onClick={() => setEditMode(false)}><RiArrowGoBackFill /></button>
+                      </div>
+                    );
                   } else if (editStatsMode) {
                     return (
                       <>
-                        <button onClick={() => setEditStatsMode(false)}><RiArrowGoBackFill /></button>
-                        <button onClick={() => addStatToCard(props.data.id)}><MdAddCircle /></button>
+                        <div className={'card-tools-right'}>
+                          <button onClick={() => addStatToCard(props.data.id)}><MdAddCircle /></button>
+                          <button onClick={() => setEditStatsMode(false)}><RiArrowGoBackFill /></button>
+                        </div>
                       </>
                     );
                   } else {
