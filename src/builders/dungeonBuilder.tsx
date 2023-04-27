@@ -7,9 +7,26 @@ export const rollChamber = (purpose: string) => doRoll(dungeonData.chambers[purp
 export const rollChamberState = () => doRoll(dungeonData.chamber_state);
 export const rollChamberContents = () => doRoll(dungeonData.chamber_contents);
 
+export const rollFeatures = () => {
+  const amount = Math.floor(Math.random() * 4);
+  let features = [];
+  for (let i = 0; i < amount; i++) {
+    features.push(doRoll(dungeonData.features));
+  }
+  let features_text = '';
+  for (let i = 0; i < amount; i++) {
+    features_text += `${doRoll([
+      'There is ',
+      'You can see ',
+      'There are some ',
+    ])} ${features[i]}. `;
+  }
+  return features_text;
+};
+
 export const rollDungeonRoom = (purpose: string, activeTags: number[] | [], defaultBg?: string) => {
   return {
-    label: '',
+    label: rollChamber(purpose),
     color: '#606060',
     background: defaultBg,
     tags: [...activeTags],
@@ -19,7 +36,12 @@ export const rollDungeonRoom = (purpose: string, activeTags: number[] | [], defa
         { insert: '\n' },
         { insert: rollChamberState() },
         { insert: '\n' },
-        { insert: rollChamberContents() },]
+        { insert: rollChamberContents() },
+        { insert: '\n' },
+        { insert: `The air is ${doRoll(dungeonData.air)}. Faint ${doRoll(dungeonData.noises)} can be heard once you enter.` },
+        { insert: '\n' },
+        { insert: rollFeatures() },
+      ]
     }
   };
 };

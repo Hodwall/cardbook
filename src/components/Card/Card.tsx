@@ -15,6 +15,7 @@ import { MdAddCircle, MdBarChart, MdDeleteForever, MdEdit } from 'react-icons/md
 import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
 import 'react-quill/dist/quill.snow.css';
 import './Card.css';
+import { useFlexAnimation } from '../../hooks/useFlexAnimation';
 
 
 const Card = (props: { data: iCard; }) => {
@@ -29,6 +30,8 @@ const Card = (props: { data: iCard; }) => {
   const [displayTagsDialog, setDisplayTagsDialog] = useState(false);
   const [resultsTagsDialog, setResultsTagsDialog] = useState(tagStore);
   const [searchTagsString, setSearchTagsString] = useState('');
+
+  const { removeFlexItem } = useFlexAnimation('.gallery');
 
   useEffect(() => {
     if (!editMode) {
@@ -139,8 +142,7 @@ const Card = (props: { data: iCard; }) => {
   const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`;
 
   return (
-    <animated.div className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>
-
+    <animated.div id={`card-${props.data.id}`} className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>
       <a.div className={'card-side'} style={{
         opacity: opacity.to(o => 1 - o), transform,
         background: card_side_bg,
@@ -215,7 +217,14 @@ const Card = (props: { data: iCard; }) => {
                         <div className={'card-tools-left'}>
                           <button onClick={() => setCardPinned(!props.data.isPinned, props.data.id)}>{props.data.isPinned ? <RiPushpinFill /> : <RiPushpinLine />}</button>
                           <button className={'copy-button'} onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
-                          <button onClick={(e) => { e.preventDefault(); deleteCard(props.data.id); }}><MdDeleteForever /></button>
+                          <button onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            removeFlexItem(`#card-${props.data.id}`, () => {
+                              console.log('deleting');
+                              deleteCard(props.data.id);
+                            });
+                          }}><MdDeleteForever /></button>
                         </div>
                         <div className={'card-tools-right'}>
                           <button onClick={() => setEditStatsMode(true)}><MdBarChart /></button>
