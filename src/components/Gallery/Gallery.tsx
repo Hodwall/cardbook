@@ -1,18 +1,16 @@
+import { useEffect, useState } from 'react';
 import { useTagStore } from '../../hooks/useTagStore';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
+import { useFlexAnimation } from '../../hooks/useFlexAnimation';
 import Card from '../Card';
 import './Gallery.css';
-
-import { useFlexAnimation } from '../../hooks/useFlexAnimation';
-import { useEffect, useState } from 'react';
 
 
 const Gallery = () => {
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
   const { activeDeck } = useDeckStore();
-
   const { getFlexItemsInfo, animateFlexItems } = useFlexAnimation('.gallery');
   const [prev_items, setPrevItems] = useState<any[]>([]);
 

@@ -18,7 +18,7 @@ import './Card.css';
 
 
 const Card = (props: { data: iCard; }) => {
-  const { tagStore, createTag } = useTagStore();
+  const { tagStore, createTag, getTagByLabel } = useTagStore();
   const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground, setCardPinned } = useCardStore();
   const { settingsStore } = useSettingsStore();
   const [editMode, setEditMode] = useState(false);
@@ -120,11 +120,10 @@ const Card = (props: { data: iCard; }) => {
 
   const handleSearchTagsKeyDown = (e: any) => {
     if (e.key === 'Enter') {
-      if (resultsTagsDialog.length === 0) {
-        e.preventDefault();
-        addTagToCard(props.data.id, createTag({ label: searchTagsString, type: 'default' }));
-        setSearchTagsString('');
-      }
+      e.preventDefault();
+      if (resultsTagsDialog.length === 0) addTagToCard(props.data.id, createTag({ label: searchTagsString, type: 'default' }));
+      else addTagToCard(props.data.id, getTagByLabel(searchTagsString));
+      setSearchTagsString('');
     }
   };
 
