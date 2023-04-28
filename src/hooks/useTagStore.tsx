@@ -76,7 +76,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
     };
 
     const getTagByLabel = (label: string) => {
-        return tagStore.find((tag) => tag.label = label)?.id || createTag({ label: label });
+        return tagStore.find((tag) => tag.label === label)?.id || createTag({ label: label });
     };
 
     return (
