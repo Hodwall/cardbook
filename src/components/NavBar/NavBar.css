@@ -1,0 +1,111 @@
+.navbar {
+    justify-content: end;
+    display: flex;
+    gap: 0.5em;
+}
+
+
+
+
+/* .navbar button,
+.navbar div.btn,
+.appbar .deckbar button {
+    height: 2.5em;
+    font-family: inherit;
+    font-size: 1em;
+    color: white;
+    border: unset;
+    padding: 0 1em;
+    box-shadow: hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px;
+    background-color: hsla(0, 100%, 65%, 0.25);
+    border-radius: 0.3em;
+    cursor: pointer;
+} */
+
+/* .navbar button.tags,
+.navbar button.return {
+    background-color: hsl(0, 50%, 50%)
+} */
+
+.navbar .card-scale {
+    display: grid;
+    line-height: 0.4em;
+    text-align: center;
+    width: 20em;
+    color: white;
+}
+
+.navbar .card-scale input {
+    outline: 0;
+    border: 0;
+    border-radius: 500px;
+    /* width: 25em; */
+    max-width: 100%;
+    margin-top: 0.3em;
+    transition: box-shadow 0.2s ease-in-out;
+    overflow: hidden;
+    height: 1.2em;
+    -webkit-appearance: none;
+    background-color: #3a1111;
+}
+
+.navbar .card-scale span {
+    font-size: 0.8em;
+    color: #f3d9d5;
+    margin-top: -0.4em;
+}
+
+.navbar .card-scale input::-webkit-slider-runnable-track {
+    height: 3em;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.navbar .card-scale input::-webkit-slider-thumb {
+    width: 1.2em;
+    height: 1.2em;
+    -webkit-appearance: none;
+    cursor: ew-resize;
+    background: tomato;
+    box-shadow: -340px 0 0 320px tomato, inset 0 0 0 "4px" 0px tomato;
+    border-radius: 50%;
+    transition: box-shadow 0.2s ease-in-out;
+    position: relative;
+    top: 0.9em;
+}
+
+.import-data-form label {
+    cursor: pointer;
+}
+
+#upload-file {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+@media (max-width: 800px) {
+    .toolbar {
+        flex-direction: column;
+        grid-column-end: span 2;
+    }
+
+    .toolbar .card-scale {
+        width: 100%;
+    }
+
+    .toolbar .toolbar-drawer.hidden {
+        z-index: -1;
+    }
+
+    .toolbar .toolbar-drawer-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    .toolbar,
+    .tagbar,
+    .tags_results {
+        justify-content: left;
+    }
+}

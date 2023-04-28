@@ -1,0 +1,110 @@
+.appbar .tag-deck-bar {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 0.6em;
+    padding-top: 0;
+    min-height: 2.2em;
+}
+
+.appbar .tagbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.appbar .deckbar {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-self: self-end;
+    gap: 0.5em;
+    width: 35em;
+}
+
+.appbar .deckbar input {
+    border: none;
+    color: hsl(12, 100%, 95%);
+    background: hsla(0, 0%, 0%, 60%);
+    font-family: inherit;
+    width: 90%;
+    border-radius: 0.4em;
+    font-size: 1.3em;
+    overflow: hidden;
+    height: 1.6em;
+}
+
+.appbar .deckbar input:focus {
+    border: unset;
+    outline: unset;
+}
+
+.appbar .deckbar button {
+    background-color: hsl(221, 50%, 50%);
+    box-shadow: hsl(0deg 0% 0% / 60%) 2px 2px 4px 0px, inset hsl(221.41deg 31.85% 24.69% / 75%) -3px -3px 20px 0px;
+    height: 2em;
+}
+
+.appbar .deckbar button.strict {
+    box-shadow: inset 0px 0px 20px 0px hsl(11.47deg 100% 40%), inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px
+}
+
+.tags-drawer {
+    height: 22.3em;
+    position: relative;
+    z-index: -1;
+    pointer-events: all;
+}
+
+.tags-drawer.hidden {
+    pointer-events: none;
+}
+
+.tags-drawer .results {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.6em;
+    gap: 0.5em;
+    max-height: 18.5em;
+    overflow-y: scroll;
+}
+
+.tags-drawer form {
+    position: absolute;
+    display: inline-flex;
+    bottom: 0;
+    width: 100%;
+}
+
+.tags-drawer form input {
+    border: none;
+    width: inherit;
+    color: hsl(12, 100%, 95%);
+    background: hsla(0, 0%, 0%, 0.30);
+    font-family: inherit;
+    font-size: 1.8rem;
+    padding: 0.2em 0.6em 0em;
+}
+
+.tags-drawer form input:focus {
+    border-style: none;
+    outline: none;
+}
+
+@media (max-width: 800px) {
+    .appbar .tag-deck-bar {
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+    }
+
+    .appbar .deckbar {
+        width: 100%;
+    }
+
+    .appbar .deckbar input {
+        width: 100%;
+    }
+
+    .tagbar,
+    .tags_results {
+        justify-content: left;
+    }
+}

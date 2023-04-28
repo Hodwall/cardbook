@@ -19,6 +19,9 @@ dependencies:
   react-spring:
     specifier: 9.7.1
     version: 9.7.1(@react-three/fiber@8.12.0)(konva@8.4.3)(react-dom@18.2.0)(react-konva@18.2.5)(react-native@0.71.5)(react-zdog@1.0.11)(react@18.2.0)(three@0.151.0)(zdog@1.1.3)
+  react-tiny-popover:
+    specifier: ^7.2.4
+    version: 7.2.4(react-dom@18.2.0)(react@18.2.0)
 
 devDependencies:
   '@types/react':
@@ -4968,6 +4971,16 @@ packages:
       - react-zdog
       - three
       - zdog
+    dev: false
+
+  /react-tiny-popover@7.2.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-T7ZSwXcUtPXCog3Bux9+TjoTvUeMi/+zI0Yv/TkIznZCWUg0XTt2797G0IiT5mTVeJeLivUzdOmKA1hOQdMfOQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-use-measure@2.1.1(react-dom@18.2.0)(react@18.2.0):
