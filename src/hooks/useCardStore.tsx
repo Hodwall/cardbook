@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useState, createContext, useContext } from 'react';
 
 
@@ -6,7 +7,7 @@ export interface iCardStat {
     label: string,
     color?: string,
     useTotal?: boolean,
-    value: number | null,
+    value: number | string | null,
 }
 
 export interface iCard {
@@ -198,12 +199,49 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         }
     };
 
-    const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: number, color?: string; useTotal?: boolean; }) => {
+    const updateStat = (stat_id: number, card_id: number, data: { label?: string, value?: any, color?: string; useTotal?: boolean; }) => {
         let store = [...cardStore];
         const card_index = store.findIndex((card: iCard) => card.id === card_id);
         if (card_index != -1) {
             const stat_index = store[card_index].stats?.findIndex((stat: iCardStat) => stat.id === stat_id);
             if (stat_index != -1) {
+                if (typeof data.value !== 'undefined') {
+                    const pre_value = store[card_index].stats[stat_index].value;
+                    const new_value = data.value;
+                    let value;
+
+                    if (!isNaN(pre_value)) {
+                        console.log('1');
+                        if (!isNaN(new_value)) value = new_value;
+                        else {
+                            console.log('2');
+                            const value_slice = new_value.slice(1);
+                            if (!isNaN(value_slice)) {
+                                console.log('3');
+                                value = data.value;
+                            } else {
+                                console.log('4');
+                                switch (new_value.charAt(0)) {
+                                    case '+':
+                                        value = pre_value + new_value;
+                                        break;
+                                    case '-':
+                                        value = pre_value - new_value;
+                                        break;
+                                    case '*':
+                                        value = pre_value * new_value;
+                                        break;
+                                    case '/':
+                                        value = pre_value / new_value;
+                                        break;
+                                    default:
+                                        value = new_value;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 if (typeof data.label !== 'undefined') store[card_index].stats[stat_index].label = data.label;
                 if (typeof data.value !== 'undefined') store[card_index].stats[stat_index].value = data.value;
                 if (data.color) store[card_index].stats[stat_index].color = data.color;

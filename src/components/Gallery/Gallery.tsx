@@ -4,10 +4,24 @@ import { useDeckStore } from '../../hooks/useDeckStore';
 import Card from '../Card';
 import './Gallery.css';
 
+import { useFlexAnimation } from '../../hooks/useFlexAnimation';
+import { useEffect, useState } from 'react';
+
+
 const Gallery = () => {
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
   const { activeDeck } = useDeckStore();
+
+  const { getFlexItemsInfo, animateFlexItems } = useFlexAnimation('.gallery');
+  const [prev_items, setPrevItems] = useState<any[]>([]);
+
+
+  useEffect(() => {
+    const new_items = getFlexItemsInfo();
+    if ((prev_items?.length > 0) && (new_items?.length > 0)) animateFlexItems(prev_items, new_items);
+    setPrevItems([...new_items]);
+  }, [cardStore]);
 
   let required_tags: number[] = [];
   let optional_tags: number[] = [];
@@ -39,7 +53,7 @@ const Gallery = () => {
         }, []);
       }
     }
-    return cards_.sort((a: iCard, b: iCard) => (Number(b.isPinned) - Number(a.isPinned)) === 0 ? ((a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0) : (Number(b.isPinned) - Number(a.isPinned)));
+    return cards_.sort((a: iCard, b: iCard) => (Number(b.isPinned) - Number(a.isPinned)) === 0 ? ((a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : (a.label.toLowerCase() < b.label.toLowerCase()) ? -1 : 0) : (Number(b.isPinned) - Number(a.isPinned)));
   };
 
   return (

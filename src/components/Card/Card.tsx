@@ -15,7 +15,6 @@ import { MdAddCircle, MdBarChart, MdDeleteForever, MdEdit } from 'react-icons/md
 import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
 import 'react-quill/dist/quill.snow.css';
 import './Card.css';
-import { useFlexAnimation } from '../../hooks/useFlexAnimation';
 
 
 const Card = (props: { data: iCard; }) => {
@@ -30,8 +29,6 @@ const Card = (props: { data: iCard; }) => {
   const [displayTagsDialog, setDisplayTagsDialog] = useState(false);
   const [resultsTagsDialog, setResultsTagsDialog] = useState(tagStore);
   const [searchTagsString, setSearchTagsString] = useState('');
-
-  const { removeFlexItem } = useFlexAnimation('.gallery');
 
   useEffect(() => {
     if (!editMode) {
@@ -220,10 +217,7 @@ const Card = (props: { data: iCard; }) => {
                           <button onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-                            removeFlexItem(`#card-${props.data.id}`, () => {
-                              console.log('deleting');
-                              deleteCard(props.data.id);
-                            });
+                            deleteCard(props.data.id);
                           }}><MdDeleteForever /></button>
                         </div>
                         <div className={'card-tools-right'}>
