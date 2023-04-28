@@ -14,7 +14,6 @@ const Gallery = () => {
   const { getFlexItemsInfo, animateFlexItems } = useFlexAnimation('.gallery');
   const [prev_items, setPrevItems] = useState<any[]>([]);
 
-
   useEffect(() => {
     const new_items = getFlexItemsInfo();
     if ((prev_items?.length > 0) && (new_items?.length > 0)) animateFlexItems(prev_items, new_items);

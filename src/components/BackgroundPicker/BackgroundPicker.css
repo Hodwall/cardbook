@@ -68,3 +68,22 @@ div.background-picker form button {
     display: inline-grid;
     grid-template-columns: 10.2em 3.7em 2.7em;
 }
+
+
+div.popmenu div.background-picker {
+    position: fixed;
+    left: 0;
+    /* height: 5em; */
+    width: 14.9em;
+    bottom: 6.2em;
+    border-radius: 0.3em;
+    background-color: white;
+    box-shadow: 0px -2px 10px 2px #00000045;
+    /* transform: rotate(2deg) !important; */
+}
+
+div.popmenu span.background-picker-btn {
+    color: #877f75;
+    text-align-last: justify;
+    font-size: 1.5em;
+}

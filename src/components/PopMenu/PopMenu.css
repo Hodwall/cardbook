@@ -21,74 +21,15 @@
     font-size: 1.6em;
 }
 
-.popmenu .option {
-    font-family: 'IM Fell DW Pica';
-    padding: 0.4em 0.75em;
-    text-align: end;
-    padding-bottom: 4em;
-    /* background: hsl(0, 47%, 38%); */
-    background: hsl(36deg 27.69% 84.75%);
-    /* color: white; */
-    color: #604f4f;
-    font-weight: bold;
-    height: 3.5em;
-    margin-bottom: -2em;
-    cursor: pointer;
-    /* border: 2px solid green; */
-    box-sizing: border-box;
-    /* outline: 7px solid hsl(0, 47%, 43%); */
-    /* outline: 7px solid hsl(36deg 27.69% 84.75%); */
-    user-select: none;
-    transition: background 0.4s;
-    /* box-shadow: 0px -8px 15px 0 #421e1ea6; */
-    box-shadow: 0px -5px 15px 0 #4833278f, 0px 3px 10px 0 #4833278f;
-    border-top-left-radius: 0.3em;
-    border-top-right-radius: 0.3em;
-}
 
 
-/* maaagic */
-.popmenu .option {
-    transform: rotate(1deg);
-}
 
-.popmenu .option:nth-child(2n) {
-    transform: rotate(-2deg);
-}
 
-.popmenu .option:nth-child(3n) {
-    transform: rotate(1deg);
-}
 
-.popmenu .option:nth-child(4n) {
-    transform: rotate(-3deg);
-}
 
-.popmenu .option:nth-child(5n) {
-    transform: rotate(-2deg);
-}
 
-.popmenu .option:nth-child(6n) {
-    transform: rotate(1deg);
-}
 
-.popmenu .option:nth-child(7n) {
-    transform: rotate(-2deg);
-}
 
-.popmenu .option:nth-child(8n) {
-    transform: rotate(1deg);
-}
-
-.popmenu .option:hover {
-    /* background: hsl(0, 47%, 43%); */
-    background: hsl(36deg 20% 74%);
-    /* outline: 7px solid hsl(36deg 20% 74%); */
-    transform: translateY(-10px);
-    transition: all 0.4s;
-}
-
-.popmenu .option:active {
-    background: hsl(0, 47%, 24%);
-    color: white;
+.react-tiny-popover-container {
+    z-index: 9999999999999999;
 }

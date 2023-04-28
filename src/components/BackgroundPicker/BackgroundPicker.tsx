@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { MdImage, MdSave, MdHideImage } from 'react-icons/md';
+import { FaImage, FaRegImage } from 'react-icons/fa';
 import './BackgroundPicker.css';
 
 
 const BackgroundPicker = (props: {
     changeBackgroundHandler?: Function,
     disabledOutsideClickHandler?: boolean,
+    hasValue?: boolean;
 }) => {
     const [display, setDisplay] = useState(false);
 
@@ -41,7 +43,7 @@ const BackgroundPicker = (props: {
 
     return (
         <>
-            <span className={'background-picker-btn'} onClick={handleClick}><MdImage /></span>
+            <span className={'background-picker-btn'} onClick={handleClick}>{props.hasValue ? <FaImage /> : <FaRegImage />}</span>
             {
                 display &&
                 <div className={'background-picker'} ref={ref}>

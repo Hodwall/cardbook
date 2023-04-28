@@ -1,21 +1,17 @@
-import { useEffect, useState, FormEvent, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { animated, useSpring } from 'react-spring';
 
 import rollNpc from '../../builders/npcBuilder';
 import { rollDungeonRoom } from '../../builders/dungeonBuilder';
 
-import { useTagStore, iTag } from '../../hooks/useTagStore';
+import { useTagStore } from '../../hooks/useTagStore';
 import { useCardStore } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
 import { useSettingsStore } from '../../hooks/useSettingsStore';
 import useWindowSize from '../../hooks/useWindowSize';
 
-import Tag from '../Tag';
-import Deck from '../Deck';
-import BigTag from '../BigTag';
 import BackgroundPicker from '../BackgroundPicker/BackgroundPicker';
-
-import PopButton from '../PopButton';
+import PopButton from '../PopMenu';
 import PopMenu from '../PopMenu';
 
 import { MdInsertDriveFile, MdOutlineInsertDriveFile, MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
@@ -24,6 +20,7 @@ import { FaTags, FaDiceD20 } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import './NavBar.css';
+import Button from '../Button';
 
 
 
@@ -31,19 +28,15 @@ import './NavBar.css';
 const NavBar = (props: {
     tagsDisplayHandler: Function,
 }) => {
-    const { tagStore, activeTags, updateActiveTags, createTag, setTagInactive, updateTagStore, getTagByLabel } = useTagStore();
-    const { deckStore, createDeck, activeDeck, updateActiveDeck, updateDeckIsStrict, updateDeckTags, updateDeckStore } = useDeckStore();
-    const { cardStore, addCard, createCard, updateCardStore } = useCardStore();
-    const { settingsStore, updateCardScale, updateSettingsStore, updateCardDefaultBg } = useSettingsStore();
+    const { tagStore, updateTagStore, activeTags, getTagByLabel } = useTagStore();
+    const { deckStore, updateDeckStore, activeDeck } = useDeckStore();
+    const { cardStore, updateCardStore, addCard, createCard, } = useCardStore();
+    const { settingsStore, updateSettingsStore, updateCardScale, updateCardDefaultBg } = useSettingsStore();
     const { width } = useWindowSize();
 
     const [navbarSection, setNavBarSection] = useState<string>('');
     const [navbarDisplay, setNavBarDisplay] = useState(true);
-    const [tagDrawerDisplay, setTagDrawerDisplay] = useState(false);
-    const [resultsTagsDrawer, setResultsTagsDrawer] = useState(tagStore);
-    const [searchString, setSearchString] = useState('');
-    const [deckLabel, setDeckLabel] = useState('');
-    const [deckStrictMode, setDeckStrictMode] = useState(activeDeck?.isStrict);
+
     const [npcGender, setNpcGender] = useState('male');
     const [cardScale, setCardScale] = useState(settingsStore.cardScale);
 
@@ -53,11 +46,6 @@ const NavBar = (props: {
     const [popmenuSection, setPopmenuSection] = useState('');
 
 
-    const animation = useSpring({
-        to: { opacity: 1, y: 0, scale: 1, rotateZ: 0, rotateX: 0 },
-        from: { opacity: 0, y: -20, scale: 1, rotateZ: 0, rotateX: 0 },
-        config: { mass: 5, friction: 120, tension: 1000 }
-    });
     const animation_navbar = useSpring({
         y: navbarDisplay ? 0 : -100,
         height: navbarDisplay ? '22.3em' : '0em',
@@ -106,40 +94,56 @@ const NavBar = (props: {
     };
 
 
-
-
-    const getToolbarElements = (section: string) => {
-        switch (section) {
-            case 'npcs':
-                return (
-                    <>
-                        <button onClick={() => setNpcGender(`${npcGender === 'male' ? 'female' : 'male'}`)}><span>{npcGender === 'male' ? <MdOutlineMale /> : <MdOutlineFemale />}{npcGender}</span></button>
-
-                        <div className={'btn'}>
-                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_human_${npcGender}`, url)} disabledOutsideClickHandler />
-                            <span onClick={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_human_${npcGender}`]))}>ROLL A HUMAN</span>
-                        </div>
-                        <div className={'btn'}>
-                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_elf_${npcGender}`, url)} disabledOutsideClickHandler />
-                            <span onClick={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_elf_${npcGender}`]))}>ROLL AN ELF</span>
-                        </div>
-                        <div className={'btn'}>
-                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_dwarf_${npcGender}`, url)} disabledOutsideClickHandler />
-                            <span onClick={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_dwarf_${npcGender}`]))}>ROLL A DWARF</span>
-                        </div>
-                        <button className={'return'} onClick={() => setNavBarSection('generators')}><RiArrowGoBackFill /></button>
-                    </>
-                );
+    const getGenerationMenuElements = () => {
+        switch (popmenuSection) {
             case 'dungeons':
                 return (
                     <>
-                        <div className={'btn'}>
-                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg('dungeon_mine', url)} disabledOutsideClickHandler />
-                            <span onClick={() => createCard(rollDungeonRoom('mine', [... new Set([...activeTags, getTagByLabel('DUNGEON ROOM')])], settingsStore.cardDefaultBg['dungeon_mine']))}>ROLL A MINE ROOM</span>
-                        </div>
-                        <button className={'return'} onClick={() => setNavBarSection('generators')}><RiArrowGoBackFill /></button>
+                        <Button label={'DRAW A MINE ROOM'}
+                            clickHandler={() => createCard(rollDungeonRoom('mine', [... new Set([...activeTags, getTagByLabel('DUNGEON ROOM')])], settingsStore.cardDefaultBg['dungeon_mine']))}
+                            defaultBgHandler={(url: string) => updateCardDefaultBg('dungeon_mine', url)}
+                            defaultBg={settingsStore.cardDefaultBg['dungeon_mine']}
+                        />
+                        <Button clickHandler={() => setPopmenuSection('')} label={<RiArrowGoBackFill />} highlighted />
                     </>
                 );
+            case 'npcs':
+                return (
+                    <>
+                        <Button clickHandler={() => setNpcGender(`${npcGender === 'male' ? 'female' : 'male'}`)} label={<span>{npcGender === 'male' ? <MdOutlineMale /> : <MdOutlineFemale />}{npcGender}</span>} highlighted />
+                        <Button label={'DRAW A HUMAN'}
+                            clickHandler={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_human_${npcGender}`]))}
+                            defaultBgHandler={(url: string) => updateCardDefaultBg(`npc_human_${npcGender}`, url)}
+                            defaultBg={settingsStore.cardDefaultBg[`npc_human_${npcGender}`]}
+                        />
+                        <Button label={'DRAW AN ELF'}
+                            clickHandler={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_elf_${npcGender}`]))}
+                            defaultBgHandler={(url: string) => updateCardDefaultBg(`npc_elf_${npcGender}`, url)}
+                            defaultBg={settingsStore.cardDefaultBg[`npc_elf_${npcGender}`]}
+                        />
+                        <Button label={'DRAW A DWARF'}
+                            clickHandler={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_dwarf_${npcGender}`]))}
+                            defaultBgHandler={(url: string) => updateCardDefaultBg(`npc_dwarf_${npcGender}`, url)}
+                            defaultBg={settingsStore.cardDefaultBg[`npc_dwarf_${npcGender}`]}
+                        />
+                        <Button clickHandler={() => setPopmenuSection('')} label={<RiArrowGoBackFill />} highlighted />
+                    </>
+                );
+            default:
+                return (
+                    <>
+                        <Button clickHandler={() => setPopmenuSection('npcs')} label={'NPCs'} />
+                        <Button clickHandler={() => setPopmenuSection('quests')} label={'QUESTS'} />
+                        <Button clickHandler={() => setPopmenuSection('settlements')} label={'SETTLEMENTS'} />
+                        <Button clickHandler={() => setPopmenuSection('dungeons')} label={'DUNGEONS'} />
+                        <Button clickHandler={() => setPopmenuSection('travel')} label={'TRAVEL'} />
+                    </>
+                );
+        }
+    };
+
+    const getToolbarElements = (section: string) => {
+        switch (section) {
             case 'settings':
                 return (
                     <>
@@ -147,85 +151,31 @@ const NavBar = (props: {
                             <input type="range" min="50" max="150" value={cardScale} onChange={(e: any) => setCardScale(e.target.value)} />
                             <span>CARD SCALE {cardScale}%</span>
                         </div>
-                        <PopButton clickHandler={() => setCardScale(100)} label={'RESET'} />
-                        <PopButton clickHandler={() => setNavBarSection('')} label={<RiArrowGoBackFill />} highlighted />
+                        <Button clickHandler={() => setCardScale(100)} label={'RESET'} />
+                        <Button clickHandler={() => setNavBarSection('')} label={<RiArrowGoBackFill />} highlighted />
                     </>
                 );
             case 'data':
                 return (
                     <>
-                        <PopButton
+                        <Button
                             clickHandler={() => inputRef.current?.click()}
                             label={file ? <span><MdInsertDriveFile />{file.name}</span> : <span><MdOutlineInsertDriveFile />Select a file ...</span>}
                         />
                         <input type="file" ref={inputRef} onChange={handleFileChange} style={{ display: 'none' }} accept=".json" />
-                        <PopButton clickHandler={() => importData()} label={'IMPORT'} />
-                        <PopButton clickHandler={() => exportData()} label={'EXPORT'} />
-                        <PopButton clickHandler={() => setNavBarSection('')} label={<RiArrowGoBackFill />} highlighted />
+                        <Button clickHandler={() => importData()} label={'IMPORT'} />
+                        <Button clickHandler={() => exportData()} label={'EXPORT'} />
+                        <Button clickHandler={() => setNavBarSection('')} label={<RiArrowGoBackFill />} highlighted />
                     </>
                 );
             default:
                 return (
                     <>
-                        <PopButton clickHandler={() => addCard(activeTags)} label={'ADD EMPTY CARD'} />
-                        {/* <NavButton clickHandler={() => setNavBarSection('generators')} label={'GENERATE CARD'} /> */}
-
-                        <PopButton label={'GENERATE CARD'} content={
-                            <PopMenu>
-                                {
-                                    (() => {
-                                        switch (popmenuSection) {
-                                            case 'npcs':
-                                                return (
-                                                    <>
-                                                        {/* <button onClick={() => setNpcGender(`${npcGender === 'male' ? 'female' : 'male'}`)}><span>{npcGender === 'male' ? <MdOutlineMale /> : <MdOutlineFemale />}{npcGender}</span></button> */}
-
-                                                        <div className='option' onClick={() => setNpcGender(`${npcGender === 'male' ? 'female' : 'male'}`)}><span>{npcGender === 'male' ? <MdOutlineMale /> : <MdOutlineFemale />}{npcGender}</span></div>
-
-                                                        {/* <PopButton
-                                                            label={'ROLL HUMAN'}
-                                                            clickHandler={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_human_${npcGender}`]))}
-                                                            defaultBg={settingsStore.cardDefaultBg[`npc_human_${npcGender}`]}
-                                                        /> */}
-
-                                                        <div className='option' onClick={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_elf_${npcGender}`]))} >ROLL AN ELF</div>
-                                                        <div className='option' onClick={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_dwarf_${npcGender}`]))} >ROLL A DWARF</div>
-
-                                                        {/* <div className='option'>
-                                                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_human_${npcGender}`, url)} disabledOutsideClickHandler />
-                                                            <span onClick={() => createCard(rollNpc('human', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_human_${npcGender}`]))}>ROLL A HUMAN</span>
-                                                        </div>
-                                                        <div className='option'>
-                                                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_elf_${npcGender}`, url)} disabledOutsideClickHandler />
-                                                            <span onClick={() => createCard(rollNpc('elf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_elf_${npcGender}`]))}>ROLL AN ELF</span>
-                                                        </div>
-                                                        <div className='option'>
-                                                            <BackgroundPicker changeBackgroundHandler={(url: string) => updateCardDefaultBg(`npc_dwarf_${npcGender}`, url)} disabledOutsideClickHandler />
-                                                            <span onClick={() => createCard(rollNpc('dwarf', npcGender, [... new Set([...activeTags, getTagByLabel('NPC')])], settingsStore.cardDefaultBg[`npc_dwarf_${npcGender}`]))}>ROLL A DWARF</span>
-                                                        </div> */}
-
-                                                        <div className='option' onClick={() => setPopmenuSection('')} ><RiArrowGoBackFill /></div>
-                                                    </>
-                                                );
-                                            default:
-                                                return (
-                                                    <>
-                                                        <div className='option' onClick={() => setPopmenuSection('npcs')} >NPCs</div>
-                                                        <div className='option' onClick={() => setPopmenuSection('quests')} >QUESTS</div>
-                                                        <div className='option' onClick={() => setPopmenuSection('settlements')} >SETTLEMENTS</div>
-                                                        <div className='option' onClick={() => setPopmenuSection('dungeons')} >DUNGEONS</div>
-                                                        <div className='option' onClick={() => setPopmenuSection('travel')} >TRAVEL</div>
-                                                    </>
-                                                );
-                                        }
-                                    })()
-                                }
-                            </PopMenu>
-                        } />
-
-                        <PopButton clickHandler={() => setNavBarSection('settings')} label={'SETTINGS'} />
-                        <PopButton clickHandler={() => setNavBarSection('data')} label={'MANAGE DATA'} />
-                        <PopButton label={'ABOUT'} />
+                        <Button clickHandler={() => addCard(activeTags)} label={'ADD EMPTY CARD'} />
+                        <PopMenu label={'GENERATE CARD'} content={(() => getGenerationMenuElements())()} />
+                        <Button clickHandler={() => setNavBarSection('settings')} label={'SETTINGS'} />
+                        <Button clickHandler={() => setNavBarSection('data')} label={'MANAGE DATA'} />
+                        <Button label={'ABOUT'} />
                     </>
                 );
         }
@@ -247,7 +197,7 @@ const NavBar = (props: {
                         :
                         getToolbarElements(navbarSection)
                 }
-                <PopButton clickHandler={() => props.tagsDisplayHandler()} label={<FaTags />} highlighted />
+                <Button clickHandler={() => props.tagsDisplayHandler()} label={<FaTags />} highlighted />
             </div >
         </>
     );
