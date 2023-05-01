@@ -114,7 +114,7 @@
 }
 
 .card-body {
-    color: hsl(0 0% 40% / 1);
+    color: hsl(0 0% 30% / 1);
     line-height: 1em;
     padding: 0 0.3em;
     box-sizing: border-box;
@@ -300,6 +300,10 @@
 
 .ql-snow .ql-editor blockquote {
     padding-left: 0.8em;
+}
+
+.ql-snow .ql-editor p {
+    margin: 0;
 }
 
 .ql-toolbar.ql-snow .ql-picker-options .ql-stroke {
