@@ -1,43 +1,34 @@
-import './Tag.css';
 import { useSpring, animated } from 'react-spring';
 import { useTagStore } from '../../hooks/useTagStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
-import { RiArrowGoBackFill } from 'react-icons/ri';
-
+import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
 import { FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
+import './Tag.css';
+
 
 const Tag = (props: {
     id: number,
     label: string,
-    type?: string,
     clickHandler?: Function,
-    deleteHandler?: Function,
-    canDelete?: boolean,
     canManageDeck?: boolean,
+    canDelete?: boolean,
+    type?: string,
+    isPinned?: boolean,
 }) => {
-    const animation = useSpring({ to: { opacity: 1, y: 0, rotateZ: 0 }, from: { opacity: 0, y: -10, rotateZ: -2 } });
-    const { deleteTag } = useTagStore();
+    const { deleteTag, toggleIsPinned } = useTagStore();
     const { activeDeck, updateDeckTags } = useDeckStore();
-
+    const animation = useSpring({
+        to: { opacity: 1, y: 0 },
+        from: { opacity: 0, y: 15 },
+        config: { mass: 15, friction: 220, tension: 4000 }
+    });
     const is_in_deck = activeDeck && activeDeck.tags.indexOf(props.id) !== -1;
     const is_strict = activeDeck && activeDeck.isStrict;
 
     return (
-        <animated.div className={`navtag ${props.type} ${is_in_deck && 'in-deck'} ${is_strict && 'strict'}`} style={animation} onClick={(e) => {
-            e.stopPropagation();
-            if (props.clickHandler) props.clickHandler(props.id);
-        }}>
+        <animated.div className={`tag ${props.type || ''}  ${is_in_deck ? 'in-deck' : ''} ${is_strict ? 'strict' : ''}`} style={animation}>
             <span>
-                {
-                    (props.canDelete && !is_in_deck) &&
-                    <button onClick={(e) => {
-                        e.stopPropagation();
-                        if (props.deleteHandler) props.deleteHandler(props.id);
-                        else deleteTag(props.id);
-                    }}>
-                        <RiArrowGoBackFill />
-                    </button>
-                }
                 {
                     (props.canManageDeck && activeDeck) &&
                     <>
@@ -47,10 +38,27 @@ const Tag = (props: {
                                 :
                                 <button onClick={() => updateDeckTags(activeDeck.id, [...activeDeck.tags, props.id])}><FaPlusCircle /></button>
                         }
+
                     </>
                 }
+                {
+                    (props.type === 'big-tag') &&
+                    <button onClick={() => toggleIsPinned(props.id)}>{props.isPinned ? <RiPushpinFill /> : <RiPushpinLine />}</button>
+                }
+                {
+                    ((props.canDelete) &&
+                        <button onClick={(e: any) => {
+                            e.stopPropagation();
+                            deleteTag(props.id);
+                        }}><MdDeleteForever /></button>
+                    )
+                }
             </span>
-            <span>{props.label}</span>
+            <span onClick={(e: any) => {
+                e.stopPropagation();
+                if (is_in_deck) return;
+                else if (props.clickHandler) props.clickHandler(props.id);
+            }}>{props.label}</span>
         </animated.div >
     );
 };

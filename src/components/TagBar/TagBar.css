@@ -1,17 +1,79 @@
-.appbar .tag-deck-bar {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    padding: 0.6em;
-    padding-top: 0;
-    min-height: 2.2em;
-}
-
 .appbar .tagbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5em;
+    gap: 0.4em;
+    padding: 0.2em 0.75em 0.75em 0.75em;
+    min-height: 1.5em;
 }
 
+
+
+
+
+
+
+
+.tagbar-drawer {
+    height: 24em;
+    position: relative;
+    z-index: -1;
+    pointer-events: all;
+}
+
+.tagbar-drawer.hidden {
+    pointer-events: none;
+}
+
+
+.tagbar-drawer .results {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.6em;
+    gap: 0.5em;
+    max-height: 20em;
+    overflow-y: scroll;
+}
+
+.tagbar-drawer .results::-webkit-scrollbar-track {
+    background: hsl(0deg 55.28% 51.76%) !important;
+    width: 0;
+}
+
+.tagbar-drawer .results::-webkit-scrollbar {
+    width: 0.3em;
+}
+
+.tagbar-drawer form {
+    position: absolute;
+    display: inline-flex;
+    bottom: 0;
+    width: 100%;
+}
+
+.tagbar-drawer form input {
+    border: none;
+    width: inherit;
+    color: hsl(12, 100%, 95%);
+    background: hsla(0, 0%, 0%, 0.30);
+    font-family: inherit;
+    font-size: 1.8rem;
+    padding: 0.2em 0.6em 0em;
+}
+
+.tagbar-drawer form input:focus {
+    border-style: none;
+    outline: none;
+}
+
+
+
+
+
+
+
+
+
+/*
 .appbar .deckbar {
     display: flex;
     flex-direction: row-reverse;
@@ -47,54 +109,10 @@
     box-shadow: inset 0px 0px 20px 0px hsl(11.47deg 100% 40%), inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px
 }
 
-.tags-drawer {
-    height: 22.3em;
-    position: relative;
-    z-index: -1;
-    pointer-events: all;
-}
 
-.tags-drawer.hidden {
-    pointer-events: none;
-}
 
-.tags-drawer .results {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.6em;
-    gap: 0.5em;
-    max-height: 18.5em;
-    overflow-y: scroll;
-}
-
-.tags-drawer form {
-    position: absolute;
-    display: inline-flex;
-    bottom: 0;
-    width: 100%;
-}
-
-.tags-drawer form input {
-    border: none;
-    width: inherit;
-    color: hsl(12, 100%, 95%);
-    background: hsla(0, 0%, 0%, 0.30);
-    font-family: inherit;
-    font-size: 1.8rem;
-    padding: 0.2em 0.6em 0em;
-}
-
-.tags-drawer form input:focus {
-    border-style: none;
-    outline: none;
-}
 
 @media (max-width: 800px) {
-    .appbar .tag-deck-bar {
-        grid-template-columns: 1fr;
-        gap: 0.5em;
-    }
-
     .appbar .deckbar {
         width: 100%;
     }
@@ -108,3 +126,5 @@
         justify-content: left;
     }
 }
+
+*/

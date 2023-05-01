@@ -1,4 +1,4 @@
-.navtag {
+.tag {
     font-family: 'IM Fell DW Pica', serif;
     font-size: 0.95rem;
     text-align: left;
@@ -6,30 +6,47 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    border-radius: 4px;
+    border-radius: 0.2em;
     user-select: none;
     width: max-content;
     padding: 0px 10px;
-    height: 2em;
-    text-align: left;
+    height: 1.6em;
     background: hsl(19deg 100% 50%);
     box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
-}
-
-.navtag button {
-    background-color: hsl(0deg 0% 0% / 0%);
-    border: unset;
-    color: white;
-    margin-top: 0.3em;
     cursor: pointer;
 }
 
-.navtag.in-deck {
+.tag:active {
+    transform: translateY(2px) !important;
+}
+
+.tag span {
+    display: flex;
+}
+
+.tag button {
+    background-color: hsl(0deg 0% 0% / 0%);
+    border: unset;
+    color: hsl(0deg 0% 100% / 78%);
+    font-size: 0.8em;
+    padding: 0;
+}
+
+.tag button:last-of-type {
+    padding-right: 1em;
+}
+
+.tag.big-tag {
+    font-size: 1.2em;
+}
+
+
+
+.tag.in-deck {
     background: hsl(224, 60%, 60%);
     box-shadow: inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
 }
 
-.navtag.in-deck.strict {
+.tag.in-deck.strict {
     box-shadow: inset 0px 0px 4px 0px hsl(11.47deg 100% 50.46%), inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
 }

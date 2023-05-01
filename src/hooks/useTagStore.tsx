@@ -7,7 +7,8 @@ import { useDeckStore, iDeck } from './useDeckStore';
 export interface iTag {
     id: number,
     label: string,
-    type: string;
+    type: string,
+    isPinned?: boolean;
 }
 
 const TagStoreContext = createContext<any>(null);
@@ -79,6 +80,15 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         return tagStore.find((tag) => tag.label === label)?.id || createTag({ label: label });
     };
 
+    const toggleIsPinned = (id: number) => {
+        let store = [...tagStore];
+        const tag_index = store.findIndex((tag) => tag.id === id);
+        if (tag_index !== -1) {
+            store[tag_index].isPinned = !store[tag_index].isPinned;
+            updateTagStore(store);
+        }
+    };
+
     return (
         <TagStoreContext.Provider value={{
             tagStore,
@@ -91,6 +101,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
             setTagActive,
             setTagInactive,
             getTagByLabel,
+            toggleIsPinned
         }}>
             {props.children}
         </TagStoreContext.Provider>

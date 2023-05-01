@@ -10,8 +10,6 @@ import { useDeckStore } from '../../hooks/useDeckStore';
 import { useSettingsStore } from '../../hooks/useSettingsStore';
 import useWindowSize from '../../hooks/useWindowSize';
 
-import BackgroundPicker from '../BackgroundPicker/BackgroundPicker';
-import PopButton from '../PopMenu';
 import PopMenu from '../PopMenu';
 
 import { MdInsertDriveFile, MdOutlineInsertDriveFile, MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
@@ -29,7 +27,7 @@ const NavBar = (props: {
     tagsDisplayHandler: Function,
 }) => {
     const { tagStore, updateTagStore, activeTags, getTagByLabel } = useTagStore();
-    const { deckStore, updateDeckStore, activeDeck } = useDeckStore();
+    const { deckStore, updateDeckStore } = useDeckStore();
     const { cardStore, updateCardStore, addCard, createCard, } = useCardStore();
     const { settingsStore, updateSettingsStore, updateCardScale, updateCardDefaultBg } = useSettingsStore();
     const { width } = useWindowSize();
@@ -94,7 +92,7 @@ const NavBar = (props: {
     };
 
 
-    const getGenerationMenuElements = () => {
+    const getCardMenuElements = () => {
         switch (popmenuSection) {
             case 'dungeons':
                 return (
@@ -132,6 +130,7 @@ const NavBar = (props: {
             default:
                 return (
                     <>
+                        <Button clickHandler={() => addCard(activeTags)} label={'DRAW AN EMPTY CARD'} />
                         <Button clickHandler={() => setPopmenuSection('npcs')} label={'NPCs'} />
                         <Button clickHandler={() => setPopmenuSection('quests')} label={'QUESTS'} />
                         <Button clickHandler={() => setPopmenuSection('settlements')} label={'SETTLEMENTS'} />
@@ -142,8 +141,8 @@ const NavBar = (props: {
         }
     };
 
-    const getToolbarElements = (section: string) => {
-        switch (section) {
+    const getToolbarElements = () => {
+        switch (navbarSection) {
             case 'settings':
                 return (
                     <>
@@ -171,10 +170,10 @@ const NavBar = (props: {
             default:
                 return (
                     <>
-                        <Button clickHandler={() => addCard(activeTags)} label={'ADD EMPTY CARD'} />
-                        <PopMenu label={'GENERATE CARD'} content={(() => getGenerationMenuElements())()} />
+
+                        <PopMenu label={'CARDS'} content={(() => getCardMenuElements())()} />
                         <Button clickHandler={() => setNavBarSection('settings')} label={'SETTINGS'} />
-                        <Button clickHandler={() => setNavBarSection('data')} label={'MANAGE DATA'} />
+                        <Button clickHandler={() => setNavBarSection('data')} label={'DATA'} />
                         <Button label={'ABOUT'} />
                     </>
                 );
@@ -185,17 +184,17 @@ const NavBar = (props: {
     return (
         <>
             {width < 800 && <button className={'ham-menu'} onClick={() => props.tagsDisplayHandler()}><GiHamburgerMenu /></button>}
-            < div className={'navbar'} >
+            <div className={'navbar'}>
                 {
                     width < 800 ?
                         <animated.div className={`navbar-drawer ${navbarDisplay ? '' : 'hidden'}`
                         } style={animation_navbar} >
                             <div className={`navbar-drawer-options`}>
-                                {getToolbarElements(navbarSection)}
+                                {getToolbarElements()}
                             </div>
                         </animated.div >
                         :
-                        getToolbarElements(navbarSection)
+                        getToolbarElements()
                 }
                 <Button clickHandler={() => props.tagsDisplayHandler()} label={<FaTags />} highlighted />
             </div >

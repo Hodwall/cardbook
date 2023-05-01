@@ -1,22 +1,64 @@
+div.deck::before {
+    content: "";
+    position: absolute;
+    left: 0.1em;
+    width: 100%;
+    height: 100%;
+    transform: rotate(4deg);
+    z-index: -1;
+    border-radius: 0.2em;
+    background: hsl(224, 60%, 60%);
+    box-shadow: inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
+}
+
 .deck {
-    width: max-content;
-    border-radius: 4px;
-    background: hsl(224, 60%, 60%) !important;
-    box-shadow: inset 0px 0px 3px 0px hsl(224, 60%, 60%), inset 0px 0px 22px 15px hsl(0deg 0% 0% / 44%), #100f0fbf 4px 4px 10px;
-    color: hsl(225, 54%, 95%);
-    padding-right: 10px;
-    padding: 10px 8px 2px 8px;
-    font-size: 22px;
     font-family: 'IM Fell DW Pica', serif;
-    text-align: end;
-    cursor: pointer;
+    font-size: 1.2em;
+    text-align: left;
+    color: hsl(0deg 0% 100% / 90%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.2em;
     user-select: none;
+    width: max-content;
+    padding: 0px 10px;
+    height: 1.6em;
+    background: hsl(224, 60%, 60%);
+    box-shadow: inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 45%), #100f0fbf 4px 4px 10px;
+    cursor: pointer;
+    position: relative;
 }
 
 .deck:active {
     transform: translateY(2px);
     box-shadow: inset 0px 0px 4px 0px hsl(224, 60%, 60%), inset 0px 0px 40px 16px hsl(0deg 0% 0% / 50%);
 }
+
+.deck span {
+    display: flex;
+}
+
+.deck button {
+    background-color: hsl(0deg 0% 0% / 0%);
+    border: unset;
+    color: hsl(0deg 0% 100% / 78%);
+    font-size: 0.8em;
+    padding: 0;
+}
+
+.deck button:last-of-type {
+    padding-right: 1em;
+}
+
+
+
+
+
+
+
+
+/* 
 
 .deck button {
     margin-right: 20px;
@@ -60,4 +102,4 @@
     transform: rotate(4deg);
     left: 0px;
     width: 103%;
-}
+} */
