@@ -201,7 +201,7 @@
     outline: none;
 }
 
-.card .navtag {
+.card .tag {
     font-size: 0.9em;
     padding: 0 0.4em;
     height: 1.8em;
@@ -219,6 +219,8 @@
 ::-webkit-scrollbar {
     width: 0.2em;
 }
+
+
 
 
 

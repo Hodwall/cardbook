@@ -252,8 +252,9 @@ const Card = (props: { data: iCard; }) => {
                   key={index}
                   id={tag.id}
                   label={tag.label}
-                  deleteHandler={handleRemoveTag}
-                  canDelete />)
+                  clickHandler={handleRemoveTag}
+                />
+              )
           }</div>
         </div>
         <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
@@ -273,7 +274,7 @@ const Card = (props: { data: iCard; }) => {
                           return results;
                         }, [])
                           .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
-                          .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} deleteHandler={handleRemoveTag} />)
+                          .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} />)
                       }
                     </div>
                     <form>
