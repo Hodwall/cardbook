@@ -24,8 +24,6 @@ const DeckMenu = () => {
         }
     };
 
-    console.log(activeDeck);
-
     return (
         <Popover
             isOpen={isPopoverOpen}

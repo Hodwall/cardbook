@@ -135,7 +135,7 @@ const Card = (props: { data: iCard; }) => {
     removeTagFromCard(props.data.id, tag_id);
   };
 
-  const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 100%)`;
+  const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 125%)`;
 
   return (
     <animated.div id={`card-${props.data.id}`} className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>

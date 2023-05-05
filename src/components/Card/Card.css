@@ -49,10 +49,9 @@
     display: flex;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
-    padding: 0.1em 0.3em;
+    padding: 0 0.3em;
     box-sizing: border-box;
-    border-bottom: 1em white;
-    margin: 0.35em;
+    margin: 0.35em 0;
     margin-bottom: 0;
 }
 
@@ -61,11 +60,12 @@
     flex: 1;
     width: 1em;
     line-height: 1em;
+    height: 2.019em;
     justify-content: end;
     text-align: right;
     overflow: hidden;
     color: hsl(0 0% 100% / 1);
-    font-size: 1.55em;
+    font-size: 1.4em;
     z-index: 1;
     white-space: break-spaces;
 }
@@ -106,7 +106,7 @@
 
 .card-side:not(.card-back) .card-body {
     background-color: white;
-    background-color: hsl(32deg 40% 95%);
+    background-color: hsl(32deg 50% 95%);
     height: fit-content;
     max-height: 100%;
     align-self: end;
@@ -116,14 +116,14 @@
 .card-body {
     color: hsl(0 0% 30% / 1);
     line-height: 1em;
-    padding: 0 0.3em;
+    padding: 0.2em 0.2em;
     box-sizing: border-box;
     overflow-y: auto;
-    border: 0.15em solid hsla(0, 0%, 100%, 0.25);
-    border-bottom-left-radius: 0.3em;
-    border-bottom-right-radius: 0.3em;
-    margin: 0 0.35em;
-    border-radius: 0.3em;
+    /* border: 0.15em solid hsla(0, 0%, 100%, 0.25); */
+    /* border-bottom-left-radius: 0.3em; */
+    /* border-bottom-right-radius: 0.3em; */
+    /* margin: 0 0.35em; */
+    /* border-radius: 0.3em; */
     z-index: -1;
 }
 
@@ -209,11 +209,11 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: hsl(0, 0%, 100%) !important;
+    background: hsl(32.31deg 52% 95.1%) !important;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: hsl(0, 0%, 92%);
+    background: hsl(32 22% 75% / 1);
 }
 
 ::-webkit-scrollbar {
