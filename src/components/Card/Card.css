@@ -1,6 +1,6 @@
 .card {
     font-size: 100%;
-    height: 25em;
+    height: 26em;
     width: 16em;
     font-family: 'IM Fell DW Pica', serif;
 }
@@ -8,7 +8,7 @@
 .card-side {
     position: absolute;
     display: grid;
-    grid-template-rows: 4em 19em 2em;
+    grid-template-rows: 4em 20em 2em;
     height: inherit;
     width: inherit;
     cursor: pointer;
@@ -20,7 +20,7 @@
 }
 
 .card-side.card-back {
-    grid-template-rows: 23em 2em;
+    grid-template-rows: 24em 2em;
 }
 
 .card-side.card-back .card-body {
