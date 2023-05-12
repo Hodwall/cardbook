@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+//@ts-nocheck
 import { useTagStore } from '../../hooks/useTagStore';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
-import { useFlexAnimation } from '../../hooks/useFlexAnimation';
-import Card from '../Card';
+import { useSettingsStore } from '../../hooks/useSettingsStore';
+import Shelf from '../Shelf';
 import './Gallery.css';
 
 
@@ -11,14 +11,7 @@ const Gallery = () => {
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
   const { activeDeck } = useDeckStore();
-  const { getFlexItemsInfo, animateFlexItems } = useFlexAnimation('.gallery');
-  const [prev_items, setPrevItems] = useState<any[]>([]);
-
-  useEffect(() => {
-    const new_items = getFlexItemsInfo();
-    if ((prev_items?.length > 0) && (new_items?.length > 0)) animateFlexItems(prev_items, new_items);
-    setPrevItems([...new_items]);
-  }, [cardStore]);
+  const { settingsStore } = useSettingsStore();
 
   let required_tags: number[] = [];
   let optional_tags: number[] = [];
@@ -53,12 +46,48 @@ const Gallery = () => {
     return cards_.sort((a: iCard, b: iCard) => (Number(b.isPinned) - Number(a.isPinned)) === 0 ? ((a.label.toLowerCase() > b.label.toLowerCase()) ? 1 : (a.label.toLowerCase() < b.label.toLowerCase()) ? -1 : 0) : (Number(b.isPinned) - Number(a.isPinned)));
   };
 
+
+  const shelveCards = (cards: any[]) => {
+    let card_shelves = [{ 'tags': [], 'cards': [] }];
+    settingsStore.shelves.forEach((shelf) => {
+      card_shelves.push({ 'tags': shelf, 'cards': [] });
+    });
+
+    cards.forEach((card) => {
+      let assigned = false;
+      let coincidences = {};
+
+      card_shelves.forEach((shelf, shelf_index) => {
+        if (assigned === true || shelf.tags.length < 1) return;
+        if (!card.tags.length) return;
+
+        coincidences[shelf_index] = 0;
+        card.tags.forEach((tag) => {
+          if (shelf.tags.includes(tag)) coincidences[shelf_index]++;
+        });
+      });
+
+      let max_index = 0;
+      let max_value = 0;
+      Object.keys(coincidences).forEach((shelf_index) => {
+        if (coincidences[shelf_index] > max_value) {
+          max_value = coincidences[shelf_index];
+          max_index = shelf_index;
+        }
+      });
+
+      card_shelves[max_index].cards.push(card);
+    });
+    return card_shelves;
+  };
+
   return (
     <div className="gallery">
-      {filterCards(cardStore).map((card: iCard) => <Card key={card.id} data={card} />)}
+      {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} />)}
     </div>
   );
 };
 
 export default Gallery;
+
 

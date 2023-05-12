@@ -80,6 +80,10 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         return tagStore.find((tag) => tag.label === label)?.id || createTag({ label: label });
     };
 
+    const getTagById = (id: number) => {
+        return tagStore.find((tag) => tag.id === id);
+    };
+
     const toggleIsPinned = (id: number) => {
         let store = [...tagStore];
         const tag_index = store.findIndex((tag) => tag.id === id);
@@ -101,7 +105,8 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
             setTagActive,
             setTagInactive,
             getTagByLabel,
-            toggleIsPinned
+            toggleIsPinned,
+            getTagById
         }}>
             {props.children}
         </TagStoreContext.Provider>

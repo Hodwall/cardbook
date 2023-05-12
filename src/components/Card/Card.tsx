@@ -16,6 +16,8 @@ import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
 import 'react-quill/dist/quill.snow.css';
 import './Card.css';
 
+import border from '../../assets/img/border.png';
+
 
 const Card = (props: { data: iCard; }) => {
   const { tagStore, createTag, getTagByLabel } = useTagStore();
@@ -142,6 +144,7 @@ const Card = (props: { data: iCard; }) => {
       <a.div className={'card-side'} style={{
         opacity: opacity.to(o => 1 - o), transform,
         background: card_side_bg,
+        backgroundPositionX: 'center'
       }} onClick={handleFlip}>
         <div className={'card-header'}>
           {
@@ -172,6 +175,7 @@ const Card = (props: { data: iCard; }) => {
             <button className="ql-blockquote" />
             <button className="ql-list" value="ordered" />
             <button className="ql-list" value="bullet" />
+            <button className="ql-list" value="check" />
             <select className="ql-align" />
             <select className="ql-color" />
             <button className="ql-link" />
@@ -236,6 +240,7 @@ const Card = (props: { data: iCard; }) => {
       <a.div className={'card-side card-back'} style={{
         opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none',
         background: card_side_bg,
+        backgroundPositionX: 'center'
       }} onClick={handleFlip}>
         <div className={'card-body'} onClick={handleFlip}>
           <div className={'card-tags'}>{

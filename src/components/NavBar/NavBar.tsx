@@ -25,6 +25,8 @@ import Button from '../Button';
 
 const NavBar = (props: {
     tagsDisplayHandler: Function,
+    toolbarDisplayHandler: Function,
+    displayToolbar: boolean;
 }) => {
     const { tagStore, updateTagStore, activeTags, getTagByLabel } = useTagStore();
     const { deckStore, updateDeckStore } = useDeckStore();
@@ -45,9 +47,9 @@ const NavBar = (props: {
 
 
     const animation_navbar = useSpring({
-        y: navbarDisplay ? 0 : -100,
-        height: navbarDisplay ? '22.3em' : '0em',
-        opacity: navbarDisplay ? 1 : 0,
+        y: props.displayToolbar ? 0 : -100,
+        height: props.displayToolbar ? '22.3em' : '0em',
+        opacity: props.displayToolbar ? 1 : 0,
     });
 
     useEffect(() => {
@@ -183,11 +185,11 @@ const NavBar = (props: {
 
     return (
         <>
-            {width < 800 && <button className={'ham-menu'} onClick={() => props.tagsDisplayHandler()}><GiHamburgerMenu /></button>}
+            {width < 800 && <button className={'ham-menu'} onClick={() => props.toolbarDisplayHandler()}><GiHamburgerMenu /></button>}
             <div className={'navbar'}>
                 {
                     width < 800 ?
-                        <animated.div className={`navbar-drawer ${navbarDisplay ? '' : 'hidden'}`
+                        <animated.div className={`navbar-drawer ${props.displayToolbar ? '' : 'hidden'}`
                         } style={animation_navbar} >
                             <div className={`navbar-drawer-options`}>
                                 {getToolbarElements()}

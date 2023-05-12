@@ -1,0 +1,58 @@
+.shelf {
+    width: 100%
+}
+
+.shelf.empty .shelf-tags>.tag {
+    background: hsl(40deg 40% 90%);
+    box-shadow: inset 0px 0px 4px 0px hsl(40deg 40% 90%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 25%);
+}
+
+.shelf-header {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1em;
+    margin-bottom: 0.6em;
+    border-bottom: 0.2em solid hsl(40 20% 85% / 1);
+    padding-bottom: 0.2em;
+    cursor: pointer;
+}
+
+.shelf-header .shelf-tags {
+    flex: 1;
+    display: flex;
+    gap: 0.2em;
+    flex-wrap: wrap;
+}
+
+.shelf-header .shelf-tags>.tag {
+    box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 25%);
+}
+
+.shelf-header>button {
+    margin: auto;
+    float: right;
+    margin-right: 0;
+    margin-top: 0;
+    background: none;
+    color: hsl(40deg 12% 70%);
+    font-size: 1.4em;
+    height: 1em;
+    border-style: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+.shelf-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    opacity: 1;
+}
+
+.shelf-cards.hidden {
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    height: 0;
+}

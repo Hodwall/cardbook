@@ -84,26 +84,31 @@
 }
 
 @media (max-width: 800px) {
-    .toolbar {
+    .navbar {
         flex-direction: column;
         grid-column-end: span 2;
     }
 
-    .toolbar .card-scale {
+    .navbar .button>span {
+        justify-content: center;
+    }
+
+    .navbar .card-scale {
         width: 100%;
     }
 
-    .toolbar .toolbar-drawer.hidden {
+    .navbar .navbar-drawer.hidden {
         z-index: -1;
     }
 
-    .toolbar .toolbar-drawer-options {
+    .navbar .navbar-drawer-options {
         display: flex;
         flex-direction: column;
         gap: 0.5em;
+        text-align: center;
     }
 
-    .toolbar,
+    .navbar,
     .tagbar,
     .tags_results {
         justify-content: left;

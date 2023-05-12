@@ -2,9 +2,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    gap: 0.1em;
     padding-top: 0.2em;
-    border-bottom: 0.15em solid hsl(36 38% 90% / 1);
+    border-bottom: 0.15em solid hsl(36 30% 80% / 1);
 }
 
 .card-stats:empty {
@@ -15,7 +14,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    width: 3.3em;
+    width: 3.5em;
     position: relative;
 }
 
@@ -48,22 +47,25 @@
 .card-stat span,
 .card-stat input,
 .card-stat button {
-    font-family: 'IM Fell DW Pica', serif;
+    font-family: 'Asul', serif;
 }
 
 .card-stat input.edit-value {
-    background: hsl(36 12% 65% / 1);
+    /* background: hsl(36 12% 65% / 1); */
+    background: hsl(36 10% 50% / 1);
     border: none;
     border-radius: 0.3em;
-    height: 1.2em;
+    height: 1.6em;
     box-sizing: border-box;
     text-align: center;
     box-shadow: inset -7px -6px 8px 0px hsl(0deg 0% 0% / 10%);
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: bold;
     color: white;
-    font-family: 'IM Fell DW Pica', serif;
+    font-family: 'Asul';
     z-index: 9;
+    padding: 0em 0.1em;
+    text-shadow: 0 0 2px black;
 }
 
 .card-stat input.edit-value:focus {

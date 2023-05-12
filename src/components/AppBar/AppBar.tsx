@@ -9,6 +9,7 @@ const AppBar = () => {
 	const [tagsDrawerDisplay, setTagDrawerDisplay] = useState(false);
 
 	const handleToggleToolbarDisplay = () => {
+		console.log('toogling');
 		if (tagsDrawerDisplay) setTagDrawerDisplay(false);
 		setToolbarDisplay(!toolbarDisplay);
 	};
@@ -26,7 +27,7 @@ const AppBar = () => {
 					<span>DUNGEON MASTER'S</span>
 					<span>DECKBOOK</span>
 				</div>
-				<NavBar tagsDisplayHandler={handleToggleTagsDisplay} />
+				<NavBar tagsDisplayHandler={handleToggleTagsDisplay} toolbarDisplayHandler={handleToggleToolbarDisplay} displayToolbar={toolbarDisplay} />
 			</div>
 			<div className='bottom-row'>
 				<TagBar displayDrawer={tagsDrawerDisplay} />

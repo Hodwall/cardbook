@@ -4,6 +4,7 @@ const SettingsStoreContext = createContext<any>(null);
 
 interface iSettings {
     cardScale: number,
+    shelves: number[][],
     cardDefaultBg: {};
 }
 
@@ -14,6 +15,7 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
             //protection for old cards with optional parameters
             let parsed_data = JSON.parse(stored_data);
             if (!parsed_data.cardDefaultBg) parsed_data.cardDefaultBg = {};
+            if (!parsed_data.shelves) parsed_data.shelves = [];
             return parsed_data;
         } else return {
             cardScale: 100,
@@ -38,9 +40,32 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
                 [label]: url,
             }
         };
-        console.log(updated_settings);
         updateSettingsStore(updated_settings);
         localStorage.setItem('settings_store', JSON.stringify(updated_settings));
+    };
+
+    const addShelf = () => {
+        let settings = { ...settingsStore };
+        settings.shelves.push([]);
+        updateSettingsStore({ ...settings });
+    };
+
+    const removeShelf = (index: number) => {
+        let settings = { ...settingsStore };
+        settings.shelves.splice(index, 1);
+        updateSettingsStore({ ...settings });
+    };
+
+    const addTagToShelf = (index: number, tag: number) => {
+        let settings = { ...settingsStore };
+        settings.shelves[index].push(tag);
+        updateSettingsStore({ ...settings });
+    };
+
+    const removeTagFromShelf = (index: number, tag: number) => {
+        let settings = { ...settingsStore };
+        settings.shelves[index] = settings.shelves[index].filter((t) => t != tag);
+        updateSettingsStore({ ...settings });
     };
 
 
@@ -49,7 +74,11 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
             settingsStore,
             updateSettingsStore,
             updateCardScale,
-            updateCardDefaultBg
+            updateCardDefaultBg,
+            addShelf,
+            removeShelf,
+            addTagToShelf,
+            removeTagFromShelf,
         }}>
             {props.children}
         </SettingsStoreContext.Provider>
