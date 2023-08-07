@@ -15,11 +15,12 @@ import './Shelf.css';
 const Shelf = (props: {
     id: number,
     tags: any[],
-    cards: iCard[];
+    cards: iCard[],
+    setDisplayCard?: Function;
 }) => {
     const [expanded, setExpanded] = useState(true);
     const { getTagById } = useTagStore();
-    const { addShelf, removeShelf, removeTagFromShelf } = useSettingsStore();
+    const { settingsStore, addShelf, removeShelf, removeTagFromShelf } = useSettingsStore();
 
     const { cardStore } = useCardStore();
     const { getFlexItemsInfo, animateFlexItems } = useFlexAnimation(`#shelf-${props.id}>.shelf-cards`);
@@ -42,7 +43,7 @@ const Shelf = (props: {
 
 
     return (
-        <div id={`shelf-${props.id}`} className={`shelf ${props.cards.length ? '' : 'empty'}`}>
+        <div id={`shelf-${props.id}`} className={`shelf ${props.cards.length ? '' : 'empty'} ${settingsStore.displayMode === 'compact' ? 'compact' : ''}`}>
             <div className="shelf-header" onClick={() => setExpanded(!expanded)}>
                 <div className="shelf-tags">
                     {props.tags.map((tag, index) => {
@@ -70,7 +71,7 @@ const Shelf = (props: {
                 <button onClick={() => setExpanded(!expanded)}>{expanded ? <FaChevronDown /> : <FaChevronUp />}</button>
             </div>
             <div className={`shelf-cards ${expanded ? '' : 'hidden'}`}>
-                {props.cards.map((card: iCard) => <Card key={card.id} data={card} />)}
+                {props.cards.map((card: iCard) => <Card key={card.id} data={card} setDisplayCard={props.setDisplayCard} />)}
             </div>
         </div>
     );

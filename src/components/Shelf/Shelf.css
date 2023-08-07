@@ -1,3 +1,25 @@
+.shelf.compact {
+    width: 16rem;
+}
+
+.shelf.compact .shelf-cards {
+    display: flex;
+    flex-direction: column;
+}
+
+.shelf.compact .shelf-cards>div {
+    flex-basis: 2.4em;
+}
+
+.shelf.compact .shelf-cards>div:not(:first-child) .card-side {
+    box-shadow: #00000030 0px -10px 12px 2px, #00000080 0px -8px 12px -3px;
+}
+
+
+
+
+
+
 .shelf {
     width: 100%
 }

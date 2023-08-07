@@ -16,12 +16,15 @@ import { RiPushpinFill, RiPushpinLine } from 'react-icons/ri';
 import 'react-quill/dist/quill.snow.css';
 import './Card.css';
 
-import border from '../../assets/img/border.png';
 
-
-const Card = (props: { data: iCard; }) => {
+const Card = (props: {
+  data: iCard;
+  isDisplay?: boolean,
+  setDisplayCard?: Function,
+  handleDisplayUpdate?: Function,
+}) => {
   const { tagStore, createTag, getTagByLabel } = useTagStore();
-  const { updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground, setCardPinned } = useCardStore();
+  const { cardStore, updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground, setCardPinned } = useCardStore();
   const { settingsStore } = useSettingsStore();
   const [editMode, setEditMode] = useState(false);
   const [editStatsMode, setEditStatsMode] = useState(false);
@@ -31,6 +34,11 @@ const Card = (props: { data: iCard; }) => {
   const [displayTagsDialog, setDisplayTagsDialog] = useState(false);
   const [resultsTagsDialog, setResultsTagsDialog] = useState(tagStore);
   const [searchTagsString, setSearchTagsString] = useState('');
+
+
+  useEffect(() => {
+    console.log('update');
+  }, [cardStore]);
 
   useEffect(() => {
     if (!editMode) {
@@ -50,9 +58,13 @@ const Card = (props: { data: iCard; }) => {
     }
   }, [tagStore, searchTagsString]);
 
+
   // REACT-SPRING ANIMATIONS
+  // const card_rotation = settingsStore.displayMode === 'compact' ? Math.floor(Math.random() * (1 - (-1) + 1) + (-1)) : 0;
+  const card_rotation = 0;
+
   const animation = useSpring({
-    to: { opacity: 1, y: 0, scale: 1, rotateZ: 0, rotateX: 0 },
+    to: { opacity: 1, y: 0, scale: 1, rotateZ: card_rotation, rotateX: 0 },
     from: { opacity: 0, y: -10, scale: 1.2, rotateZ: -10, rotateX: -80 },
     config: { mass: 5, friction: 120, tension: 1000 }
   });
@@ -109,13 +121,6 @@ const Card = (props: { data: iCard; }) => {
     updateCardBackground(background, props.data.id);
   };
 
-  const handleFlip = () => {
-    if (!editMode && !editStatsMode) {
-      setFlipped(!flipped);
-      setSearchTagsString('');
-    }
-  };
-
   const handleSearchTagsChange = (e: any) => {
     setSearchTagsString(e.target.value);
   };
@@ -137,171 +142,190 @@ const Card = (props: { data: iCard; }) => {
     removeTagFromCard(props.data.id, tag_id);
   };
 
+  const handleClick = () => {
+    if (settingsStore.displayMode === 'compact' && typeof props.isDisplay === 'undefined') {
+      if (props.setDisplayCard) {
+        props.setDisplayCard(props.data);
+      }
+    } else {
+      if (!editMode && !editStatsMode) {
+        setFlipped(!flipped);
+        setSearchTagsString('');
+      }
+    }
+  };
+
   const card_side_bg = `${props.data.background ? `url(${props.data.background})` : ''} 0 0 / auto 100%, linear-gradient(180deg, ${props.data.color || 'hsl(0deg 6% 45%)'} 0%, hsl(0, 0%, 20%) 125%)`;
 
   return (
-    <animated.div id={`card-${props.data.id}`} className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>
-      <a.div className={'card-side'} style={{
-        opacity: opacity.to(o => 1 - o), transform,
-        background: card_side_bg,
-        backgroundPositionX: 'center'
-      }} onClick={handleFlip}>
-        <div className={'card-header'}>
-          {
-            editMode ?
-              <textarea value={label} onChange={(e: any) => setLabel(e.target.value)} />
-              :
-              <div className={'card-label'}>{props.data.label}</div>
-          }
-          {/* {props.art && <div className='card-art'><img className="art" src={props.art} alt={props.art} /></div>} */}
-        </div>
-        <div className={'card-body'}>
-          <div className={'card-stats'}>
+    <>
+      <animated.div id={`card-${props.data.id}`} className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>
+        <a.div
+          className={'card-side'}
+          style={{
+            opacity: opacity.to(o => 1 - o), transform,
+            background: card_side_bg,
+            backgroundPositionX: 'center'
+          }}
+          onClick={handleClick}
+        >
+          <div className={'card-header'}>
             {
-              props.data.stats?.map((stat, index) =>
-                <CardStat
-                  key={index}
-                  stat={stat}
-                  cardId={props.data.id}
-                  editMode={editStatsMode}
-                />
-              )
+              editMode ?
+                <textarea value={label} onChange={(e: any) => setLabel(e.target.value)} />
+                :
+                <div className={'card-label'}>{props.data.label}</div>
+            }
+            {/* {props.art && <div className='card-art'><img className="art" src={props.art} alt={props.art} /></div>} */}
+          </div>
+          <div className={'card-body'}>
+            <div className={'card-stats'}>
+              {
+                props.data.stats?.map((stat, index) =>
+                  <CardStat
+                    key={index}
+                    stat={stat}
+                    cardId={props.data.id}
+                    editMode={editStatsMode}
+                  />
+                )
+              }
+            </div>
+            <div id={`#toolbar`} className={`ql-toolbar ql-snow ${editMode ? '' : 'hidden'} toolbar-${props.data.id}${props.isDisplay ? 'd' : ''}`}>
+              <button className="ql-bold" />
+              <button className="ql-italic" />
+              <button className="ql-underline" />
+              <button className="ql-blockquote" />
+              <button className="ql-list" value="ordered" />
+              <button className="ql-list" value="bullet" />
+              <button className="ql-list" value="check" />
+              <select className="ql-align" />
+              <select className="ql-color" />
+              <button className="ql-link" />
+            </div>
+            <ReactQuill
+              theme="snow"
+              value={content}
+              readOnly={!editMode}
+              onChange={(val: any) => setContent(val)}
+              modules={{
+                toolbar: `.toolbar-${props.data.id}${props.isDisplay ? 'd' : ''}`,
+              }}
+            />
+          </div>
+          <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
+            {
+              !flipped &&
+              <>
+                {
+                  (() => {
+                    if (editMode) {
+                      return (
+                        <div className={'card-tools-right'}>
+                          <button onClick={() => setEditMode(false)}><RiArrowGoBackFill /></button>
+                        </div>
+                      );
+                    } else if (editStatsMode) {
+                      return (
+                        <>
+                          <div className={'card-tools-right'}>
+                            <button onClick={() => addStatToCard(props.data.id)}><MdAddCircle /></button>
+                            <button onClick={() => setEditStatsMode(false)}><RiArrowGoBackFill /></button>
+                          </div>
+                        </>
+                      );
+                    } else {
+                      return (
+                        <>
+                          <div className={'card-tools-left'}>
+                            <button onClick={() => setCardPinned(!props.data.isPinned, props.data.id)}>{props.data.isPinned ? <RiPushpinFill /> : <RiPushpinLine />}</button>
+                            <button className={'copy-button'} onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
+                            <button onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              deleteCard(props.data.id);
+                            }}><MdDeleteForever /></button>
+                          </div>
+                          <div className={'card-tools-right'}>
+                            <button onClick={() => setEditStatsMode(true)}><MdBarChart /></button>
+                            <button onClick={() => setEditMode(true)}><MdEdit /></button>
+                          </div>
+                        </>
+                      );
+                    }
+                  })()
+                }
+              </>
             }
           </div>
-          <div id={`#toolbar`} className={`ql-toolbar ql-snow ${editMode ? '' : 'hidden'} toolbar-${props.data.id}`}>
-            <button className="ql-bold" />
-            <button className="ql-italic" />
-            <button className="ql-underline" />
-            <button className="ql-blockquote" />
-            <button className="ql-list" value="ordered" />
-            <button className="ql-list" value="bullet" />
-            <button className="ql-list" value="check" />
-            <select className="ql-align" />
-            <select className="ql-color" />
-            <button className="ql-link" />
-          </div>
-          <ReactQuill
-            theme="snow"
-            value={content}
-            readOnly={!editMode}
-            onChange={(val: any) => setContent(val)}
-            modules={{
-              toolbar: `.toolbar-${props.data.id}`,
-            }}
-          />
-        </div>
-        <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
-          {
-            !flipped &&
-            <>
-              {
-                (() => {
-                  if (editMode) {
-                    return (
-                      <div className={'card-tools-right'}>
-                        <button onClick={() => setEditMode(false)}><RiArrowGoBackFill /></button>
-                      </div>
-                    );
-                  } else if (editStatsMode) {
-                    return (
-                      <>
-                        <div className={'card-tools-right'}>
-                          <button onClick={() => addStatToCard(props.data.id)}><MdAddCircle /></button>
-                          <button onClick={() => setEditStatsMode(false)}><RiArrowGoBackFill /></button>
-                        </div>
-                      </>
-                    );
-                  } else {
-                    return (
-                      <>
-                        <div className={'card-tools-left'}>
-                          <button onClick={() => setCardPinned(!props.data.isPinned, props.data.id)}>{props.data.isPinned ? <RiPushpinFill /> : <RiPushpinLine />}</button>
-                          <button className={'copy-button'} onClick={() => copyCard(props.data.id)}><IoIosCopy /></button>
-                          <button onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            deleteCard(props.data.id);
-                          }}><MdDeleteForever /></button>
-                        </div>
-                        <div className={'card-tools-right'}>
-                          <button onClick={() => setEditStatsMode(true)}><MdBarChart /></button>
-                          <button onClick={() => setEditMode(true)}><MdEdit /></button>
-                        </div>
-                      </>
-                    );
-                  }
-                })()
-              }
-            </>
-          }
-        </div>
-      </a.div>
+        </a.div>
 
-      <a.div className={'card-side card-back'} style={{
-        opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none',
-        background: card_side_bg,
-        backgroundPositionX: 'center'
-      }} onClick={handleFlip}>
-        <div className={'card-body'} onClick={handleFlip}>
-          <div className={'card-tags'}>{
-            props.data.tags?.reduce((results: any[], tag_id: any) => {
-              results.push({
-                id: tag_id,
-                label: tagStore.find((el: any) => el.id === tag_id)?.label
-              });
-              return results;
-            }, [])
-              .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
-              .map((tag: iTag, index: number) =>
-                <Tag
-                  key={index}
-                  id={tag.id}
-                  label={tag.label}
-                  clickHandler={handleRemoveTag}
-                />
-              )
-          }</div>
-        </div>
-        <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
-          {
-            flipped &&
-            <>
-              {
-                displayTagsDialog
-                  ?
-                  <animated.div className={'card-tags-dialog'} style={animation} >
-                    <div className={'card-tags-dialog-results'}>
-                      {
-                        resultsTagsDialog.reduce((results: iTag[], tag: iTag) => {
-                          if (!props.data.tags.includes(tag.id)) {
-                            results.push(tag);
-                          }
-                          return results;
-                        }, [])
-                          .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
-                          .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} />)
-                      }
-                    </div>
-                    <form>
-                      <input type="text" value={searchTagsString} onChange={handleSearchTagsChange} onKeyDown={handleSearchTagsKeyDown} autoFocus />
-                    </form>
-                  </animated.div>
-                  :
-                  <>
-                    <div className={'card-tools-left'}>
-                      <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />
-                      <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />
-                    </div>
-                    <div className={'card-tools-right'}>
-                      <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}><FaTags /></button>
-                    </div>
-                  </>
-              }
-            </>
-          }
-        </div>
-      </a.div>
-    </animated.div >
+        <a.div className={'card-side card-back'} style={{
+          opacity, transform, rotateY: '180deg', display: flipped ? 'grid' : 'none',
+          background: card_side_bg,
+          backgroundPositionX: 'center'
+        }} onClick={handleClick}>
+          <div className={'card-body'} onClick={handleClick}>
+            <div className={'card-tags'}>{
+              props.data.tags?.reduce((results: any[], tag_id: any) => {
+                results.push({
+                  id: tag_id,
+                  label: tagStore.find((el: any) => el.id === tag_id)?.label
+                });
+                return results;
+              }, [])
+                .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+                .map((tag: iTag, index: number) =>
+                  <Tag
+                    key={index}
+                    id={tag.id}
+                    label={tag.label}
+                    clickHandler={handleRemoveTag}
+                  />
+                )
+            }</div>
+          </div>
+          <div className={'card-tools'} onClick={(e) => e.stopPropagation()}>
+            {
+              flipped &&
+              <>
+                {
+                  displayTagsDialog
+                    ?
+                    <animated.div className={'card-tags-dialog'} style={animation} >
+                      <div className={'card-tags-dialog-results'}>
+                        {
+                          resultsTagsDialog.reduce((results: iTag[], tag: iTag) => {
+                            if (!props.data.tags.includes(tag.id)) {
+                              results.push(tag);
+                            }
+                            return results;
+                          }, [])
+                            .sort((a: iTag, b: iTag) => (a.label > b.label) ? 1 : (a.label < b.label) ? -1 : 0)
+                            .map((tag: iTag, index: number) => <Tag key={index} id={tag.id} label={tag.label} clickHandler={handleAddTag} />)
+                        }
+                      </div>
+                      <form>
+                        <input type="text" value={searchTagsString} onChange={handleSearchTagsChange} onKeyDown={handleSearchTagsKeyDown} autoFocus />
+                      </form>
+                    </animated.div>
+                    :
+                    <>
+                      <div className={'card-tools-left'}>
+                        <ColorPicker defaultColor={props.data.color} changeColorHandler={handleChangeColor} />
+                        <BackgroundPicker changeBackgroundHandler={handleChangeBackground} />
+                      </div>
+                      <div className={'card-tools-right'}>
+                        <button onClick={(e) => { e.preventDefault(); setDisplayTagsDialog(!displayTagsDialog); }}><FaTags /></button>
+                      </div>
+                    </>
+                }
+              </>
+            }
+          </div>
+        </a.div>
+      </animated.div >
+    </>
   );
 };
 

@@ -109,7 +109,6 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
             const has_tag = store[card_index].tags.some((tag) => tag === tag_id);
             if (!has_tag) store[card_index].tags.push(tag_id);
             store = [...updateStatTotals(store)];
-            console.log(store);
             updateCardStore(store);
         }
     };

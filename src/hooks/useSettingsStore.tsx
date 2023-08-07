@@ -4,6 +4,7 @@ const SettingsStoreContext = createContext<any>(null);
 
 interface iSettings {
     cardScale: number,
+    displayMode: string,
     shelves: number[][],
     cardDefaultBg: {};
 }
@@ -12,10 +13,11 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
     const [settingsStore, setSettingsStore] = useState<iSettings>((() => {
         let stored_data = localStorage.getItem('settings_store');
         if (stored_data) {
-            //protection for old cards with optional parameters
+            //protection for old stores with optional parameters
             let parsed_data = JSON.parse(stored_data);
             if (!parsed_data.cardDefaultBg) parsed_data.cardDefaultBg = {};
             if (!parsed_data.shelves) parsed_data.shelves = [];
+            if (!parsed_data.displayMode) parsed_data.displayMode = 'full';
             return parsed_data;
         } else return {
             cardScale: 100,
@@ -30,6 +32,10 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
 
     const updateCardScale = (val: number) => {
         updateSettingsStore({ ...settingsStore, cardScale: val });
+    };
+
+    const toggleDisplayMode = () => {
+        updateSettingsStore({ ...settingsStore, displayMode: settingsStore.displayMode === 'full' ? 'compact' : 'full' });
     };
 
     const updateCardDefaultBg = (label: string, url: string) => {
@@ -73,6 +79,7 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
         <SettingsStoreContext.Provider value={{
             settingsStore,
             updateSettingsStore,
+            toggleDisplayMode,
             updateCardScale,
             updateCardDefaultBg,
             addShelf,

@@ -100,10 +100,10 @@ const TagPicker = (props: {
     return (
         <Popover
             isOpen={isPopoverOpen}
-            positions={['bottom']} // if you'd like, you can limit the positions
+            positions={['bottom', 'top']} // if you'd like, you can limit the positions
             padding={12}
             align={'end'}
-            reposition={false} // prevents automatic readjustment of content position that keeps your popover content within its parent's bounds
+            reposition={true} // prevents automatic readjustment of content position that keeps your popover content within its parent's bounds
             onClickOutside={() => setIsPopoverOpen(false)} // handle click events outside of the popover/target here!
             content={({ position, nudgedLeft, nudgedTop }) => ( // you can also provide a render function that injects some useful stuff!
                 <>

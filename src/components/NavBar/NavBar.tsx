@@ -13,8 +13,8 @@ import useWindowSize from '../../hooks/useWindowSize';
 import PopMenu from '../PopMenu';
 
 import { MdInsertDriveFile, MdOutlineInsertDriveFile, MdOutlineMale, MdOutlineFemale } from 'react-icons/md';
-import { RiArrowGoBackFill } from 'react-icons/ri';
-import { FaTags, FaDiceD20 } from 'react-icons/fa';
+import { RiArrowGoBackFill, RiLayoutGridFill } from 'react-icons/ri';
+import { FaTags, FaDiceD20, FaLayerGroup } from 'react-icons/fa';
 import { GiHamburgerMenu } from 'react-icons/gi';
 
 import './NavBar.css';
@@ -31,7 +31,7 @@ const NavBar = (props: {
     const { tagStore, updateTagStore, activeTags, getTagByLabel } = useTagStore();
     const { deckStore, updateDeckStore } = useDeckStore();
     const { cardStore, updateCardStore, addCard, createCard, } = useCardStore();
-    const { settingsStore, updateSettingsStore, updateCardScale, updateCardDefaultBg } = useSettingsStore();
+    const { settingsStore, updateSettingsStore, updateCardScale, updateCardDefaultBg, toggleDisplayMode } = useSettingsStore();
     const { width } = useWindowSize();
 
     const [navbarSection, setNavBarSection] = useState<string>('');
@@ -177,6 +177,7 @@ const NavBar = (props: {
                         <Button clickHandler={() => setNavBarSection('settings')} label={'SETTINGS'} />
                         <Button clickHandler={() => setNavBarSection('data')} label={'DATA'} />
                         <Button label={'ABOUT'} />
+
                     </>
                 );
         }
@@ -198,6 +199,7 @@ const NavBar = (props: {
                         :
                         getToolbarElements()
                 }
+                <Button clickHandler={() => toggleDisplayMode()} label={settingsStore.displayMode === 'full' ? <RiLayoutGridFill /> : <FaLayerGroup />} highlighted />
                 <Button clickHandler={() => props.tagsDisplayHandler()} label={<FaTags />} highlighted />
             </div >
         </>

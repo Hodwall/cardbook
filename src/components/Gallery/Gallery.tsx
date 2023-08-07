@@ -1,9 +1,12 @@
 //@ts-nocheck
+import { useState, useEffect } from 'react';
 import { useTagStore } from '../../hooks/useTagStore';
 import { useCardStore, iCard } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
 import { useSettingsStore } from '../../hooks/useSettingsStore';
 import Shelf from '../Shelf';
+import DisplayCard from '../DisplayCard/DisplayCard';
+import Card from '../Card/Card';
 import './Gallery.css';
 
 
@@ -12,6 +15,11 @@ const Gallery = () => {
   const { activeTags } = useTagStore();
   const { activeDeck } = useDeckStore();
   const { settingsStore } = useSettingsStore();
+  const [displayCard, setDisplayCard] = useState<any>(null);
+
+  useEffect(() => {
+    setDisplayCard(null);
+  }, [settingsStore.displayMode]);
 
   let required_tags: number[] = [];
   let optional_tags: number[] = [];
@@ -81,9 +89,12 @@ const Gallery = () => {
     return card_shelves;
   };
 
+  console.log(setDisplayCard);
+
   return (
     <div className="gallery">
-      {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} />)}
+      {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} setDisplayCard={setDisplayCard} />)}
+      {displayCard && <DisplayCard><Card data={displayCard} isDisplay={true} /></DisplayCard>}
     </div>
   );
 };
