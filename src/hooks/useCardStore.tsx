@@ -30,7 +30,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         if (stored_data) {
             //protection for old cards with optional parameters
             let parsed_data = JSON.parse(stored_data);
-            parsed_data.forEach((card: iCard) => {
+            parsed_data?.forEach((card: iCard) => {
                 if (!card.label) card.label = '';
                 if (!card.stats) card.stats = [];
                 if (!card.isPinned) card.isPinned = false;
@@ -256,7 +256,7 @@ export const CardStoreProvider = (props: { children: React.ReactNode; }) => {
         let tmp_store = [...store];
         tmp_store.forEach((card_to_update) => {
             if (card_to_update.stats && card_to_update.stats.length > 0) {
-                card_to_update.stats.forEach((stat_to_update) => {
+                card_to_update?.stats?.forEach((stat_to_update) => {
                     if (stat_to_update.useTotal) {
                         //found a card with a stat that uses total
                         let values: number[] = [];

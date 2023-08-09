@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { DisplayEditableContext } from '../DisplayCard/DisplayCard';
 import { useSpring, animated, a } from 'react-spring';
 import ReactQuill, { Quill } from 'react-quill';
 import { useTagStore, iTag } from '../../hooks/useTagStore';
@@ -21,7 +22,6 @@ const Card = (props: {
   data: iCard;
   isDisplay?: boolean,
   setDisplayCard?: Function,
-  handleDisplayUpdate?: Function,
 }) => {
   const { tagStore, createTag, getTagByLabel } = useTagStore();
   const { cardStore, updateCardContent, updateCardLabel, updateCardColor, deleteCard, addTagToCard, removeTagFromCard, addStatToCard, copyCard, updateCardBackground, setCardPinned } = useCardStore();
@@ -34,7 +34,17 @@ const Card = (props: {
   const [displayTagsDialog, setDisplayTagsDialog] = useState(false);
   const [resultsTagsDialog, setResultsTagsDialog] = useState(tagStore);
   const [searchTagsString, setSearchTagsString] = useState('');
+  const displayEditable = useContext(DisplayEditableContext);
 
+
+  useEffect(() => {
+    console.log(displayEditable);
+    if (displayEditable === false) {
+      setDisplayTagsDialog(false);
+      setEditMode(false);
+      setEditStatsMode(false);
+    }
+  }, [displayEditable]);
 
   useEffect(() => {
     console.log('update');
@@ -159,7 +169,7 @@ const Card = (props: {
 
   return (
     <>
-      <animated.div id={`card-${props.data.id}`} className={`card`} style={{ ...animation, fontSize: `${settingsStore.cardScale}%` }} ref={ref}>
+      <animated.div id={`card-${props.data.id}`} className={`card`} style={{ ...animation, fontSize: `${!props.isDisplay ? settingsStore.cardScale : null}%` }} ref={ref}>
         <a.div
           className={'card-side'}
           style={{

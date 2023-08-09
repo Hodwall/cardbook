@@ -52,7 +52,7 @@ export const TagStoreProvider = (props: { children: React.ReactNode; }) => {
         updateTagStore(tagStore.filter((tag: iTag) => tag.id != id));
         removeTagFromAllCards(id);
         updateActiveTags([...activeTags.filter((tag: number) => tag != id)]);
-        deckStore.forEach((deck: iDeck) => {
+        deckStore?.forEach((deck: iDeck) => {
             if (deck.tags.findIndex((tag: number) => tag === id) !== -1) {
                 const filtered_tags = deck.tags.filter((tag) => tag != id);
                 if (filtered_tags.length > 0) updateDeckTags(deck.id, filtered_tags);

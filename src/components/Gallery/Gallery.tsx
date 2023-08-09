@@ -21,6 +21,10 @@ const Gallery = () => {
     setDisplayCard(null);
   }, [settingsStore.displayMode]);
 
+  useEffect(() => {
+    console.log(displayCard);
+  }, [displayCard]);
+
   let required_tags: number[] = [];
   let optional_tags: number[] = [];
 
@@ -57,7 +61,7 @@ const Gallery = () => {
 
   const shelveCards = (cards: any[]) => {
     let card_shelves = [{ 'tags': [], 'cards': [] }];
-    settingsStore.shelves.forEach((shelf) => {
+    settingsStore?.shelves?.forEach((shelf) => {
       card_shelves.push({ 'tags': shelf, 'cards': [] });
     });
 
@@ -89,13 +93,13 @@ const Gallery = () => {
     return card_shelves;
   };
 
-  console.log(setDisplayCard);
-
   return (
-    <div className="gallery">
-      {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} setDisplayCard={setDisplayCard} />)}
-      {displayCard && <DisplayCard><Card data={displayCard} isDisplay={true} /></DisplayCard>}
-    </div>
+    <>
+      <div className="gallery">
+        {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} setDisplayCard={setDisplayCard} />)}
+      </div>
+      {displayCard && <DisplayCard setDisplayCard={setDisplayCard}><Card data={displayCard} isDisplay={true} setDisplayCard={setDisplayCard} /></DisplayCard>}
+    </>
   );
 };
 
