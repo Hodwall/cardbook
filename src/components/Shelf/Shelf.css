@@ -1,10 +1,18 @@
 .shelf.compact {
-    width: 16rem;
+    width: auto;
+    height: 37em;
+}
+
+.shelf.compact .shelf-header {
+    flex-wrap: wrap !important;
+    overflow: hidden;
 }
 
 .shelf.compact .shelf-cards {
     display: flex;
     flex-direction: column;
+    height: 15em;
+    align-content: flex-start;
 }
 
 .shelf.compact .shelf-cards>div {
@@ -15,13 +23,10 @@
     box-shadow: #00000030 0px -10px 12px 2px, #00000080 0px -8px 12px -3px;
 }
 
-
-
-
-
-
 .shelf {
-    width: 100%
+    width: 100%;
+    height: min-content;
+    margin-bottom: 2em;
 }
 
 .shelf.empty .shelf-tags>.tag {
@@ -34,7 +39,7 @@
     flex-wrap: nowrap;
     gap: 1em;
     margin-bottom: 0.6em;
-    border-bottom: 0.2em solid hsl(40 20% 85% / 1);
+    border-bottom: 0.2em solid hsl(40, 20%, 55%);
     padding-bottom: 0.2em;
     cursor: pointer;
 }
@@ -56,7 +61,7 @@
     margin-right: 0;
     margin-top: 0;
     background: none;
-    color: hsl(40deg 12% 70%);
+    color: hsl(40, 20%, 55%);
     font-size: 1.4em;
     height: 1em;
     border-style: none;

@@ -3,6 +3,7 @@
     height: 26em;
     width: 16em;
     font-family: 'IM Fell DW Pica', serif;
+    position: relative;
 }
 
 .card-side {

@@ -7,6 +7,18 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+div.App {
+  display: flex;
+  flex-direction: column;
+}
+
+html,
+body,
+#root,
+div.App {
+  height: 100%;
+}
+
 body {
   margin: 0px;
   width: 100%;

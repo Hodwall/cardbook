@@ -4,6 +4,7 @@
     z-index: 99;
     font-family: 'IM Fell DW Pica';
     background-color: hsl(0, 45%, 17%);
+    /* hsl(0deg 7.66% 20.62%) */
 }
 
 .appbar .top-row {

@@ -1,0 +1,47 @@
+.appbody {
+  flex-grow: 2;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  ;
+}
+
+.appbody .top-divider {
+  display: grid;
+  grid-template-columns: 67px auto 67px;
+  height: 49px;
+}
+
+.appbody .top-divider .top-divider-center {
+  background: url(../../assets/img/ui_border_top.png) repeat-x;
+}
+
+.appbody .top-divider .top-divider-left {
+  background: url(../../assets/img/ui_border_top-left.png);
+}
+
+.appbody .top-divider .top-divider-right {
+  background: url(../../assets/img/ui_border_top-right.png);
+}
+
+
+.appbody .body {
+  display: grid;
+  grid-template-columns: 67px auto 67px;
+  flex-grow: 2;
+  overflow: hidden;
+}
+
+.appbody .body .border-left {
+  background: url(../../assets/img/ui_border_left.png) repeat-y;
+}
+
+.appbody .body .border-right {
+  background: url(../../assets/img/ui_border_right.png) repeat-y;
+}
+
+.appbody .body .content {
+  display: flex;
+  overflow: hidden;
+  padding-bottom: 2em;
+}
