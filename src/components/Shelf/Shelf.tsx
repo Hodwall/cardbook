@@ -59,16 +59,18 @@ const Shelf = (props: {
                         );
                     })}
                 </div>
-                <button onClick={(e: any) => {
-                    e.stopPropagation();
-                    addShelf();
-                }}><FaPlusCircle /></button>
-                {props.id > 0 &&
-                    <>
-                        <button onClick={() => removeShelf(props.id - 1)}><FaMinusCircle /></button>
-                        <TagPicker shelfIndex={props.id - 1} tags={props.tags} />
-                    </>}
-                <button onClick={() => setExpanded(!expanded)}>{expanded ? <FaChevronDown /> : <FaChevronUp />}</button>
+                <div className="shelf-tools">
+                    <button onClick={() => setExpanded(!expanded)}>{expanded ? <FaChevronDown /> : <FaChevronUp />}</button>
+                    <button onClick={(e: any) => {
+                        e.stopPropagation();
+                        addShelf();
+                    }}><FaPlusCircle /></button>
+                    {props.id > 0 &&
+                        <>
+                            <button onClick={() => removeShelf(props.id - 1)}><FaMinusCircle /></button>
+                            <TagPicker shelfIndex={props.id - 1} tags={props.tags} />
+                        </>}
+                </div>
             </div>
             <div className={`shelf-cards ${expanded ? '' : 'hidden'}`}>
                 {props.cards.map((card: iCard) => <Card key={card.id} data={card} setDisplayCard={props.setDisplayCard} />)}

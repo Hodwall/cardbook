@@ -186,10 +186,10 @@ const NavBar = (props: {
 
     return (
         <>
-            {width < 800 && <button className={'ham-menu'} onClick={() => props.toolbarDisplayHandler()}><GiHamburgerMenu /></button>}
+            {width < 768 && <button className={'ham-menu'} onClick={() => props.toolbarDisplayHandler()}><GiHamburgerMenu /></button>}
             <div className={'navbar'}>
                 {
-                    width < 800 ?
+                    width < 768 ?
                         <animated.div className={`navbar-drawer ${props.displayToolbar ? '' : 'hidden'}`
                         } style={animation_navbar} >
                             <div className={`navbar-drawer-options`}>

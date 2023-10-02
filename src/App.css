@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica+SC&family=IM+Fell+English+SC&family=IM+Fell+Great+Primer+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap');
 
+
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-div.App {
+#root {
+  --media-breakpoint: 500px;
+  --test-color: 'tomato';
+}
+
+.App {
   display: flex;
   flex-direction: column;
 }
@@ -15,7 +22,7 @@ div.App {
 html,
 body,
 #root,
-div.App {
+.App {
   height: 100%;
 }
 

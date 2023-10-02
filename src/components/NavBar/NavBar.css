@@ -83,7 +83,7 @@
     z-index: -1;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
     .navbar {
         flex-direction: column;
         grid-column-end: span 2;
