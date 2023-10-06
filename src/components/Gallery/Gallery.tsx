@@ -5,25 +5,21 @@ import { useCardStore, iCard } from '../../hooks/useCardStore';
 import { useDeckStore } from '../../hooks/useDeckStore';
 import { useSettingsStore } from '../../hooks/useSettingsStore';
 import Shelf from '../Shelf';
-import DisplayCard from '../DisplayCard/DisplayCard';
 import Card from '../Card/Card';
 import './Gallery.css';
+
+import DisplayCard from '../DisplayCard';
 
 
 const Gallery = () => {
   const { cardStore } = useCardStore();
   const { activeTags } = useTagStore();
   const { activeDeck } = useDeckStore();
-  const { settingsStore } = useSettingsStore();
-  const [displayCard, setDisplayCard] = useState<any>(null);
+  const { settingsStore, setDisplayCard } = useSettingsStore();
 
   useEffect(() => {
     setDisplayCard(null);
   }, [settingsStore.displayMode]);
-
-  useEffect(() => {
-    console.log(displayCard);
-  }, [displayCard]);
 
   let required_tags: number[] = [];
   let optional_tags: number[] = [];
@@ -96,9 +92,9 @@ const Gallery = () => {
   return (
     <>
       <div className="gallery">
-        {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} setDisplayCard={setDisplayCard} />)}
+        {shelveCards(filterCards(cardStore)).map((group, index) => <Shelf key={index} id={index} tags={group.tags} cards={group.cards} />)}
       </div>
-      {displayCard && <DisplayCard setDisplayCard={setDisplayCard}><Card data={displayCard} isDisplay={true} setDisplayCard={setDisplayCard} /></DisplayCard>}
+      <DisplayCard />
     </>
   );
 };

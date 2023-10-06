@@ -73,7 +73,7 @@ const Shelf = (props: {
                 </div>
             </div>
             <div className={`shelf-cards ${expanded ? '' : 'hidden'}`}>
-                {props.cards.map((card: iCard) => <Card key={card.id} data={card} setDisplayCard={props.setDisplayCard} />)}
+                {props.cards.map((card: iCard) => <Card key={card.id} data={card} />)}
             </div>
         </div>
     );

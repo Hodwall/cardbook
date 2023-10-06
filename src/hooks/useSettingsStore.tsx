@@ -5,6 +5,7 @@ const SettingsStoreContext = createContext<any>(null);
 interface iSettings {
     cardScale: number,
     displayMode: string,
+    displayCard: number | null,
     shelves: number[][],
     cardDefaultBg: {};
 }
@@ -36,6 +37,10 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
 
     const toggleDisplayMode = () => {
         updateSettingsStore({ ...settingsStore, displayMode: settingsStore.displayMode === 'full' ? 'compact' : 'full' });
+    };
+
+    const setDisplayCard = (id: number | null) => {
+        updateSettingsStore({ ...settingsStore, displayCard: id });
     };
 
     const updateCardDefaultBg = (label: string, url: string) => {
@@ -80,6 +85,7 @@ export const SettingsStoreProvider = (props: { children: React.ReactNode; }) => 
             settingsStore,
             updateSettingsStore,
             toggleDisplayMode,
+            setDisplayCard,
             updateCardScale,
             updateCardDefaultBg,
             addShelf,

@@ -1,95 +1,76 @@
 .card {
-    font-size: 1em;
     height: 26em;
     width: 16em;
     font-family: 'IM Fell DW Pica', serif;
     position: relative;
 }
 
-.card-side {
+.card-front,
+.card-back {
     position: absolute;
     display: grid;
-    grid-template-rows: 4em 20em 2em;
     height: inherit;
     width: inherit;
     cursor: pointer;
-    border-radius: 0.3em;
-    /* box-shadow: #00000041 4px 4px 10px, #00000041 2px 2px 2px; */
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 7px 1px;
-    /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+    border-radius: 0.75em;
+    padding: 0.8em 0.8em 0 0.8em;
+    box-shadow: hsl(30deg 50% 25% / 40%) 2px 2px 5px 0px;
     box-sizing: border-box;
     background: linear-gradient(150deg, hsl(0deg 6% 45%) 0%, hsl(0, 0%, 20%) 100%);
     background-blend-mode: hard-light;
-    background-position-x: center;
+    background-position-x: center !important;
 }
 
-.card-side.card-back {
-    grid-template-rows: 24em 2em;
-}
-
-.card-side.card-back .card-body {
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
-    padding: 0.5em;
-    border-bottom-left-radius: 0.3em;
-    border-bottom-right-radius: 0.3em;
-    margin: 0.35em 0.35em 0em 0.35em;
-}
-
-.card-side.card-back .card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3em;
-}
-
-.card-side.card-back .card-tools button {
-    font-size: 1.3em;
-    padding-top: 0.1em;
-    color: hsl(0deg 0% 100%);
-    background: hsl(0deg 0% 100% / 0%);
-}
-
-.card-header {
-    display: flex;
-    border-top-left-radius: inherit;
-    border-top-right-radius: inherit;
-    padding: 0 0.3em;
-    box-sizing: border-box;
-    margin: 0.35em 0;
-    margin-bottom: 0;
-}
-
-.card-header .card-label {
-    display: flex;
+.card-front:before,
+.card-back:before {
+    content: '';
+    border: 0.15em solid hsl(45deg 14.23% 69.88% / 59%);
+    position: absolute;
     flex: 1;
-    width: 1em;
+    width: 94%;
+    height: 90%;
+    justify-self: center;
+    align-self: top;
+    margin-top: 0.4em;
+    border-radius: 0.6em;
+    z-index: 9;
+    pointer-events: none;
+}
+
+.card-front {
+    /* grid-template-rows: 4em 20em 2em; */
+    grid-template-rows: minmax(5em, auto) min-content min-content;
+}
+
+.card-back {
+    /* grid-template-rows: 24em 2em; */
+    grid-template-rows: auto min-content;
+}
+
+
+/* CARD LABEL */
+.card .card-front .label {
+    display: flex;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+    box-sizing: border-box;
+}
+
+.card .card-front .label>div {
+    flex: 1;
     line-height: 1em;
-    height: 2.019em;
+    height: 2em;
     justify-content: end;
     text-align: right;
     overflow: hidden;
     color: hsl(0 0% 100% / 1);
-    font-size: 1.4em;
+    font-size: 1.3em;
     z-index: 1;
     white-space: break-spaces;
-    text-shadow: 0 0 2px black;
+    text-shadow: 0 0 4px black;
 }
 
-.card-header .card-art {
-    position: absolute;
-    top: -0.5em;
-    width: 95%;
-    height: 4.5em;
-    overflow: hidden;
-}
-
-.card-header .card-art img {
-    position: absolute;
-    bottom: 0;
-    width: 70%;
-}
-
-.card-header textarea {
+.card .card-front .label>textarea {
     resize: none;
     color: white;
     width: 100%;
@@ -102,89 +83,73 @@
     overflow: hidden;
     padding: 0;
     border: none;
+    max-height: 2.1em;
 }
 
-.card-header textarea:focus {
+.card .card-front .label>textarea:focus {
     border-style: none;
     outline: none;
 }
 
-/* .card-side:not(.card-back) .card-body {
-    background-color: white;
-    background-color: hsl(32deg 50% 95%);
-    height: fit-content;
-    max-height: 100%;
+
+/* CARD BODY */
+.card .body {
+    background: hsl(45, 30%, 90%);
+    background: linear-gradient(0deg, hsl(45, 30%, 90%) 0%, hsla(45, 30%, 90%, 0.98) 50%, hsla(45, 30%, 90%, 0.8) 100%);
+    max-height: 14em;
     align-self: end;
     z-index: 2;
-} */
-
-.card-side:not(.card-back) .card-body {
-    background-color: white;
-    background-color: hsl(32deg 50% 95%);
-    background: url(../../assets/img/parchment.jpg);
-    background-position-x: center;
-    height: fit-content;
-    max-height: 100%;
-    align-self: end;
-    z-index: 2;
-    border-top: 6px solid hsl(22deg 26% 60%);
-    border-bottom: 6px solid hsl(22deg 26% 60%);
-    border-top-style: double;
-    border-bottom-style: double;
-    box-shadow: inset 0px 0px 12px 0px #81521aa3;
+    padding: 0.75em 0.75em 1.75em 0.75em;
+    padding: 0.75em 0.75em 2.25em 0.75em;
+    margin: 0 -0.8em;
+    overflow-y: scroll;
+    box-shadow: 0px -10px 20px 13px hsl(45deg 29% 89% / 82%);
+    clip-path: inset(-60px 0px -40px 0px);
 }
 
-/* .card-body {
-    color: hsl(0 0% 30% / 1);
-    line-height: 1em;
-    padding: 0.2em 0.3em;
-    box-sizing: border-box;
-    overflow-y: auto;
-    /* border: 0.15em solid hsla(0, 0%, 100%, 0.25); */
-/* border-bottom-left-radius: 0.3em; */
-/* border-bottom-right-radius: 0.3em; */
-/* margin: 0 0.35em; */
-/* border-radius: 0.3em; */
-/* z-index: -1; */
-/* } */
-
-.card-body {
-    color: hsl(0 0% 30% / 1);
-    line-height: 1em;
-    padding: 0.2em 0.3em;
-    box-sizing: border-box;
-    overflow-y: auto;
-    /* border: 0.15em solid hsl(0deg 0% 0%); */
-    /* border-bottom-left-radius: 0.3em; */
-    /* border-bottom-right-radius: 0.3em; */
-    /* margin: 0 0.3em; */
-    /* border-radius: 0.3em; */
-    z-index: -1;
-    /* border-top: 6px solid #0f812463; */
-    /* outline: 2px solid black; */
-    /* border-top: 2px solid black; */
-    /* border-radius: -10px; */
-
+/* CARD TAGS */
+.card .tags {
+    display: flex;
+    gap: 0.4em;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow-y: scroll;
 }
 
-.card-body p {
-    margin: 0.4em 0;
-}
 
-.card-tools {
+/* CARD TOOLS */
+.card .tools {
     display: flex;
     flex-direction: row;
-    padding: 0.2em;
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
+    padding: 0.5em 0.4em 0.2em 0.4em;
+    margin: 0 -0.8em;
+    border-bottom-left-radius: 0.6em;
+    border-bottom-right-radius: 0.6em;
 }
 
-.card-tools .card-tools-right {
+.card .card-front .tools {
+    background: hsl(46, 30%, 89%);
+}
+
+.card .card-front .tools button,
+.card .card-front .tools span {
+    color: hsl(32, 10%, 50%);
+}
+
+.card .tools>div {
+    display: flex;
+    align-self: flex-end;
+}
+
+.card .tools .tools-right {
     flex-grow: 1;
-    text-align: right;
+    flex-direction: row-reverse;
 }
 
-.card-tools button {
+.card .tools>div>button,
+.card .tools>div>span {
     border: none;
     font-family: inherit;
     color: white;
@@ -192,14 +157,21 @@
     font-size: 1.4em;
     font-weight: bold;
     cursor: pointer;
+    line-height: 0.6em;
+    padding: 0 0.15em;
+    align-self: baseline;
 }
 
-.card-tools button.copy-button {
-    font-size: 1.1em;
+.card .tools button.copy-button {
+    font-size: 1.3em;
     vertical-align: text-bottom;
 }
 
-.card-tools .card-tags-dialog {
+
+
+
+
+.card .tools .tags-dialog {
     position: absolute;
     left: 0;
     height: 9em;
@@ -209,9 +181,10 @@
     background-color: white;
     box-shadow: 0px 1px 10px 0px #00000045;
     transform: rotate(2deg) !important;
+    z-index: 9999;
 }
 
-.card-tools .card-tags-dialog .card-tags-dialog-results {
+.card .tools .tags-dialog .results {
     padding: 0.3em;
     display: flex;
     flex-wrap: wrap;
@@ -221,7 +194,7 @@
     max-height: 6.3em;
 }
 
-.card-tools .card-tags-dialog form input {
+.card .tools .tags-dialog form input {
     position: absolute;
     bottom: 0;
     height: 2em;
@@ -234,9 +207,10 @@
     padding: 0 0.4em;
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
+    z-index: 99999;
 }
 
-.card-tools .card-tags-dialog form input:focus {
+.card .tools .tags-dialog form input:focus {
     border-style: none;
     outline: none;
 }
@@ -244,23 +218,22 @@
 .card .tag {
     font-size: 0.9em;
     padding: 0 0.4em;
-    height: 1.8em;
     box-shadow: inset 0px 0px 4px 0px hsl(19deg 100% 50% / 100%), inset 0px 0px 15px 8px hsl(0deg 0% 0% / 25%);
 }
 
+
+/* SCROLL BAR */
 ::-webkit-scrollbar-track {
-    background: hsl(42 35% 72% / 1) !important;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: hsl(32 22% 55% / 1);
+    background: hsl(40 25% 75%) !important;
 }
 
 ::-webkit-scrollbar {
-    width: 0.2em;
+    width: 0.5em;
 }
-
-
 
 
 
@@ -365,16 +338,16 @@
 
 .ql-toolbar .ql-stroke {
     fill: none !important;
-    stroke: #fff !important;
+    stroke: hsl(32, 10%, 50%) !important;
 }
 
 .ql-toolbar .ql-fill {
-    fill: #fff !important;
+    fill: hsl(32, 10%, 50%) !important;
     stroke: none !important;
 }
 
 .ql-toolbar .ql-picker {
-    color: #fff !important;
+    color: hsl(32, 10%, 50%) !important;
 }
 
 .ql-container.ql-snow {

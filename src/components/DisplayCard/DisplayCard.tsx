@@ -1,23 +1,26 @@
-import { useRef, useEffect, createContext, useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import { useRef, useEffect, useState } from 'react';
+import { useSettingsStore } from '../../hooks/useSettingsStore';
+import { useCardStore } from '../../hooks/useCardStore';
+import Card from '../Card';
 import './DisplayCard.css';
 
-export const DisplayEditableContext = createContext(true);
 
-const DisplayCard = (props: {
-  setDisplayCard: Function,
-  children: any;
-}) => {
-  const [displayEditable, setDisplayEditable] = useState(true);
+const DisplayCard = () => {
+  const { settingsStore, setDisplayCard } = useSettingsStore();
+  const { cardStore } = useCardStore();
+  const [card, setCard] = useState(null);
+
+  useEffect(() => {
+    setCard(cardStore.find((c: any) => c.id === settingsStore.displayCard));
+  }, [settingsStore.displayCard]);
+
+  console.log(card);
 
   // HANDLE OUTSIDE CLICKS
   const ref = useRef<any>(null);
   const handleClickOutside = (event: any) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      if (props.setDisplayCard) {
-        props.setDisplayCard(null);
-        setDisplayEditable(false);
-      }
+      setDisplayCard(null);
     }
   };
   useEffect(() => {
@@ -37,13 +40,9 @@ const DisplayCard = (props: {
     });
   }, []);
 
-
   return (
-    <div className={'display-card'} ref={ref}>
-      <DisplayEditableContext.Provider value={displayEditable}>
-        <button onClick={() => props.setDisplayCard(null)}>X</button>
-        {props.children}
-      </DisplayEditableContext.Provider>
+    <div className={`display-card ${!card ? 'hidden' : ''}`} ref={ref}>
+      {card && <Card data={card} isDisplay />}
     </div>
   );
 };
